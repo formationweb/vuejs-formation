@@ -10,10 +10,12 @@
 </template>
 
 <script lang="ts">
+import { ref } from 'vue'
+
 export default {
     props: ['username'],
     emits: ['onSearch'],
-    data() {
+    /*data() {
         return {
             localUsername: this.username,
             firstnames: ['ana', 'jim', 'ben']
@@ -28,6 +30,14 @@ export default {
         search(str: string, event?: any) {
             this.$emit('onSearch', this.localUsername)
         }
-    }
+    }*/
+
+    /*setup() {
+        const localUsername = ref('ana')
+
+        return {
+            localUsername
+        }
+    }*/
 }
 </script>
