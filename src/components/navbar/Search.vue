@@ -6,6 +6,7 @@
             {{ index }} - {{ name }}
         </li>
     </ul>
+    
 </template>
 
 <script lang="ts">
