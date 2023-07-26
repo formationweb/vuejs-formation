@@ -5,7 +5,7 @@
 
 <script lang="ts">
 import Navbar from './components/navbar/Navbar.vue'
-import Users from './components/Users.vue'
+import Users from './components/user/Users.vue'
 
 export default {
     data() {

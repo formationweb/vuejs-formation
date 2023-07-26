@@ -2,11 +2,11 @@
     <input type="text" v-model="localUsername">
     <button @click="search('hello', $event)" v-if="localUsername">Rechercher</button>
     <ul>
-        <li v-for="(name, index) in firstnames">
+        <li v-for="(name, index) in firstnames" :key="name">
             {{ index }} - {{ name }}
         </li>
     </ul>
-    
+
 </template>
 
 <script lang="ts">
