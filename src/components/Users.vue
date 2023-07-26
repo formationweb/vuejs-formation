@@ -1,5 +1,5 @@
 <template>
-    <h1>Mon App</h1>
+    <h1>Utilisateurs</h1>
 </template>
 
 <script lang="ts">

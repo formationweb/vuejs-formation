@@ -1,19 +1,19 @@
 <template>
-    {{ message }}
     <Navbar />
+    <Users />
 </template>
 
 <script lang="ts">
-import Navbar from './components/Navbar.vue'
+import Navbar from './components/navbar/Navbar.vue'
+import Users from './components/Users.vue'
 
 export default {
     data() {
-        return {
-            message: 'Mon App'
-        }
+        return {}
     },
     components: {
-        Navbar
+        Navbar,
+        Users
     }
 }
 </script>
