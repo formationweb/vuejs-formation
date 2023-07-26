@@ -1,6 +1,6 @@
 <template>
     <h1>Mon App</h1>
-    <Search :username="name" @onSearch="listenSearch" />
+    <Search :username="name" @on-search="listenSearch" />
 </template>
 
 <script lang="ts">
@@ -13,9 +13,14 @@ export default {
         }
     },
     methods: {
-        listenSearch() {
-            console.log('ok')
+        listenSearch(username: string) {
+            console.log(username)
         }
+    },
+    mounted() {
+       /* setTimeout(() => {
+            this.name = 'jim'
+        }, 2000)*/
     },
     components: {
         Search
