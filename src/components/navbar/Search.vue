@@ -9,35 +9,11 @@
 
 </template>
 
-<script lang="ts">
-import { ref } from 'vue'
+<script setup lang="ts">
+import { useSearch } from '@/composable/useSearch'
 
-export default {
-    props: ['username'],
-    emits: ['onSearch'],
-    /*data() {
-        return {
-            localUsername: this.username,
-            firstnames: ['ana', 'jim', 'ben']
-        }
-    },
-    watch: {
-        username(newVal) {
-            this.localUsername = newVal
-        }
-    },
-    methods: {
-        search(str: string, event?: any) {
-            this.$emit('onSearch', this.localUsername)
-        }
-    }*/
+const props = defineProps(['username'])
+const emits = defineEmits(['onSearch'])
 
-    /*setup() {
-        const localUsername = ref('ana')
-
-        return {
-            localUsername
-        }
-    }*/
-}
+const { localUsername, firstnames, search } =  useSearch(props, emits)
 </script>

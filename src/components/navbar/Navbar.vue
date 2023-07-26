@@ -18,9 +18,9 @@ export default {
         }
     },
     mounted() {
-       /* setTimeout(() => {
+        setTimeout(() => {
             this.name = 'jim'
-        }, 2000)*/
+        }, 2000)
     },
     components: {
         Search

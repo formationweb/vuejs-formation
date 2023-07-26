@@ -1,4 +1,4 @@
-class MyComponent {
+/*class MyComponent {
     _username = ''
 
     get username() {
@@ -13,4 +13,19 @@ class MyComponent {
 
 const component = new MyComponent()
 component.username = 'ana'
-console.log(component.username)
+console.log(component.username)*/
+
+const user = {
+    name: 'ana',
+    email: 'ana@gmail.com'
+}
+
+const userProxy = new Proxy(user, {
+    set(obj, prop, value) {
+        console.log(prop, value)
+    }
+})
+
+userProxy.name = 'ben'
+
+const { name, email } = user
