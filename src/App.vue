@@ -1,21 +1,9 @@
 <template>
-    <Navbar />
-    <Users />
+    <RouterView />
 </template>
 
-<script lang="ts">
-import Navbar from './components/navbar/Navbar.vue'
-import Users from './components/user/Users.vue'
+<script setup lang="ts">
 
-export default {
-    data() {
-        return {}
-    },
-    components: {
-        Navbar,
-        Users
-    }
-}
 </script>
 
 <style scoped>
