@@ -4,7 +4,22 @@
         <option value="">Tous</option>
         <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
     </select>
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <template #header>
+            <h1>Utilisateur</h1>
+        </template>
+        <template #default>
+            un texte par défaut
+        </template>
+        <template #footer="slotProps">
+            <div>
+                <button>Supprimer</button>
+            </div>
+            <div>
+                L'utilisateur {{ u.name }} est {{ slotProps.actived ? 'actif' : 'inactif' }}
+            </div>
+        </template>
+    </UserCard>
 </template>
 
 <script setup lang="ts">
