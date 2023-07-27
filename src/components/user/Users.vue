@@ -1,10 +1,10 @@
 <template>
-    <h1>Utilisateurs</h1>
+    <h1>{{  wordPlural }}</h1>
     <UserCard v-for="u in users" :key="u.id" :user="u" />
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import UserCard from './UserCard.vue'
 import type { User } from '@/interfaces/User'
 
@@ -240,4 +240,10 @@ const users = reactive<User[]>([
                     }
                 }
             ])
+
+const word = ref('Utilisateur')
+
+const wordPlural = computed(() => {
+    return  word.value + (users.length > 1 ? 's' : '')
+})
 </script>
