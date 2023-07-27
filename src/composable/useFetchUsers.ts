@@ -9,7 +9,7 @@ export function useFetchUsers() {
     async function getAll() {
         try {
             loading.value = true
-            const response = await axios.get('https://jsonplaceholder.typicode.com/users')
+            const response = await axios.get(import.meta.env.VITE_API_URL + '/users')
             await new Promise((resolve: any) => {
                 setTimeout(() => {
                     resolve()

@@ -7,6 +7,7 @@
         {{ user.email }}
         <slot></slot>
         <footer>
+            <button>Supprimer</button>
             <input type="checkbox" v-model="isActive">
             <slot name="footer" :actived="isActive" v-bind="user"></slot>
         </footer>

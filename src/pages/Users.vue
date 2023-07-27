@@ -5,6 +5,7 @@
             <option value="">Tous</option>
             <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
         </select>
+        <button @click="createUser">Créer utilisateur</button>
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
             <template #header>
                 <h1>Utilisateur</h1>
@@ -13,9 +14,6 @@
                 un texte par défaut
             </template>
             <template #footer="slotProps">
-                <div>
-                    <button>Supprimer</button>
-                </div>
                 <div>
                     L'utilisateur {{ u.name }} est {{ slotProps.actived ? 'actif' : 'inactif' }}
                 </div>
@@ -30,11 +28,20 @@ import UserCard from '@/components/user/UserCard.vue'
 import { useExtensionFilter } from '@/composable/useExtensionFilter'
 import { useFetchUsers } from '@/composable/useFetchUsers'
 import Loading from '@/components/Loading.vue'
+import axios from 'axios'
 
 const extensions = reactive(['biz', 'io', 'me', 'tv'])
 const { getAll, loading, users } = useFetchUsers()
 
 getAll()
+
+async function createUser() {
+    const response = await axios.post(import.meta.env.VITE_API_URL + '/users', {
+        name: 'ana',
+        email: 'ana@gmail.com'
+    })
+    users.value.push(response.data)
+}
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => {
