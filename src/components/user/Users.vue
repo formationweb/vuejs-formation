@@ -10,6 +10,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
 import UserCard from './UserCard.vue'
+import { useExtensionFilter } from '@/composable/useExtensionFilter'
 import type { User } from '@/interfaces/User'
 
 const extensions = reactive(['biz', 'io', 'me', 'tv'])
@@ -252,10 +253,5 @@ const wordPlural = computed(() => {
 })
 
 const extSelected = ref('')
-const usersFiltered = computed(() => {
-    if (!extSelected.value) {
-        return users
-    }
-    return users.filter(user => user.email.endsWith(extSelected.value))
-})
+const usersFiltered = useExtensionFilter(users, extSelected)
 </script>
