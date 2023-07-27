@@ -1,31 +1,6 @@
-/*class MyComponent {
-    _username = ''
+[1, 2, 3].findIndex(item => item == 2) // 1
+[{ name: 'sam'}, { name: 'jim'}].findIndex(item => item.name == 'jim') // 1
 
-    get username() {
-        return this._username
-    }
-
-    set username(str) {
-        console.log('modifié')
-        this._username = str
-    }
-}
-
-const component = new MyComponent()
-component.username = 'ana'
-console.log(component.username)*/
-
-const user = {
-    name: 'ana',
-    email: 'ana@gmail.com'
-}
-
-const userProxy = new Proxy(user, {
-    set(obj, prop, value) {
-        console.log(prop, value)
-    }
-})
-
-userProxy.name = 'ben'
-
-const { name, email } = user
+[1, 2, 3].splice(index, nb)
+[1, 2, 3].splice(1, 1) // [1, 3]
+[1, 2, 3].splice(0, 2) // [3]

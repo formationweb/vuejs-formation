@@ -6,7 +6,7 @@
             <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
         </select>
         <button @click="createUser">Créer utilisateur</button>
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @remove="deleteUser">
             <template #header>
                 <h1>Utilisateur</h1>
             </template>
@@ -41,6 +41,12 @@ async function createUser() {
         email: 'ana@gmail.com'
     })
     users.value.push(response.data)
+}
+
+async function deleteUser(userId: number) {
+    await axios.delete(import.meta.env.VITE_API_URL + '/users/' + userId)
+    const index = users.value.findIndex(user => user.id == userId)
+    users.value.splice(index, 1)
 }
 
 const word = 'Utilisateur'

@@ -7,7 +7,7 @@
         {{ user.email }}
         <slot></slot>
         <footer>
-            <button>Supprimer</button>
+            <button @click="emits('remove', user.id)">Supprimer</button>
             <input type="checkbox" v-model="isActive">
             <slot name="footer" :actived="isActive" v-bind="user"></slot>
         </footer>
@@ -25,6 +25,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const emits = defineEmits(['remove'])
 
 const isActive = ref(props.user.isActive)
 
