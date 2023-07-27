@@ -1,6 +1,10 @@
 <template>
     <h1>{{  wordPlural }}</h1>
-    <UserCard v-for="u in users" :key="u.id" :user="u" />
+    <select v-model="extSelected">
+        <option value="">Tous</option>
+        <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+    </select>
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
 </template>
 
 <script setup lang="ts">
@@ -8,6 +12,7 @@ import { computed, reactive, ref } from 'vue'
 import UserCard from './UserCard.vue'
 import type { User } from '@/interfaces/User'
 
+const extensions = reactive(['biz', 'io', 'me', 'tv'])
 const users = reactive<User[]>([
                 {
                     "id": 1,
@@ -241,9 +246,16 @@ const users = reactive<User[]>([
                 }
             ])
 
-const word = ref('Utilisateur')
-
+const word = 'Utilisateur'
 const wordPlural = computed(() => {
-    return  word.value + (users.length > 1 ? 's' : '')
+    return  word + (users.length > 1 ? 's' : '')
+})
+
+const extSelected = ref('')
+const usersFiltered = computed(() => {
+    if (!extSelected.value) {
+        return users
+    }
+    return users.filter(user => user.email.endsWith(extSelected.value))
 })
 </script>
