@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from '@/pages/Login.vue'
-import Users from "@/components/user/Users.vue";
+import LayoutDefault from '@/layouts/Default.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -13,7 +13,7 @@ const router = createRouter({
         {
             path: '/',
             name: 'root',
-            component: Users
+            component: LayoutDefault
         }
     ]
 })

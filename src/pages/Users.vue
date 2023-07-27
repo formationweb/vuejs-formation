@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue'
-import UserCard from './UserCard.vue'
+import UserCard from '@/components/user/UserCard.vue'
 import { useExtensionFilter } from '@/composable/useExtensionFilter'
 import type { User } from '@/interfaces/User'
 
