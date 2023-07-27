@@ -1,6 +1,9 @@
 <template>
     <h1>Mon App</h1>
     <Search :username="name" @on-search="listenSearch" />
+    <RouterLink :to="{ name: 'loginId' }" custom v-slot="slotProps">
+        <button @click="slotProps.navigate">Se connecter</button>
+    </RouterLink>
 </template>
 
 <script setup lang="ts">
