@@ -7,6 +7,7 @@
         {{ user.email }}
         <slot></slot>
         <footer>
+            <RouterLink :to="{ name: 'user-edit', params: { id: user.id } }">Modifier</RouterLink>
             <button @click="emits('remove', user.id)">Supprimer</button>
             <input type="checkbox" v-model="isActive">
             <slot name="footer" :actived="isActive" v-bind="user"></slot>

@@ -29,6 +29,11 @@
 import { ref, watch, watchEffect } from 'vue'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
+import { useAuthStore } from '@/store/auth'
+import { useRouter } from 'vue-router';
+
+const authStore = useAuthStore()
+const router = useRouter()
 
 const { defineInputBinds, handleSubmit, errors, meta } = useForm({
     validationSchema: yup.object({
@@ -43,8 +48,10 @@ watch(() => meta.value.valid, (newValue) => {
     console.log(newValue)
 })
 
-const onSubmit = handleSubmit((values) => {
-    console.log(values)
+const onSubmit = handleSubmit(async (values: any) => {
+    await authStore.login(values)
+    // nullish
+    router.push((router.currentRoute.value.query.redirect as string) ?? '/')
 })
 
 const email = defineInputBinds('email')
