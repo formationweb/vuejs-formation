@@ -35,7 +35,7 @@ import { useRouter } from 'vue-router';
 const authStore = useAuthStore()
 const router = useRouter()
 
-const { defineInputBinds, handleSubmit, errors, meta } = useForm({
+const { defineInputBinds, handleSubmit, errors, meta, setFieldValue, setValues } = useForm({
     validationSchema: yup.object({
         email: yup.string().email().required().test('email_domain', 'Nom de domain interdit', (value) => {
             return !value.endsWith('gmail.com')
@@ -43,6 +43,12 @@ const { defineInputBinds, handleSubmit, errors, meta } = useForm({
         password: yup.string().min(6).required()
     })
 })
+
+//setFieldValue('email', 'test@test.com')
+/*setValues({
+    email: 'test@test.com',
+    password: 'azerty'
+})*/
 
 watch(() => meta.value.valid, (newValue) => {
     console.log(newValue)

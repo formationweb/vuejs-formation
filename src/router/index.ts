@@ -15,7 +15,6 @@ const router = createRouter({
         },
         {
             path: '/',
-            name: 'root',
             component: LayoutDefault,
             meta: { requiredAuth: true },
             children: [
@@ -26,6 +25,7 @@ const router = createRouter({
                 },
                 {
                     path: '',
+                    name: 'root',
                     component: Users
                 }
             ]
