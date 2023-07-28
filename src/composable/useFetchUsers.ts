@@ -1,16 +1,16 @@
 import type { User } from "@/interfaces/User"
+import { useUserStore } from "@/store/user"
 import axios from "axios"
 import { ref } from "vue"
 
 export function useFetchUsers() {
-    const users = ref<User[]>([])
+    const userStore = useUserStore()
     const loading = ref(false)
 
     async function getAll() {
         try {
             loading.value = true
-            const response = await axios.get(import.meta.env.VITE_API_URL + '/users')
-            users.value = response.data
+            await userStore.getAll()
         }
         catch (err) {
             console.log(err)
@@ -21,7 +21,6 @@ export function useFetchUsers() {
     }
 
     return {
-        users,
         loading,
         getAll
     }

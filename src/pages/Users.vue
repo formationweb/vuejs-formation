@@ -15,7 +15,7 @@
             <div>{{ errors.email }}</div>
             <button :aria-busy="loadingCreate" :disabled="loadingCreate">Créer utilisateur</button>
         </form>
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @remove="deleteUser">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @remove="userStore.deleteUser">
             <template #header>
                 <h1>Utilisateur</h1>
             </template>
@@ -40,6 +40,10 @@ import Loading from '@/components/Loading.vue'
 import axios from 'axios'
 import { useForm, useIsSubmitting } from 'vee-validate'
 import * as yup from 'yup'
+import { useUserStore } from '@/store/user'
+import { storeToRefs } from 'pinia'
+
+const userStore = useUserStore()
 
 const { defineInputBinds, handleSubmit, errors, meta } = useForm({
     validationSchema: {
@@ -51,32 +55,26 @@ const { defineInputBinds, handleSubmit, errors, meta } = useForm({
 const isSubmitting = useIsSubmitting();
 
 const extensions = reactive(['biz', 'io', 'me', 'tv'])
-const { getAll, loading, users } = useFetchUsers()
+const { getAll, loading } = useFetchUsers()
 
 getAll()
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => {
-    return word + (users.value.length > 1 ? 's' : '')
+    return word + (userStore.users.length > 1 ? 's' : '')
 })
 
 const extSelected = ref('')
 const loadingCreate = ref(false)
+const { users } = storeToRefs(userStore)
 const usersFiltered = useExtensionFilter(users, extSelected)
 
 const name = defineInputBinds('name')
 const email = defineInputBinds('email')
 
-const createUser = handleSubmit(async (values) => {
+const createUser = handleSubmit(async (values: any) => {
     loadingCreate.value = true
-    const response = await axios.post(import.meta.env.VITE_API_URL + '/users', values)
+    await userStore.createUser(values)
     loadingCreate.value = false
-    users.value.push(response.data)
 })
-
-async function deleteUser(userId: number) {
-    await axios.delete(import.meta.env.VITE_API_URL + '/users/' + userId)
-    const index = users.value.findIndex(user => user.id == userId)
-    users.value.splice(index, 1)
-}
 </script>
