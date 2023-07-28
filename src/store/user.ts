@@ -4,13 +4,17 @@ import type { User } from '@/interfaces/User'
 
 const URI: string = import.meta.env.VITE_API_URL + '/users'
 
+type UserPayload =  Omit<User, 'id'>
+
 export const useUserStore = defineStore({
     id: 'user',
     state(): {
-        users: User[]
+        users: User[],
+        user: User | null
     }  {
         return {
-            users: []
+            users: [],
+            user: null
         }
     },
     getters: { },
@@ -19,7 +23,15 @@ export const useUserStore = defineStore({
             const response = await axios.get(URI)
             this.users = response.data
         },
-        async createUser(payload: Omit<User, 'id'>) {
+        async getUser(userId: string) {
+            const response = await axios.get(URI + '/' + userId)
+            this.user = response.data
+        },
+        async updateUser(userId: string, payload: UserPayload) {
+            const response = await axios.put(URI + '/' + userId, payload)
+            this.user = response.data
+        },
+        async createUser(payload: UserPayload) {
             const response = await axios.post(URI, payload)
             this.users.push(response.data)
         },
