@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import { useAuthStore } from './store/auth'
+import AppService from './services/app'
 
 axios.interceptors.request.use((config) => {
     const authStore = useAuthStore()
@@ -17,4 +18,5 @@ axios.interceptors.request.use((config) => {
 const app = createApp(App)
 app.use(router)
 app.use(createPinia())
+app.provide('appService', new AppService())
 app.mount('#app')

@@ -7,10 +7,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, inject } from 'vue';
 import Search from './Search.vue'
+import type AppService from '@/services/app';
 
 const name = ref('ana')
+const appService = inject<AppService>('appService')
+
+console.log(appService?.getTitle())
 
 function listenSearch(username: string) {
     console.log(username)
