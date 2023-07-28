@@ -10,11 +10,6 @@ export function useFetchUsers() {
         try {
             loading.value = true
             const response = await axios.get(import.meta.env.VITE_API_URL + '/users')
-            await new Promise((resolve: any) => {
-                setTimeout(() => {
-                    resolve()
-                }, 2000)
-            })
             users.value = response.data
         }
         catch (err) {
