@@ -8,25 +8,22 @@
     </ul>
 </template>
 
-<script lang="ts">
-export default {
-    props: ['name'],
-    emits: ['on-search'],
-    data() {
-        return {
-            localName: this.name,
-            firstNames: ['ana', 'jim', 'ben']
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('on-search', this.localName)
-        }
-    },
-    watch: {
-        name(newVal) {
-            this.localName = newVal
-        }
-    }
+<script setup lang="ts">
+import { ref, watch } from 'vue';
+
+const props = defineProps<{
+    name: string
+}>()
+const emits = defineEmits(['on-search'])
+
+const localName = ref<string>(props.name)
+const firstNames = ref(['ana', 'jim', 'ben'])
+
+function search() {
+    emits('on-search', localName.value)
 }
+
+watch(() => props.name, (newVal) => {
+    localName.value = newVal
+})
 </script>
