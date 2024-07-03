@@ -1,19 +1,26 @@
 <template>
     <input type="text" v-model="localName">
-    <button @click="search">Rechercher</button>
+    <button @click="search" v-if="localName != ''">Rechercher</button>
+    <ul>
+        <li v-for="(name, index) in firstNames" :key="name">
+            {{ index }} - {{ name }}
+        </li>
+    </ul>
 </template>
 
 <script lang="ts">
 export default {
     props: ['name'],
+    emits: ['on-search'],
     data() {
         return {
-            localName: this.name
+            localName: this.name,
+            firstNames: ['ana', 'jim', 'ben']
         }
     },
     methods: {
         search() {
-            console.log(this.localName)
+            this.$emit('on-search', this.localName)
         }
     },
     watch: {

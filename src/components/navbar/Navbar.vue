@@ -1,6 +1,6 @@
 <template>
     <h1>{{ title }}</h1>
-    <Search :name="username" />
+    <Search :name="username" @on-search="listenSearch"  />
 </template>
 
 <script lang="ts">
@@ -11,6 +11,11 @@ export default {
         return {
             title: 'Mon App',
             username: 'ben'
+        }
+    },
+    methods: {
+        listenSearch(username: string) {
+            console.log(username)
         }
     },
     // mounted() {
