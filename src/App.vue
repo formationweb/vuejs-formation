@@ -1,19 +1,19 @@
 <template>
-    {{ count }}
     <Navbar />
+    <Users />
 </template>
 
 <script lang="ts">
 import Navbar from './components/navbar/Navbar.vue';
+import Users from './components/users/Users.vue';
 
 export default {
     data() {
-        return {
-            count: 0
-        }
+        return {}
     },
     components: {
-        Navbar
+        Navbar,
+        Users
     }
 }
 </script>
