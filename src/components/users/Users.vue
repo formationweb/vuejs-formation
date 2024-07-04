@@ -1,12 +1,17 @@
 <template>
   <h1>{{ wordPlural }}</h1>
-  <UserCard v-for="u in users" :user="u" :key="u.id" />
+  <select v-model="extSelected">
+    <option value="">Tous</option>
+    <option v-for="ext in extensions" :key="ext">{{  ext  }}</option>
+  </select>
+  <UserCard v-for="u in usersFiltered" :user="u" :key="u.id" />
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { User } from '../../interfaces/User';
 import UserCard from './UserCard.vue';
+
 const users = ref<User[]>([
   {
     "id": 1,
@@ -239,8 +244,15 @@ const users = ref<User[]>([
     }
   }
 ])
+const extensions: string[]  = ['tv', 'biz', 'io', 'me']
+const extSelected = ref('')
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
-
+const usersFiltered = computed(() => {
+  if (!extSelected.value) {
+    return users.value
+  }
+  return users.value.filter(user => user.email.endsWith(extSelected.value))
+})
 </script>
