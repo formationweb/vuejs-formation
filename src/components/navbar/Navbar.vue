@@ -1,6 +1,10 @@
 <template>
     <h1>{{ title }}</h1>
-    <Search :name="username" @on-search="listenSearch"  />
+    <Search :name="username" @on-search="listenSearch" />
+    <router-link :to="{ name: 'loginId' }" custom v-slot="router">
+        <button @click="router.navigate">Se connecter</button>
+    </router-link>
+    
 </template>
 
 <script setup lang="ts">
