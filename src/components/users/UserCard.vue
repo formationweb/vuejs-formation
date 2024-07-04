@@ -7,7 +7,7 @@
             Est actif: <input type="checkbox" v-model="isActive">
         </footer>
         <slot></slot>
-        <slot name="footer" :active="isActive"></slot>
+        <slot name="footer" :active="isActive" v-bind="user"></slot>
     </article>
 </template>
 

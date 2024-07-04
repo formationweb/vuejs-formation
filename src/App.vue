@@ -1,9 +1,8 @@
 <template>
-    <Navbar/>
-    <Users />
+   <router-view />
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import Navbar from './components/navbar/Navbar.vue';
 import Users from './components/users/Users.vue';
 
@@ -16,4 +15,4 @@ export default {
         Users
     }
 }
-</script>
+</script> -->

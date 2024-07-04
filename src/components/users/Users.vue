@@ -12,7 +12,7 @@
       <p>Texte par défaut</p>
     </template>
     <template #footer="slotProps">
-      <p>L'utilisateur {{ u.name }} est {{ slotProps.active }}</p>
+      <p>L'utilisateur {{ slotProps.name }} est {{ slotProps.active }}</p>
     </template>
   </UserCard>
 </template>

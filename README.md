@@ -15,3 +15,12 @@ Variable réactive calculée: computed
 
 Effect
 Ecoute de/des ref, ou des computed: déclenche une action (callback)
+
+# Routeur
+
+/login -> Serveur -> Routeur -> Controller -> Model/View
+/login -> Routeur VueJS -> Component
+
+SPA (Single Page Application)
+SSR (Server Side Rendering) --> Nuxt
+SSG (Server Side Generation) --> Vitepress
