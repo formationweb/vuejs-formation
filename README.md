@@ -1,5 +1,17 @@
-# Vue 3 + TypeScript + Vite
+Sur un objet
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+ref: get/set sur l'objet en entier + proxy (reactive) sur l'objet
+reactive: proxy (reactive) sur l'objet
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+ref: fonctionne sur tout
+reactive: que les objets (tableau)
+
+--- Variable reactive
+- ref
+- (reactive)
+
+---
+Variable réactive calculée: computed
+
+Effect
+Ecoute de/des ref, ou des computed: déclenche une action (callback)

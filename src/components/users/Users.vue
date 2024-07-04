@@ -1,13 +1,12 @@
 <template>
-    <h1>Utilisateurs</h1>
-    <UserCard v-for="u in users" :user="u" :key="u.id" />
+  <h1>{{ wordPlural }}</h1>
+  <UserCard v-for="u in users" :user="u" :key="u.id" />
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { User } from '../../interfaces/User';
 import UserCard from './UserCard.vue';
-
 const users = ref<User[]>([
   {
     "id": 1,
@@ -240,4 +239,8 @@ const users = ref<User[]>([
     }
   }
 ])
+
+const word = 'Utilisateur'
+const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
+
 </script>
