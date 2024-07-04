@@ -3,6 +3,7 @@ export interface User {
   name: string;
   username: string;
   email: string;
+  isActive?: boolean
   address?: {
     street: string;
     suite: string;

@@ -2,9 +2,19 @@
   <h1>{{ wordPlural }}</h1>
   <select v-model="extSelected">
     <option value="">Tous</option>
-    <option v-for="ext in extensions" :key="ext">{{  ext  }}</option>
+    <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
   </select>
-  <UserCard v-for="u in usersFiltered" :user="u" :key="u.id" />
+  <UserCard v-for="u in usersFiltered" :user="u" :key="u.id">
+    <template #header>
+      <h1>Titre</h1>
+    </template>
+    <template #default>
+      <p>Texte par défaut</p>
+    </template>
+    <template #footer="slotProps">
+      <p>L'utilisateur {{ u.name }} est {{ slotProps.active }}</p>
+    </template>
+  </UserCard>
 </template>
 
 <script setup lang="ts">
@@ -245,7 +255,7 @@ const users = ref<User[]>([
     }
   }
 ])
-const extensions: string[]  = ['tv', 'biz', 'io', 'me']
+const extensions: string[] = ['tv', 'biz', 'io', 'me']
 const extSelected = ref('')
 
 const word = 'Utilisateur'
