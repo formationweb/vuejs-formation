@@ -9,6 +9,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useExtensionFilter } from '../../composable/useExtensionFilter';
 import type { User } from '../../interfaces/User';
 import UserCard from './UserCard.vue';
 
@@ -249,10 +250,5 @@ const extSelected = ref('')
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
-const usersFiltered = computed(() => {
-  if (!extSelected.value) {
-    return users.value
-  }
-  return users.value.filter(user => user.email.endsWith(extSelected.value))
-})
+const usersFiltered = useExtensionFilter(users, extSelected)
 </script>
