@@ -5,7 +5,7 @@
       <option value="">Tous</option>
       <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
     </select>
-    <UserCard v-for="u in usersFiltered" :user="u" :key="u.id">
+    <UserCard v-for="u in usersFiltered" :user="u" :key="u.id" @remove="deleteUser">
       <template #header>
         <h1>Titre</h1>
       </template>
@@ -34,6 +34,10 @@ const extSelected = ref('')
 const word = 'Utilisateur'
 const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
 const usersFiltered = useExtensionFilter(users, extSelected)
+
+function deleteUser(id: number) {
+  console.log(id)
+}
 
 onMounted(() => {
   getAll()

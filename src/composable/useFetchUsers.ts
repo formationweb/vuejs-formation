@@ -10,7 +10,7 @@ export function useFetchUsers() {
     try {
         loading.value = true
         const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        //await new Promise(resolve => setTimeout(resolve, 2000))
         users.value = res.data;
     }
     catch (err) {
