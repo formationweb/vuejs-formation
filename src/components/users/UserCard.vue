@@ -5,6 +5,7 @@
         {{ user.email }}
         <footer>
             Est actif: <input type="checkbox" v-model="isActive">
+            <router-link :to="{ name: 'user-edit', params: { id: user.id } }">Modifier</router-link>
             <button @click="emits('remove', user.id)">Supprimer</button>
         </footer>
         <slot></slot>

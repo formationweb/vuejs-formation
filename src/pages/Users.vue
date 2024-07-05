@@ -33,14 +33,14 @@
 </template>
 
 <script setup lang="ts">
+import Loading from '@/components/Loading.vue';
+import UserCard from '@/components/users/UserCard.vue';
+import { useExtensionFilter } from '@/composable/useExtensionFilter';
+import { useFetchUsers } from '@/composable/useFetchUsers';
 import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { computed, onMounted, ref } from 'vue';
 import * as yup from 'yup';
-import { useExtensionFilter } from '../../composable/useExtensionFilter';
-import { useFetchUsers } from '../../composable/useFetchUsers';
-import Loading from '../Loading.vue';
-import UserCard from './UserCard.vue';
 
 const { users, loading, getAll } = useFetchUsers()
 const { handleSubmit, defineField, errors } = useForm({
