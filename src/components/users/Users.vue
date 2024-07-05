@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import axios from 'axios';
 import { computed, onMounted, ref } from 'vue';
 import { useExtensionFilter } from '../../composable/useExtensionFilter';
 import { useFetchUsers } from '../../composable/useFetchUsers';
@@ -35,8 +36,10 @@ const word = 'Utilisateur'
 const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
 const usersFiltered = useExtensionFilter(users, extSelected)
 
-function deleteUser(id: number) {
-  console.log(id)
+async function deleteUser(id: number) {
+  await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
+  const index = users.value.findIndex(user => user.id == id)
+  users.value.splice(index, 1)
 }
 
 onMounted(() => {

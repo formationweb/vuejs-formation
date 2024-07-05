@@ -11,8 +11,10 @@
   "dependencies": {
     "@picocss/pico": "^2.0.6",
     "axios": "^1.7.2",
+    "vee-validate": "^4.13.1",
     "vue": "^3.4.29",
-    "vue-router": "^4.4.0"
+    "vue-router": "^4.4.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
