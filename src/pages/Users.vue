@@ -39,7 +39,7 @@ import { useExtensionFilter } from '@/composable/useExtensionFilter';
 import { useFetchUsers } from '@/composable/useFetchUsers';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import * as yup from 'yup';
 import { UserPayload, useUserStore } from '../store/user';
 
@@ -73,7 +73,7 @@ const createUser = handleSubmit(async (values, { resetForm }) => {
 })
 
 
-onMounted(() => {
-  getAll()
-})
+// onMounted(() => {
+//   getAll()
+// })
 </script>

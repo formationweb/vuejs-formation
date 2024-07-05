@@ -4,6 +4,7 @@ import Login from './pages/Login.vue';
 import UserEdit from './pages/UserEdit.vue';
 import Users from "./pages/Users.vue";
 import { useAuthStore } from "./store/auth";
+import { useUserStore } from "./store/user";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -13,6 +14,10 @@ export const router = createRouter({
             component: Default,
             meta: {
                 requiredAuth: true
+            },
+            beforeEnter() {
+                const userStore = useUserStore()
+                userStore.getAll()
             },
             children: [
                 {
