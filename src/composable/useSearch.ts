@@ -1,4 +1,6 @@
+import { storeToRefs } from "pinia";
 import { ComputedRef, DefineProps, Ref, computed, ref, watch, watchEffect } from "vue";
+import { useUserStore } from "../store/user";
 
 type Props = DefineProps<
   {
@@ -16,7 +18,9 @@ type SearchFnReturn = {
 
 export function useSearch(props: Props, emits: Emits): SearchFnReturn {
   const localName = ref<string>(props.name);
-  const firstNames = ref(["ana", "jim", "ben"]);
+  const userStore = useUserStore()
+  const { users } =  storeToRefs(userStore)
+  const firstNames = computed(() => users.value.map(user => user.name))
   const firstNamesFiltered = computed(() => {
     return firstNames.value.filter((firstName) => firstName.startsWith(localName.value))
   })
