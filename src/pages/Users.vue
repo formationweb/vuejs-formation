@@ -37,42 +37,49 @@ import Loading from '@/components/Loading.vue';
 import UserCard from '@/components/users/UserCard.vue';
 import { useExtensionFilter } from '@/composable/useExtensionFilter';
 import { useFetchUsers } from '@/composable/useFetchUsers';
-import axios from 'axios';
+import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
 import { computed, onMounted, ref } from 'vue';
 import * as yup from 'yup';
+import { useUserStore } from '../store/user';
 
-const { users, loading, getAll } = useFetchUsers()
+const { loading, getAll } = useFetchUsers()
 const { handleSubmit, defineField, errors } = useForm({
   validationSchema: {
     email: yup.string().email().required(),
     name: yup.string().required()
   }
 })
+const userStore = useUserStore()
+
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 const loadingCreate = ref(false)
 
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
 const extSelected = ref('')
+const { users } = storeToRefs(userStore)
 
 const word = 'Utilisateur'
-const wordPlural = computed(() => word + (users.value.length > 1 ? 's' : ''))
+const wordPlural = computed(() => word + (userStore.users.length > 1 ? 's' : ''))
 const usersFiltered = useExtensionFilter(users, extSelected)
 
+// @ts-ignore
 async function deleteUser(id: number) {
-  await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
-  const index = users.value.findIndex(user => user.id == id)
-  users.value.splice(index, 1)
+  // await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
+  // const index = users.value.findIndex(user => user.id == id)
+  // users.value.splice(index, 1)
 }
 
+// @ts-ignore
 const createUser = handleSubmit(async (values, { resetForm }) => {
-  loadingCreate.value = true
-  const { data } = await axios.post("https://jsonplaceholder.typicode.com/users", values)
-  users.value.push(data)
-  loadingCreate.value = false
+  // loadingCreate.value = true
+  // const { data } = await axios.post("https://jsonplaceholder.typicode.com/users", values)
+  // users.value.push(data)
+  // loadingCreate.value = false
   resetForm()
 })
+  
 
 onMounted(() => {
   getAll()
