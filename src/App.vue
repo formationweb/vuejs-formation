@@ -1,10 +1,11 @@
 <template>
     <Navbar />
-    <h1>{{ name }}</h1>
+    <Users />
 </template>
 
 <script lang="ts">
 import Navbar from './components/Navbar.vue'
+import Users from './components/Users.vue'
 
 export default {
     data() {
@@ -13,7 +14,8 @@ export default {
         }
     },
     components: {
-        Navbar
+        Navbar,
+        Users
     }
 }
 </script>
