@@ -4,8 +4,8 @@
 </template>
 
 <script lang="ts">
-import Navbar from './components/Navbar.vue'
 import Users from './components/Users.vue'
+import Navbar from './components/Navbar.vue'
 
 export default {
     data() {
@@ -14,7 +14,7 @@ export default {
         }
     },
     components: {
-        Navbar,
+        Navbar, 
         Users
     }
 }
