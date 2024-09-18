@@ -10,32 +10,30 @@
     </ul>
 </template>
 
-<script lang="ts">
-import { PropType } from 'vue';
+<script setup lang="ts">
+import { reactive, ref, watch, watchEffect } from 'vue';
 
-export default {
-    props: {
-        name: {
-            type: String as PropType<string>,
-            required: true
-        }
-    },
-    emits: ['on-search'],
-    data() {
-        return {
-            localName: this.name,
-            firstNames: ['ana', 'jim', 'ben']
-        }
-    },
-    methods: {
-        onSearch() {
-            this.$emit('on-search', this.localName)
-        }
-    },
-    watch: {
-        name(newVal: string) {
-            this.localName = newVal
-        }
-    }
+const props = defineProps<{
+    name: string
+}>()
+
+const emits = defineEmits<{
+    'on-search': [string]
+}>()
+
+const localName = ref(props.name)
+let firstNames = ref(['ana', 'jim', 'ben'])
+
+function onSearch() {
+    emits('on-search', localName.value)
 }
+
+watchEffect(() => {
+    localName.value = props.name
+})
+
+// watch(() => age.value, (newVal) => {
+//     console.log(newVal)
+// })
+
 </script>
