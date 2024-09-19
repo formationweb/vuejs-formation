@@ -14,7 +14,7 @@
 
         <button @click="createUser">Créer utilisateur</button>
 
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @on-delete="deleteUser">
             <template #title>
                 <h1>Titre</h1>
             </template>
@@ -62,6 +62,10 @@ async function createUser() {
     }
 }
 // --
+
+function deleteUser(id: number) {
+    console.log(id)
+}
 
 onMounted(() => {
     getAll()

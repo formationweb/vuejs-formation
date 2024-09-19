@@ -14,7 +14,7 @@
             {{  isActive }}
         </div>
         <footer>
-            <button>Supprimer</button>
+            <button @click="removeUser">Supprimer</button>
             <slot name="footer" :active="isActive" v-bind="user"></slot>
         </footer>
     </article>
@@ -28,5 +28,13 @@ const props = defineProps< {
     user: User
 }>()
 
+const emits = defineEmits<{
+    'on-delete': [number]
+}>()
+
 const isActive = ref(props.user.isActive)
+
+function removeUser() {
+    emits('on-delete', props.user.id)
+}
 </script>
