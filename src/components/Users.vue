@@ -1,7 +1,18 @@
 <template>
     <h1>Utilisateurs</h1>
     <UserCard v-for="u in users" :key="u.id" :user="u">
-        <h1>Titre</h1>
+        <template #title>
+            <h1>Titre</h1>
+        </template>
+        <template #subtitle>
+            <h2>Sous titre</h2>
+        </template>
+        <!-- <template #default>
+            <h3>Contenu par défaut</h3>
+        </template> -->
+        <template #footer="slotProps">
+            <p>L'Utilisateur {{  slotProps.name  }} est {{ slotProps.active }}</p>
+        </template>
     </UserCard>
 </template>
 

@@ -7,4 +7,5 @@ export interface User {
     phone?: string
     website?: string
     company?: any
+    isActive?: boolean
 }
