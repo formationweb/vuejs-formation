@@ -1,4 +1,4 @@
-import { DefineProps, Ref, ref, watchEffect } from "vue";
+import { computed, ComputedRef, DefineProps, Ref, ref, watchEffect } from "vue";
 
 type Props = DefineProps<{
     name: string
@@ -9,12 +9,16 @@ type Emits = (event: 'on-search', name: string) => void
 type SearchFnReturn = {
     localName: Ref<string>
     firstNames: Ref<string[]>
-    onSearch: () => void
+    onSearch: () => void,
+    firstNamesFiltered: ComputedRef<string[]>
 }
 
 export function useSearch(props: Props, emits: Emits): SearchFnReturn {
   const localName = ref(props.name);
-  let firstNames = ref(["ana", "jim", "ben"]);
+  const firstNames = ref(["ana", "jim", "ben"]);
+  const firstNamesFiltered = computed(() => {
+    return firstNames.value.filter(firstName => firstName.startsWith(localName.value))
+  })
 
   function onSearch() {
     emits("on-search", localName.value);
@@ -27,6 +31,7 @@ export function useSearch(props: Props, emits: Emits): SearchFnReturn {
   return {
     localName,
     firstNames,
-    onSearch
+    onSearch,
+    firstNamesFiltered
   }
 }

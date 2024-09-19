@@ -1,5 +1,12 @@
 <template>
-    <h1>Utilisateurs</h1>
+    <h1>{{ wordPlural }}</h1>
+   
+    <select v-model="nbSelected">
+        <option>0</option>
+        <option>1</option>
+        <option>2</option>
+    </select>
+   
     <UserCard v-for="u in users" :key="u.id" :user="u">
         <template #title>
             <h1>Titre</h1>
@@ -17,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { User } from '../interfaces/User';
 import UserCard from './UserCard.vue'
 
@@ -253,4 +260,9 @@ const users = ref<User[]>([
         }
     }
 ])
+
+const nbSelected = ref(0)
+
+const word = 'Utilisateur'
+const wordPlural = computed(() => word + (nbSelected.value > 1 ? 's' : ''))
 </script>
