@@ -1,4 +1,5 @@
 <template>
+
     <h1>{{ wordPlural }}</h1>
 
     <select v-model="nbSelected">
