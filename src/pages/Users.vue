@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { User } from '../interfaces/User';
-import UserCard from './UserCard.vue'
+import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 
 const users = ref<User[]>([
