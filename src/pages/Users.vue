@@ -63,8 +63,10 @@ async function createUser() {
 }
 // --
 
-function deleteUser(id: number) {
-    console.log(id)
+async function deleteUser(id: number) {
+    await userService?.delete(id)
+    const index = users.value.findIndex(user => user.id == id)
+    users.value.splice(index, 1)
 }
 
 onMounted(() => {
