@@ -14,6 +14,7 @@
             {{  isActive }}
         </div>
         <footer>
+            <button>Supprimer</button>
             <slot name="footer" :active="isActive" v-bind="user"></slot>
         </footer>
     </article>

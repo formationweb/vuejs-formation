@@ -12,6 +12,8 @@
             <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
         </select>
 
+        <button @click="createUser">Créer utilisateur</button>
+
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
             <template #title>
                 <h1>Titre</h1>
@@ -31,11 +33,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 import { useFetchUsers } from '../composable/useFetchUsers';
 import Loading  from '@/components/Loading.vue'
+import { UserService } from '../services/UserService';
 
 const { users, getAll, loading } = useFetchUsers()
 const nbSelected = ref(0)
@@ -45,6 +48,20 @@ const word = 'Utilisateur'
 const wordPlural = computed(() => word + (nbSelected.value > 1 ? 's' : ''))
 
 const extensions: string[] = ['tv', 'biz', 'io', 'me'];
+
+// -- 
+const userService = inject<UserService>('userService')
+
+async function createUser() {
+    const userCreated = await userService?.create({
+        email: 'ana@gmail.com',
+        name: 'ana'
+    })
+    if (userCreated) {
+        users.value.push(userCreated)
+    }
+}
+// --
 
 onMounted(() => {
     getAll()

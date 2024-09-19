@@ -1,17 +1,20 @@
 import axios from "axios"
 import { User } from "../interfaces/User"
-import { ref } from "vue"
+import { inject, ref } from "vue"
+import { UserService } from "../services/UserService"
 
 export function useFetchUsers() {
     const users = ref<User[]>([])
     const loading = ref(false)
+    const userService = inject<UserService>('userService')
 
     async function getAll() {
         try {
             loading.value = true
-            const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+            if (userService) {
+                users.value = await userService.getAll()
+            }
             //await new Promise(resolve => setTimeout(resolve, 2000))
-            users.value = res.data
         }
         catch (err) {
             console.log(err)
