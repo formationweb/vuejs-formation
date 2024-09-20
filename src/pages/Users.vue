@@ -45,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 import { useFetchUsers } from '../composable/useFetchUsers';
@@ -56,7 +56,7 @@ import { useUserForm } from '../composable/useUserForm';
 
 const nbSelected = ref(0)
 
-const { getAll, loading } = useFetchUsers()
+const { loading } = useFetchUsers()
 const userStore = useUserStore()
 const { users } = storeToRefs(userStore)
 

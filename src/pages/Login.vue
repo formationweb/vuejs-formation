@@ -36,7 +36,7 @@ import { useAuthStore } from '../store/auth';
 
 const isSubmitting = ref(false)
 
-const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = useForm({
+const { handleSubmit, defineField, errors, meta } = useForm({
     validationSchema: object({
         email: string().email().required()
             .test('email_domain', 'Nom de domaine interdit', (value) => {

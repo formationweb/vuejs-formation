@@ -9,7 +9,7 @@ interface UserState {
 
 export type UserPayload = { email: string; name: string };
 
-const URL = "https://jsonplaceholder.typicode.com/users";
+const URL = import.meta.env.VITE_API_URL + "/users";
 
 export const useUserStore = defineStore({
   id: "user",
