@@ -96,7 +96,7 @@ async function deleteUser(id: number) {
     users.value.splice(index, 1)
 }
 
-onMounted(() => {
-    getAll()
-})
+// onMounted(() => {
+//     getAll()
+// })
 </script>
