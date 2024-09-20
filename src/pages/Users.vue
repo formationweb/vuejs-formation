@@ -12,7 +12,19 @@
             <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
         </select>
 
-        <button @click="createUser">Créer utilisateur</button>
+        <form @submit.prevent="createUser">
+            <label>Nom</label>
+            <input type="text" v-model="name" v-bind="nameAttrs">
+            <div>{{  errors.name }}</div>
+
+            <label>Email</label>
+            <input type="text" v-model="email" v-bind="emailAttrs">
+            <div>{{  errors.email }}</div>
+
+            <button :aria-busy="loadingCreate" :disabled="loadingCreate">
+                   {{ loadingCreate ? '' : 'Créer utilisateur' }}
+            </button>
+        </form>
 
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @on-delete="deleteUser">
             <template #title>
@@ -37,30 +49,45 @@ import { computed, inject, onMounted, ref } from 'vue';
 import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 import { useFetchUsers } from '../composable/useFetchUsers';
-import Loading  from '@/components/Loading.vue'
-import { UserService } from '../services/UserService';
+import Loading from '@/components/Loading.vue'
+import { UserPayload, UserService } from '../services/UserService';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+
+const nbSelected = ref(0)
+const loadingCreate = ref(false)
 
 const { users, getAll, loading } = useFetchUsers()
-const nbSelected = ref(0)
 const { usersFiltered, extSelected } = useExtensionFilter(users)
+const { handleSubmit, defineField, errors } = useForm({
+    validationSchema: object({
+        email: string().email().required(),
+        name: string().required()
+    })
+})
+
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => word + (nbSelected.value > 1 ? 's' : ''))
 
 const extensions: string[] = ['tv', 'biz', 'io', 'me'];
 
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
+
 // -- 
 const userService = inject<UserService>('userService')
 
-async function createUser() {
-    const userCreated = await userService?.create({
-        email: 'ana@gmail.com',
-        name: 'ana'
-    })
+const createUser = handleSubmit(async (values, { resetForm }) => {
+    loadingCreate.value = true
+    const userCreated = await userService?.create(values as UserPayload)
     if (userCreated) {
         users.value.push(userCreated)
     }
-}
+    loadingCreate.value = false
+    resetForm()
+})
 // --
 
 async function deleteUser(id: number) {
