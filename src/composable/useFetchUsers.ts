@@ -1,20 +1,14 @@
-import axios from "axios"
-import { User } from "../interfaces/User"
-import { inject, ref } from "vue"
-import { UserService } from "../services/UserService"
+import { ref } from "vue"
+import { useUserStore } from "../store/user"
 
 export function useFetchUsers() {
-    const users = ref<User[]>([])
     const loading = ref(false)
-    const userService = inject<UserService>('userService')
+    const userStore = useUserStore()
 
     async function getAll() {
         try {
             loading.value = true
-            if (userService) {
-                users.value = await userService.getAll()
-            }
-            //await new Promise(resolve => setTimeout(resolve, 2000))
+            await userStore.getAll()
         }
         catch (err) {
             console.log(err)
@@ -26,7 +20,6 @@ export function useFetchUsers() {
 
     return {
         getAll,
-        users,
         loading
     }
 }

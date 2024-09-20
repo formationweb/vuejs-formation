@@ -45,19 +45,23 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 import { useFetchUsers } from '../composable/useFetchUsers';
 import Loading from '@/components/Loading.vue'
-import { UserPayload, UserService } from '../services/UserService';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia';
 
 const nbSelected = ref(0)
 const loadingCreate = ref(false)
 
-const { users, getAll, loading } = useFetchUsers()
+const { getAll, loading } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+
 const { usersFiltered, extSelected } = useExtensionFilter(users)
 const { handleSubmit, defineField, errors } = useForm({
     validationSchema: object({
@@ -77,26 +81,24 @@ const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
 // -- 
-const userService = inject<UserService>('userService')
-
-const createUser = handleSubmit(async (values, { resetForm }) => {
-    loadingCreate.value = true
-    const userCreated = await userService?.create(values as UserPayload)
-    if (userCreated) {
-        users.value.push(userCreated)
-    }
-    loadingCreate.value = false
-    resetForm()
-})
-// --
-
-async function deleteUser(id: number) {
-    await userService?.delete(id)
-    const index = users.value.findIndex(user => user.id == id)
-    users.value.splice(index, 1)
-}
-
-// onMounted(() => {
-//     getAll()
+// const createUser = handleSubmit(async (values, { resetForm }) => {
+//     loadingCreate.value = true
+//     const userCreated = await userService?.create(values as UserPayload)
+//     if (userCreated) {
+//         users.value.push(userCreated)
+//     }
+//     loadingCreate.value = false
+//     resetForm()
 // })
+// // --
+
+// async function deleteUser(id: number) {
+//     await userService?.delete(id)
+//     const index = users.value.findIndex(user => user.id == id)
+//     users.value.splice(index, 1)
+// }
+
+onMounted(() => {
+    getAll()
+})
 </script>
