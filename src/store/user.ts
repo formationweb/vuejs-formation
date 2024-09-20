@@ -4,6 +4,7 @@ import axios from "axios";
 
 interface UserState {
   users: User[];
+  userModifying: User
 }
 
 export type UserPayload = { email: string; name: string };
@@ -15,6 +16,7 @@ export const useUserStore = defineStore({
   state(): UserState {
     return {
       users: [],
+      userModifying: {} as User
     };
   },
   actions: {
@@ -23,9 +25,20 @@ export const useUserStore = defineStore({
       this.users = res.data;
     },
 
+    async get(id: number): Promise<void> {
+      const res = await axios.get(URL + "/" + id);
+      this.userModifying = res.data
+    },
+
     async create(payload: UserPayload): Promise<void> {
       const res = await axios.post(URL, payload);
       this.users.push(res.data);
+    },
+
+    async update(id: number, payload: UserPayload): Promise<void> {
+      const res = await axios.put(URL + "/" + id, payload);
+      this.userModifying = res.data
+      this.users = this.users.map(user => user.id == id ? res.data : user)
     },
 
     async delete(id: number): Promise<void> {

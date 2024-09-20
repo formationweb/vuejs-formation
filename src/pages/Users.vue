@@ -50,42 +50,26 @@ import UserCard from '@/components/UserCard.vue'
 import { useExtensionFilter } from '../composable/useExtensionFilter';
 import { useFetchUsers } from '../composable/useFetchUsers';
 import Loading from '@/components/Loading.vue'
-import { useForm } from 'vee-validate';
-import { object, string } from 'yup';
-import { UserPayload, useUserStore } from '../store/user';
+import { useUserStore } from '../store/user';
 import { storeToRefs } from 'pinia';
+import { useUserForm } from '../composable/useUserForm';
 
 const nbSelected = ref(0)
-const loadingCreate = ref(false)
 
 const { getAll, loading } = useFetchUsers()
 const userStore = useUserStore()
 const { users } = storeToRefs(userStore)
 
 const { usersFiltered, extSelected } = useExtensionFilter(users)
-const { handleSubmit, defineField, errors } = useForm({
-    validationSchema: object({
-        email: string().email().required(),
-        name: string().required()
-    })
-})
-
+const { defineField, errors, createUser, loadingCreate } = useUserForm()
 
 const word = 'Utilisateur'
 const wordPlural = computed(() => word + (nbSelected.value > 1 ? 's' : ''))
 
 const extensions: string[] = ['tv', 'biz', 'io', 'me'];
 
-
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
-
-const createUser = handleSubmit(async (values, { resetForm }) => {
-    loadingCreate.value = true
-    await userStore.create(values as UserPayload)
-    loadingCreate.value = false
-    resetForm()
-})
 
 async function deleteUser(id: number) {
     await userStore.delete(id)
