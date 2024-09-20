@@ -20,16 +20,18 @@ export const useUserStore = defineStore({
   actions: {
     async getAll(): Promise<void> {
       const res = await axios.get(URL);
-      this.users = res.data
+      this.users = res.data;
     },
 
-    async create(payload: UserPayload): Promise<User> {
+    async create(payload: UserPayload): Promise<void> {
       const res = await axios.post(URL, payload);
-      return res.data;
+      this.users.push(res.data);
     },
 
-    delete(id: number): Promise<void> {
-      return axios.delete(URL + "/" + id);
+    async delete(id: number): Promise<void> {
+      await axios.delete(URL + "/" + id);
+      const index = this.users.findIndex((user) => user.id == id);
+      this.users.splice(index, 1);
     },
   },
 });

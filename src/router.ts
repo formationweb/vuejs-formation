@@ -4,6 +4,7 @@ import Default from "./layouts/Default.vue";
 import Users from "./pages/Users.vue";
 import UserEdit from "./pages/UserEdit.vue";
 import { useAuthStore } from "./store/auth";
+import { useFetchUsers } from "./composable/useFetchUsers";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -15,7 +16,8 @@ export const router = createRouter({
                 requiredAuth: true
             },
             beforeEnter() {
-                // plus tard
+               const { getAll } = useFetchUsers()
+                getAll()
             },
             children: [
                 {

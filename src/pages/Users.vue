@@ -15,14 +15,14 @@
         <form @submit.prevent="createUser">
             <label>Nom</label>
             <input type="text" v-model="name" v-bind="nameAttrs">
-            <div>{{  errors.name }}</div>
+            <div>{{ errors.name }}</div>
 
             <label>Email</label>
             <input type="text" v-model="email" v-bind="emailAttrs">
-            <div>{{  errors.email }}</div>
+            <div>{{ errors.email }}</div>
 
             <button :aria-busy="loadingCreate" :disabled="loadingCreate">
-                   {{ loadingCreate ? '' : 'Créer utilisateur' }}
+                {{ loadingCreate ? '' : 'Créer utilisateur' }}
             </button>
         </form>
 
@@ -52,7 +52,7 @@ import { useFetchUsers } from '../composable/useFetchUsers';
 import Loading from '@/components/Loading.vue'
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { useUserStore } from '../store/user';
+import { UserPayload, useUserStore } from '../store/user';
 import { storeToRefs } from 'pinia';
 
 const nbSelected = ref(0)
@@ -80,25 +80,18 @@ const extensions: string[] = ['tv', 'biz', 'io', 'me'];
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
-// -- 
-// const createUser = handleSubmit(async (values, { resetForm }) => {
-//     loadingCreate.value = true
-//     const userCreated = await userService?.create(values as UserPayload)
-//     if (userCreated) {
-//         users.value.push(userCreated)
-//     }
-//     loadingCreate.value = false
-//     resetForm()
-// })
-// // --
-
-// async function deleteUser(id: number) {
-//     await userService?.delete(id)
-//     const index = users.value.findIndex(user => user.id == id)
-//     users.value.splice(index, 1)
-// }
-
-onMounted(() => {
-    getAll()
+const createUser = handleSubmit(async (values, { resetForm }) => {
+    loadingCreate.value = true
+    await userStore.create(values as UserPayload)
+    loadingCreate.value = false
+    resetForm()
 })
+
+async function deleteUser(id: number) {
+    await userStore.delete(id)
+}
+
+// onMounted(() => {
+//     getAll()
+// })
 </script>
