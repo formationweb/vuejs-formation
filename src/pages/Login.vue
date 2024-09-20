@@ -32,6 +32,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { object, string } from 'yup'
 import { useAuthStore } from '../store/auth';
+//import { storeToRefs } from 'pinia';
 
 const isSubmitting = ref(false)
 
@@ -49,6 +50,7 @@ const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = us
 })
 const router = useRouter()
 const authStore = useAuthStore()
+//const { token } = storeToRefs(authStore)
 
 const onSubmit = handleSubmit(async (values) => {
     await authStore.login(values.email, values.password)
