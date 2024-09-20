@@ -15,6 +15,7 @@
         </div>
         <footer>
             <button @click="removeUser">Supprimer</button>
+            <router-link :to="{ name: 'user-edit', params: { id: user.id } }">Modifier</router-link>
             <slot name="footer" :active="isActive" v-bind="user"></slot>
         </footer>
     </article>

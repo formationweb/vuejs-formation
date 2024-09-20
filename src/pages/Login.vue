@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate'
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { object, string } from 'yup'
 
 const isSubmitting = ref(false)
@@ -45,9 +46,11 @@ const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = us
     //     email: 'ana@gmail.com'
     // }
 })
+const router = useRouter()
 
 const onSubmit = handleSubmit((values) => {
     console.log(values)
+    router.push('/')
 }, () => {
     isSubmitting.value = true
 })
