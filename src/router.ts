@@ -16,8 +16,7 @@ export const router = createRouter({
                 requiredAuth: true
             },
             beforeEnter() {
-               const { getAll } = useFetchUsers()
-                getAll()
+               useFetchUsers().getAll()
             },
             children: [
                 {

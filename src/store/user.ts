@@ -34,4 +34,9 @@ export const useUserStore = defineStore({
       this.users.splice(index, 1);
     },
   },
+  getters: {
+    firstNames(): string[] {
+      return this.users.map(user => user.name)
+    }
+  }
 });
