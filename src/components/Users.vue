@@ -1,5 +1,6 @@
 <template>
     <h1>Users</h1>
+    <Opacity :opacity="0.3" color="black" @change="console.log" />
     <Loader :loading> <!-- alias de :loading="loading" -->
         <UserCard v-for="u in users" :user="u">
             <template #title>
@@ -21,6 +22,7 @@ import { onMounted, ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
+import Opacity from '../atomics/Opacity.vue';
 
 const loading = ref(true)
 
