@@ -1,20 +1,26 @@
 <template>
     <article>
+        <slot name="title"></slot>
         <header>{{ user.name }}</header>
         {{ user.email }}
+        <slot></slot>
+        <div>
+            <label>Activer</label>
+            <input type="checkbox" v-model="isActive">
+        </div>
+        <footer>
+            <slot name="footer" :active="isActive" v-bind="user"></slot>
+        </footer>
     </article>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import type { User } from '../interfaces/User';
 
-export default {
-    props: {
-        user: {
-            type: Object as PropType<User>,
-            required: true
-        }
-    }
-}
+const isActive = ref(false)
+
+defineProps<{
+    user: User
+}>()
 </script>
