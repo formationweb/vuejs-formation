@@ -1,23 +1,29 @@
 <template>
     <h1>Users</h1>
-    <UserCard v-for="u in users" :user="u">
-        <template #title>
-            <h1>Titre</h1>
-        </template>
-        <template #default>
-            Contenu par défaut
-        </template>
-        <template #footer="{ name, active }">
-            <p>L'utilisateur est {{ name }} est 
-                <span :style="{ color: active ? 'green' : 'red', fontWeight: 'bold' }">{{ active }}</span></p>
-        </template>
-    </UserCard>
+    <Loader :loading> <!-- alias de :loading="loading" -->
+        <UserCard v-for="u in users" :user="u">
+            <template #title>
+                <h1>Titre</h1>
+            </template>
+            <template #default>
+                Contenu par défaut
+            </template>
+            <template #footer="{ name, active }">
+                <p>L'utilisateur est {{ name }} est 
+                    <span :style="{ color: active ? 'green' : 'red', fontWeight: 'bold' }">{{ active }}</span></p>
+            </template>
+        </UserCard>
+    </Loader>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
+import Loader from '../atomics/Loader.vue';
+
+const loading = ref(true)
+
 
 const users = ref<User[]>([
     {
@@ -251,4 +257,10 @@ const users = ref<User[]>([
         }
     }
 ])
+
+onMounted(() => {
+    setTimeout(() => {
+        loading.value = false
+    }, 3000)
+})
 </script>
