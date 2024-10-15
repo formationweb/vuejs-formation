@@ -35,10 +35,8 @@ import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
-import type { UserService } from '../services/UserService';
+import { useFetchUsers } from '../composables/useFetchUsers';
 
-const userService = inject<UserService>('userService') as UserService
-const loading = ref(true)
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
 const indexUser = ref(0)
 //const elCards = reactive<HTMLElement[]>([])
@@ -61,8 +59,9 @@ function scrollToUser() {
 }
 
 onMounted(async () => {
-    users.value = await userService.getAll()
+    users.value = await getAll()
 })
 
 const { extSelected, usersFiltered } = useExtensionFilter(users)
+const { loading, getAll } = useFetchUsers()
 </script>

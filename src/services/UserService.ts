@@ -8,4 +8,13 @@ export class UserService {
         const res = await axios.get(this.url)
         return res.data
     }
+
+    async create(payload: { email: string, name: string }): Promise<User> {
+        const res = await axios.post(this.url, payload)
+        return res.data
+    }
+
+    delete(id: number): Promise<void> {
+        return axios.delete(this.url + '/' + id)
+    }
 }
