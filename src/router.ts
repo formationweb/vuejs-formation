@@ -1,17 +1,19 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Users from "./components/Users.vue";
 import Login from "./pages/Login.vue";
+import Main from "./layouts/Main.vue";
 
 export const router = createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
-            component: Users
+            component: Main,
+            name: 'root'
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            name: 'loginId'
         }
     ]
 })

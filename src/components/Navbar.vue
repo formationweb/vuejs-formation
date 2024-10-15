@@ -2,7 +2,10 @@
     <h1 ref="elTitle">{{  title  }}</h1>
     <!-- peut être écrit par @on-search="listenSearch($event)" -->
     <Search :name="myName" @on-search="listenSearch" />
-    <button @click="changeName">Changer le nom</button>
+    <!-- <button @click="changeName">Changer le nom</button> -->
+     <router-link :to="{ name: 'loginId' }" custom v-slot="router">
+        <button @click="router.navigate">Se connecter</button>
+     </router-link>
 </template>
 
 <script setup lang="ts">
