@@ -2,7 +2,11 @@
     <h1>{{ userWord }}</h1>
     <Opacity :opacity="0.3" color="black" @change="console.log" />
     <Loader :loading> <!-- alias de :loading="loading" -->
-        <UserCard v-for="u in users" :user="u">
+        <select v-model="extSelected">
+            <option value="">Tous</option>
+            <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+        </select>
+        <UserCard v-for="u in usersFiltered" :user="u" :key="u.id">
             <template #title>
                 <h1>Titre</h1>
             </template>
@@ -23,8 +27,10 @@ import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
+import { useExtensionFilter } from '../composables/useExtensionFilter';
 
 const loading = ref(true)
+const extensions: string[] = ['tv', 'biz', 'io', 'me']
 
 const users = ref<User[]>([
     {
@@ -258,12 +264,15 @@ const users = ref<User[]>([
         }
     }
 ])
+
 const isUsersEmpty = computed(() => users.value.length == 0)
 const userWord = computed(() => 'Utilisateur' + (isUsersEmpty.value ? '' : 's'))
 
 onMounted(() => {
     setTimeout(() => {
         loading.value = false
-    }, 3000)
+    }, 100)
 })
+
+const { extSelected, usersFiltered } = useExtensionFilter(users)
 </script>
