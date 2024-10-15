@@ -12,7 +12,7 @@
             <button @click="scrollToUser">Scroll To User</button>
         </div>
         <div v-for="(u, index) in usersFiltered" ref="userItems">
-            <UserCard :user="u" :key="u.id">
+            <UserCard :user="u" :key="u.id" @on-delete="deleteUser">
                 <template #title>
                     <h1>Titre</h1>
                 </template>
@@ -36,7 +36,9 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import { useFetchUsers } from '../composables/useFetchUsers';
+import type { UserService } from '../services/UserService';
 
+const userService = inject<UserService>('userService') as UserService
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
 const indexUser = ref(0)
 //const elCards = reactive<HTMLElement[]>([])
@@ -61,6 +63,11 @@ function scrollToUser() {
 onMounted(async () => {
     users.value = await getAll()
 })
+
+async function deleteUser(userId: number) {
+    await userService.delete(userId)
+    users.value = users.value.filter(user => user.id != userId)
+}
 
 const { extSelected, usersFiltered } = useExtensionFilter(users)
 const { loading, getAll } = useFetchUsers()
