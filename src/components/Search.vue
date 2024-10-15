@@ -14,7 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue';
+import { reactive, ref, watch, watchEffect } from 'vue';
+import { useSearch } from '../composables/useSearch';
 
 const props = defineProps<{
     name: string
@@ -24,52 +25,5 @@ const emits = defineEmits<{
     'on-search': [string]
 }>()
 
-const firstNames = ref(['ana', 'jim', 'ben'])
-const userName = ref(props.name)
-
-function onSearch() {
-    emits('on-search', userName.value)
-}
-
-// watch(() => props.name, (newValue) => {
-//     userName.value = newValue
-// })
-
-watchEffect(() => {
-    userName.value = props.name
-})
+const { userName, onSearch, firstNames } = useSearch(props, emits)
 </script>
-
-<!-- <script lang="ts">
-import type { PropType } from 'vue';
-
-export default {
-    props: {
-        name: {
-            type: String as PropType<string>,
-            required: true
-        }
-    },
-    emits: ['on-search'],
-    data() {
-        return {
-            userName: this.name,
-            firstNames: ['ana', 'jim', 'ben']
-            // myObj: {
-            //     name: 'ana',
-            //     age: 18
-            // }
-        }
-    },
-    methods: {
-        onSearch() {
-            this.$emit('on-search', this.userName)
-        }
-    },
-    watch: {
-        name(newVal: string) {
-            this.userName = newVal
-        }
-    }
-}
-</script> -->
