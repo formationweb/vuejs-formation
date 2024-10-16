@@ -77,10 +77,6 @@ function scrollToUser() {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' })
 }
 
-onMounted(async () => {
-    await getAll()
-})
-
 const loadingCreate = ref(false)
 
 const { handleSubmit, defineField, errors } = useForm({
@@ -100,5 +96,5 @@ const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
 const { extSelected, usersFiltered } = useExtensionFilter(users)
-const { loading, getAll } = useFetchUsers()
+const { loading } = useFetchUsers()
 </script>
