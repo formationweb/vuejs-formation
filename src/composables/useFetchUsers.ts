@@ -1,6 +1,4 @@
-import { inject, ref, type Ref } from "vue";
-import type { UserService } from "../services/UserService";
-import type { User } from "../interfaces/User";
+import { ref, type Ref } from "vue";
 import { useUserStore } from "../store/user";
 
 type FetchUsers = {
