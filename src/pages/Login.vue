@@ -26,6 +26,8 @@
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { object, string } from 'yup';
+import { useAuthStore } from '../store/auth';
+import { useRouter } from 'vue-router';
 
 const isSubmitting = ref(false)
 
@@ -43,8 +45,12 @@ const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = us
     // }
 })
 
-const onLogin = handleSubmit((values) => {
-    console.log(values)
+const authStore = useAuthStore()
+const router = useRouter()
+
+const onLogin = handleSubmit(async (values) => {
+    await authStore.login(values.email, values.password)
+    router.push('/')
 }, () => {
     isSubmitting.value = true
 })
