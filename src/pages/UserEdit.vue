@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>{{ userModifying.name }}</h1>
-        <form>
+        <form @submit.prevent="onEdit">
             <label>Email</label>
             <input type="text" v-model="email" v-bind="emailAttrs">
            
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { useUserStore } from '../store/user';
+import { useUserStore, type UserPayload } from '../store/user';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useForm } from 'vee-validate';
@@ -36,5 +36,9 @@ const [name, nameAttrs] = defineField('name')
 onMounted(async () => {
  await userStore.get(userId)
  setValues(userStore.userModifying)
+})
+
+const onEdit = handleSubmit(async (values) => {
+    await userStore.update(userId, values as UserPayload)
 })
 </script>

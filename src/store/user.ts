@@ -32,6 +32,15 @@ export const useUserStore = defineStore({
             const res = await axios.post(URL, payload)
             this.users.push(res.data)
         },
+        async update(id: number, payload: UserPayload): Promise<void> {
+            const res = await axios.put(URL + '/' + id, payload)
+            // this.userModifying = {
+            //     ...this.userModifying,
+            //     ...res.data
+            // }
+            this.userModifying = res.data
+            this.users = this.users.map(user => user.id == id ? this.userModifying : user)
+        },
         async delete(id: number): Promise<void> {
             await axios.delete(URL + '/' + id)
             this.users = this.users.filter(user => user.id != id)
