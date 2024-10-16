@@ -1,21 +1,21 @@
 import { inject, ref, type Ref } from "vue";
 import type { UserService } from "../services/UserService";
 import type { User } from "../interfaces/User";
+import { useUserStore } from "../store/user";
 
 type FetchUsers = {
     loading: Ref<boolean>
-    getAll: () => Promise<User[]>
+    getAll: () => Promise<void>
 }
 
 export function useFetchUsers(): FetchUsers {
+    const userStore = useUserStore()
     const loading = ref(false)
-    const userService = inject<UserService>('userService') as UserService
 
     async function getAll() {
         try {
             loading.value = true
-            const users = await userService.getAll()
-            return users
+            await userStore.getAll()
         }
         catch (err) {
             throw err

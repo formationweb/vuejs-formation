@@ -52,6 +52,10 @@ import { useFetchUsers } from '../composables/useFetchUsers';
 import type { UserPayload, UserService } from '../services/UserService';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { storeToRefs } from 'pinia';
+import { useUserStore } from '../store/user';
+
+const userStore = useUserStore()
 
 const userService = inject<UserService>('userService') as UserService
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
@@ -60,7 +64,7 @@ const indexUser = ref(0)
 const elCards = useTemplateRef<HTMLElement[]>('userItems')
 const errorMessage = ref('')
 
-const users = ref<User[]>([])
+const { users } = storeToRefs(userStore)
 
 const isUsersEmpty = computed(() => users.value.length == 0)
 const userWord = computed(() => 'Utilisateur' + (isUsersEmpty.value ? '' : 's'))
@@ -76,7 +80,7 @@ function scrollToUser() {
 }
 
 onMounted(async () => {
-    users.value = await getAll()
+    await getAll()
 })
 
 const loadingCreate = ref(false)
