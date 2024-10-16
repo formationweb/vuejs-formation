@@ -11,6 +11,19 @@
             <p v-if="errorMessage">{{ errorMessage }}</p>
             <button @click="scrollToUser">Scroll To User</button>
         </div>
+        <form @submit.prevent="createUser">
+            <label>Email</label>
+            <input type="text" v-model="email" v-bind="emailAttrs">
+            <div>{{  errors.email  }}</div>
+           
+            <label>Nom</label>
+            <input type="text" v-model="name" v-bind="nameAttrs">
+            <div>{{  errors.name  }}</div>
+
+            <button :aria-busy="loadingCreate" :disabled="loadingCreate">
+               {{ loadingCreate ? '' : ' Créer utilisateur' }}
+            </button>
+        </form>
         <div v-for="(u, index) in usersFiltered" ref="userItems">
             <UserCard :user="u" :key="u.id" @on-delete="deleteUser">
                 <template #title>
@@ -36,7 +49,9 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import { useFetchUsers } from '../composables/useFetchUsers';
-import type { UserService } from '../services/UserService';
+import type { UserPayload, UserService } from '../services/UserService';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
 
 const userService = inject<UserService>('userService') as UserService
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
@@ -63,6 +78,25 @@ function scrollToUser() {
 onMounted(async () => {
     users.value = await getAll()
 })
+
+const loadingCreate = ref(false)
+
+const { handleSubmit, defineField, errors } = useForm({
+    validationSchema: object({
+        name: string().required(),
+        email: string().required()
+    })
+})
+
+const createUser = handleSubmit(async (values) => {
+    loadingCreate.value = true
+    const userCreated = await userService.create(values as UserPayload)
+    users.value.push(userCreated)
+    loadingCreate.value = false
+})
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
 
 async function deleteUser(userId: number) {
     await userService.delete(userId)
