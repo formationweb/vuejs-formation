@@ -25,7 +25,7 @@
             </button>
         </form>
         <div v-for="(u, index) in usersFiltered" ref="userItems">
-            <UserCard :user="u" :key="u.id" @on-delete="deleteUser">
+            <UserCard :user="u" :key="u.id" @on-delete="userStore.delete">
                 <template #title>
                     <h1>Titre</h1>
                 </template>
@@ -49,15 +49,13 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import { useFetchUsers } from '../composables/useFetchUsers';
-import type { UserPayload, UserService } from '../services/UserService';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '../store/user';
+import { useUserStore, type UserPayload } from '../store/user';
 
 const userStore = useUserStore()
 
-const userService = inject<UserService>('userService') as UserService
 const extensions: string[] = ['tv', 'biz', 'io', 'me']
 const indexUser = ref(0)
 //const elCards = reactive<HTMLElement[]>([])
@@ -94,18 +92,12 @@ const { handleSubmit, defineField, errors } = useForm({
 
 const createUser = handleSubmit(async (values) => {
     loadingCreate.value = true
-    const userCreated = await userService.create(values as UserPayload)
-    users.value.push(userCreated)
+    const userCreated = await userStore.create(values as UserPayload)
     loadingCreate.value = false
 })
 
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
-
-async function deleteUser(userId: number) {
-    await userService.delete(userId)
-    users.value = users.value.filter(user => user.id != userId)
-}
 
 const { extSelected, usersFiltered } = useExtensionFilter(users)
 const { loading, getAll } = useFetchUsers()
