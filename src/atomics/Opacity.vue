@@ -22,7 +22,7 @@ watchEffect(() => {
 })
 </script>
 
-<style>
+<style scoped>
 .preview {
     width: 100px;
     height: 100px;
