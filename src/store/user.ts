@@ -5,7 +5,8 @@ import axios from "axios";
 export type UserPayload = { email: string, name: string }
 
 export interface UserState {
-    users: User[]
+    users: User[],
+    userModifying: User
 }
 
 const URL = 'https://jsonplaceholder.typicode.com/users'
@@ -14,13 +15,18 @@ export const useUserStore = defineStore({
     id: 'user',
     state(): UserState {
         return {
-            users: []
+            users: [],
+            userModifying: {} as User
         }
     },
     actions: {
         async getAll(): Promise<void> {
             const res = await axios.get(URL)
             this.users = res.data
+        },
+        async get(id: number): Promise<void> {
+            const res = await axios.get(URL + '/' + id)
+            this.userModifying = res.data
         },
         async create(payload: UserPayload): Promise<void> {
             const res = await axios.post(URL, payload)
