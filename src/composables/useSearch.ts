@@ -1,4 +1,6 @@
-import { ref, watchEffect, type DefineProps, type Ref } from "vue"
+import { computed, ref, watchEffect, type ComputedRef, type DefineProps, type Ref } from "vue"
+import { useUserStore } from "../store/user"
+import { storeToRefs } from "pinia"
 
 type Props = DefineProps<{
     name: string
@@ -8,13 +10,19 @@ type Emits = (event: 'on-search', name: string) => void
 
 type SearchFnReturn = {
     userName: Ref<string>
-    firstNames: Ref<string[]>
+    firstNames: Ref<string[]>,
+    firstNamesFiltered: ComputedRef<string[]>
     onSearch: () => void
 }
 
 export function useSearch(props: Props, emits: Emits): SearchFnReturn {
-    let firstNames = ref(['ana', 'jim', 'ben'])
+    const userStore = useUserStore()
+    const { firstNames } = storeToRefs(userStore)
     const userName = ref(props.name)
+
+    const firstNamesFiltered = computed(() => {
+        return firstNames.value.filter(firstName => firstName.startsWith(userName.value))
+    })
 
     function onSearch() {
         emits('on-search', userName.value)
@@ -27,6 +35,7 @@ export function useSearch(props: Props, emits: Emits): SearchFnReturn {
     return {
         userName,
         firstNames,
+        firstNamesFiltered,
         onSearch
     }
 }

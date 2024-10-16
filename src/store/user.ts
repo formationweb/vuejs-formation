@@ -30,5 +30,10 @@ export const useUserStore = defineStore({
             await axios.delete(URL + '/' + id)
             this.users = this.users.filter(user => user.id != id)
         }
+    },
+    getters: {
+        firstNames(): string[] {
+            return this.users.map(user => user.name)
+        }
     }
 })

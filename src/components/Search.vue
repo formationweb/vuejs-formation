@@ -4,7 +4,7 @@
     <!-- <div v-else-if="userName == 'ana'">Test</div>
     <div v-else>Plus de bouton</div> -->
     <ul>
-        <li v-for="(name, index) in firstNames" :key="name">
+        <li v-for="(name, index) in firstNamesFiltered" :key="name">
             {{ index }} - {{  name  }}
         </li>
         <!-- <li v-for="(val, key) in myObj" :key="key">
@@ -25,5 +25,5 @@ const emits = defineEmits<{
     'on-search': [string]
 }>()
 
-const { userName, onSearch, firstNames } = useSearch(props, emits)
+const { userName, onSearch, firstNamesFiltered } = useSearch(props, emits)
 </script>
