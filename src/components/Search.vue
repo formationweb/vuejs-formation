@@ -12,36 +12,25 @@
     </ul>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
+<script lang="ts" setup>
+import { watch, ref } from 'vue'
 
-export default {
-    props: {
-        userName: {
-            type: String as PropType<string>,
-            required: true
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-            firstName: this.userName,
-            names: ['ana', 'jim', 'ben'],
-            // myObj: {
-            //     name: 'ana',
-            //     age: 18
-            // }
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('onSearch', this.firstName)
-        }
-    },
-    watch: {
-        userName(newVal: string) {
-           this.firstName = newVal
-        }
-    }
+const props = defineProps<{
+    userName: string
+}>()
+
+const emits = defineEmits<{
+    'onSearch': [string]
+}>()
+
+let firstName = ref(props.userName)
+const names = ['ana', 'jim', 'ben']
+
+function search() {
+    emits('onSearch', firstName.value)
 }
+
+watch(props, (obj) => {
+    firstName.value = obj.userName
+})
 </script>
