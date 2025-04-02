@@ -5,16 +5,10 @@
     </article>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
+<script lang="ts" setup>
 import type { User } from '../interfaces/User';
 
-export default {
-    props: {
-        user: {
-            type: Object as PropType<User>,
-            required: true
-        }
-    }
-}
+defineProps<{
+    user: User
+}>()
 </script>
