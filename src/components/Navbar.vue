@@ -14,9 +14,9 @@ function listenSearch(userName: string) {
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    name.value = 'test'
-    console.log('test')
-  }, 3000)  
+  // setTimeout(() => {
+  //   name.value = 'test'
+  //   console.log('test')
+  // }, 3000)  
 })
 </script>

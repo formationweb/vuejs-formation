@@ -1,5 +1,9 @@
 <template>
     <h1>Utilisateurs</h1>
+    <!-- liste déroulante-->
+     <select v-model>
+        <option></option>
+     </select>
     <UserCard v-for="u in users" :key="u.id" :user="u" />
 </template>
 
@@ -239,4 +243,6 @@ const users: User[] = [
         }
     }
 ]
+
+const extensions: string[] = ['tv', 'biz', 'io', 'me'];
 </script>
