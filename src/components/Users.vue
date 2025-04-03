@@ -9,9 +9,10 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, type Ref } from 'vue';
+import { ref, type Ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
+import { useExtensionFilter } from '../composables/useExtensionFilter';
 
 const users: Ref<User[]> = ref([
     {
@@ -245,14 +246,6 @@ const users: Ref<User[]> = ref([
         }
     }
 ])
-const extSelected = ref('')
 
-const usersFiltered = computed(() => {
-    if (!extSelected.value) {
-        return users.value
-    }
-    return users.value.filter(user => user.email.endsWith(extSelected.value))
-})
-
-const extensions: string[] = ['tv', 'biz', 'io', 'me'];
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 </script>
