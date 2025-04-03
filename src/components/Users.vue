@@ -5,7 +5,19 @@
         <option value="">Tous</option>
         <option v-for="ext in extensions">{{ ext }}</option>
      </select>
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+         <template #title>
+            <h1>Texte</h1>
+         </template>
+         <template #default>
+            Par défaut
+         </template>
+         <template #footer="{ name, active }">
+            <div>
+                <p>L'utilisateur {{ name }} est <span :style="{ color: active ? 'green' : 'red' }">{{ active ? 'actif' : 'inactif' }}</span> </p>
+            </div>
+         </template>
+    </UserCard>
 </template>
 
 <script lang="ts" setup>
