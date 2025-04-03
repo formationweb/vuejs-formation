@@ -1,17 +1,19 @@
 <template>
     <h1>Utilisateurs</h1>
     <!-- liste déroulante-->
-     <select v-model>
-        <option></option>
+     <select v-model="extSelected">
+        <option value="">Tous</option>
+        <option v-for="ext in extensions">{{ ext }}</option>
      </select>
-    <UserCard v-for="u in users" :key="u.id" :user="u" />
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
 </template>
 
 <script lang="ts" setup>
+import { computed, ref, type Ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 
-const users: User[] = [
+const users: Ref<User[]> = ref([
     {
         "id": 1,
         "name": "Leanne Graham",
@@ -242,7 +244,15 @@ const users: User[] = [
             "bs": "target end-to-end models"
         }
     }
-]
+])
+const extSelected = ref('')
+
+const usersFiltered = computed(() => {
+    if (!extSelected.value) {
+        return users.value
+    }
+    return users.value.filter(user => user.email.endsWith(extSelected.value))
+})
 
 const extensions: string[] = ['tv', 'biz', 'io', 'me'];
 </script>
