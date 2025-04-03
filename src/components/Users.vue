@@ -1,5 +1,5 @@
 <template>
-    <Opacity color="red" :opacity="0.5" @change="console.log" />
+    <!-- <Opacity color="red" :opacity="0.5" @change="console.log" /> -->
     <Loader :loading>
         <h1>Utilisateurs</h1>
         <!-- liste déroulante-->
