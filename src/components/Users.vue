@@ -1,5 +1,5 @@
 <template>
-    <Draw />
+    <Opacity color="red" :opacity="0.5" @change="console.log" />
     <Loader :loading>
         <h1>Utilisateurs</h1>
         <!-- liste déroulante-->
@@ -31,6 +31,7 @@ import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Draw from './Draw.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
+import Opacity from '../atomics/Opacity.vue';
 
 const users: Ref<User[]> = ref([
     {
