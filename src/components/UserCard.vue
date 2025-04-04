@@ -10,7 +10,10 @@
         </div>
         <footer>
             <slot name="footer" :active="isActive" v-bind="user"></slot>
-            <button @click="emits('onDelete', user.id)">Supprimer</button>
+            <button v-confirm="{
+                message: 'êtes vous de ..',
+                cb: () => emits('onDelete', user.id)
+            }">Supprimer</button>
             <router-link :to="{ name: 'userEdit', params: { id: user.id } }">Modifier</router-link>
         </footer>
     </article>
