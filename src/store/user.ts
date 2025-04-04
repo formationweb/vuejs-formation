@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import type { User } from "../interfaces/User";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ export type UserPayload = { email: string, name: string }
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([])
     const userModifying = ref<User | null>(null)
+    const names = computed(() => users.value.map(user => user.name))
 
     async function getAll() {
         const res = await axios.get(URL)
@@ -44,6 +45,7 @@ export const useUserStore = defineStore('user', () => {
         createUser,
         deleteUser,
         getUser,
-        updateUser
+        updateUser,
+        names
     }
 })
