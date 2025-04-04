@@ -15,6 +15,9 @@ export const router = createRouter({
             meta: {
                 requiredAuth: true
             },
+            async beforeEnter() {
+                await useFetchUsers().getAll()
+            },
             children: [
                 {
                     path: '',

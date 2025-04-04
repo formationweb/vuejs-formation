@@ -32,12 +32,18 @@ export const useUserStore = defineStore('user', () => {
         userModifying.value = res.data
     }
 
+    async function updateUser(userId: number, data: UserPayload) {
+        const res = await axios.put(URL + '/' + userId, data)
+        userModifying.value = res.data
+    }
+
     return {
         userModifying,
         users, 
         getAll,
         createUser,
         deleteUser,
-        getUser
+        getUser,
+        updateUser
     }
 })

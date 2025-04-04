@@ -1,6 +1,6 @@
 <template>
     <!-- <Opacity color="red" :opacity="0.5" @change="console.log" /> -->
-    <Loader :loading>
+    <Loader :loading="false">
         <h1>Utilisateurs</h1>
 
         <form @submit.prevent="createUser">
@@ -54,7 +54,7 @@ import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { storeToRefs } from 'pinia';
 
-const { loading, getAll } = useFetchUsers()
+const { loading } = useFetchUsers()
 const userStore = useUserStore()
 const { users } = storeToRefs(userStore)
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
@@ -74,9 +74,5 @@ const createUser = handleSubmit(async (values) => {
     await userStore.createUser(values as UserPayload)
     loadingCreate.value = false
     resetForm()
-})
-
-onMounted(() => {
-    getAll()
 })
 </script>
