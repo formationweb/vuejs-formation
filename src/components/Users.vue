@@ -23,7 +23,7 @@
             <option value="">Tous</option>
             <option v-for="ext in extensions">{{ ext }}</option>
         </select>
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="userStore.deleteUser">
             <template #title>
                 <h1>Texte</h1>
             </template>
@@ -48,7 +48,7 @@ import Draw from './Draw.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Opacity from '../atomics/Opacity.vue';
 import { useFetchUsers } from '@/composables/useFetchUsers';
-import { useUserStore } from "@/store/user"
+import { useUserStore, type UserPayload } from "@/store/user"
 import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
@@ -71,17 +71,10 @@ const [name, nameAttrs] = defineField('name')
 
 const createUser = handleSubmit(async (values) => {
     loadingCreate.value = true
-    const res = await axios.post('https://jsonplaceholder.typicode.com/users', values)
-    const userCreated = res.data
-    users.value.push(userCreated)
+    await userStore.createUser(values as UserPayload)
     loadingCreate.value = false
     resetForm()
 })
-
-async function deleteUser(userId: number) {
-    await axios.delete('https://jsonplaceholder.typicode.com/users/' + userId)
-    users.value = users.value.filter(user => user.id != userId)
-}
 
 onMounted(() => {
     getAll()
