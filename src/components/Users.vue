@@ -10,7 +10,7 @@
             <option value="">Tous</option>
             <option v-for="ext in extensions">{{ ext }}</option>
         </select>
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
             <template #title>
                 <h1>Texte</h1>
             </template>
@@ -47,6 +47,11 @@ async function createUser() {
     })
     const userCreated = res.data
     users.value.push(userCreated)
+}
+
+async function deleteUser(userId: number) {
+    await axios.delete('https://jsonplaceholder.typicode.com/users/' + userId)
+    users.value = users.value.filter(user => user.id != userId)
 }
 
 onMounted(() => {

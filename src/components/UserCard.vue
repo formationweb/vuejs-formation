@@ -10,6 +10,7 @@
         </div>
         <footer>
             <slot name="footer" :active="isActive" v-bind="user"></slot>
+            <button @click="emits('onDelete', user.id)">Supprimer</button>
         </footer>
     </article>
 </template>
@@ -22,5 +23,9 @@ const isActive = ref(false)
 
 defineProps<{
     user: User
+}>()
+
+const emits = defineEmits<{
+    onDelete: [number]
 }>()
 </script>
