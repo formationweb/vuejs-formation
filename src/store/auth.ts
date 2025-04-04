@@ -2,9 +2,13 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
+const KEY_STORAGE = 'token'
+
 export const useAuthStore = defineStore('auth', () => {
     // state
-    const token = ref('')
+    const token = ref(localStorage.getItem(KEY_STORAGE) as string)
+
+    // getter
     const hasToken = computed(() => !!token.value)
 
     // action
@@ -14,6 +18,7 @@ export const useAuthStore = defineStore('auth', () => {
             password
         })
         token.value = res.data.token
+        localStorage.setItem(KEY_STORAGE, token.value)
     }
 
     return {
