@@ -3,7 +3,20 @@
     <Loader :loading>
         <h1>Utilisateurs</h1>
 
-        <button @click="createUser">Créer un utilisateur</button>
+        <form @submit.prevent="createUser">
+
+            <label>Email</label>
+            <input type="text" v-model="email" v-bind="emailAttrs">
+            {{ errors.email }}
+
+            <label>Nom</label>
+            <input type="text" v-model="name" v-bind="nameAttrs">
+            {{ errors.name }}
+
+            <button :aria-busy="loadingCreate" :disabled="loadingCreate">
+                {{ loadingCreate ? '' : 'Créer un utilisateur' }}
+            </button>
+        </form>
 
         <!-- liste déroulante-->
         <select v-model="extSelected">
@@ -28,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Draw from './Draw.vue';
@@ -36,18 +49,30 @@ import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Opacity from '../atomics/Opacity.vue';
 import { useFetchUsers } from '../composables/useFetchUsers';
 import axios from 'axios';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
 
 const { users, loading, getAll } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
-
-async function createUser() {
-    const res = await axios.post('https://jsonplaceholder.typicode.com/users', {
-        name: 'ana',
-        email: 'ana@gmail.tv'
+const { handleSubmit, defineField, errors, resetForm } = useForm({
+    validationSchema: object({
+        name: string().required(),
+        email: string().required()
     })
+})
+const loadingCreate = ref(false)
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
+
+const createUser = handleSubmit(async (values) => {
+    loadingCreate.value = true
+    const res = await axios.post('https://jsonplaceholder.typicode.com/users', values)
     const userCreated = res.data
     users.value.push(userCreated)
-}
+    loadingCreate.value = false
+    resetForm()
+})
 
 async function deleteUser(userId: number) {
     await axios.delete('https://jsonplaceholder.typicode.com/users/' + userId)
