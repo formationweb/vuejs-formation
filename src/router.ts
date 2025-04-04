@@ -3,6 +3,7 @@ import Login from "./pages/Login.vue";
 import Main from "./layouts/Main.vue";
 import Users from "./components/Users.vue";
 import UserEdit from "./pages/UserEdit.vue";
+import { useAuthStore } from "./store/auth";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -10,6 +11,9 @@ export const router = createRouter({
         {
             path: '/',
             component: Main,
+            meta: {
+                requiredAuth: true
+            },
             children: [
                 {
                     path: '',
@@ -29,4 +33,15 @@ export const router = createRouter({
             name: 'loginId'
         }
     ]
+})
+
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore()
+    if (to.meta.requiredAuth && !authStore.hasToken) {
+        next({
+            name: 'loginId'
+        })
+        return
+    }
+    next()
 })
