@@ -47,12 +47,16 @@ import Loader from '../atomics/Loader.vue';
 import Draw from './Draw.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Opacity from '../atomics/Opacity.vue';
-import { useFetchUsers } from '../composables/useFetchUsers';
+import { useFetchUsers } from '@/composables/useFetchUsers';
+import { useUserStore } from "@/store/user"
 import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { storeToRefs } from 'pinia';
 
-const { users, loading, getAll } = useFetchUsers()
+const { loading, getAll } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 const { handleSubmit, defineField, errors, resetForm } = useForm({
     validationSchema: object({
