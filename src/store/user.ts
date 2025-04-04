@@ -9,6 +9,7 @@ export type UserPayload = { email: string, name: string }
 
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([])
+    const userModifying = ref<User | null>(null)
 
     async function getAll() {
         const res = await axios.get(URL)
@@ -26,10 +27,17 @@ export const useUserStore = defineStore('user', () => {
         users.value = users.value.filter(user => user.id != userId)
     }
 
+    async function getUser(userId: number) {
+        const res = await axios.get(URL + '/' + userId)
+        userModifying.value = res.data
+    }
+
     return {
+        userModifying,
         users, 
         getAll,
         createUser,
-        deleteUser
+        deleteUser,
+        getUser
     }
 })
