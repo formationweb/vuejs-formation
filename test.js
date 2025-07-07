@@ -1,17 +1,25 @@
-let userName = {
-    _val: '',
-
-    get value() {
-        return this._val
-    },
-
-    set value(newVal) {
-        console.log('valeur a changée')
-        // appel d'une fonction, callback
-        this._val = newVal
+const user = {
+    name: 'ben',
+    age: 19,
+    address: {
+        city: 'paris'
     }
 }
 
-console.log(userName.value)
-userName.value = 'ben'
-console.log(userName.value)
+let userProxy = new Proxy(user, {
+    get(obj, prop) {
+        return obj[prop]
+    },
+    set(obj, prop, val) {
+        console.log('test')
+        obj[prop] = val
+        return true
+    }
+})
+
+userProxy = {
+    name: 'ana',
+    age: 25
+}
+
+userProxy.age = 18
