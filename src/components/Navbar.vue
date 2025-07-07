@@ -3,27 +3,19 @@
     <Search :firstName="name" @onSearch="listenSearch" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import Search from './Search.vue'
+import { onMounted, ref } from 'vue'
 
-export default {
-    data() {
-        return {
-            name: 'ana'
-        }
-    },
-    methods: {
-        listenSearch(userName: string) {
-            console.log(userName)
-        }
-    },
-    components: {
-        Search
-    },
-    mounted() {
-        setTimeout(() => {
-            this.name = 'ben'
-        }, 2000)
-    }
+let name = ref('ana')
+
+function listenSearch(userName: string) {
+    console.log(userName)
 }
+
+onMounted(() => {
+    setTimeout(() => {
+        name.value = 'ben'
+    }, 2000)
+})
 </script>

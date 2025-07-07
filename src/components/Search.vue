@@ -6,35 +6,32 @@
             {{ index }} - {{ name }}
         </li>
     </ul>
+    {{ firstName  }}
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
+<script lang="ts" setup>
+import { ref, watch, watchEffect } from 'vue'
 
-export default {
-    props: {
-        firstName: {
-            type: String as PropType<string>,
-            required: true
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-           userName: this.firstName,
-           names: ['ana', 'jim', 'ben']
-            
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('onSearch', this.userName)
-        }
-    },
-    watch: {
-        firstName(newVal: string) {
-            this.userName = newVal
-        }
-    }
+const { firstName } = defineProps<{
+    firstName: string
+}>()
+
+const emits = defineEmits<{
+    'onSearch': [string]
+}>()
+
+const userName = ref(firstName)
+const names = ref(['ana', 'jim', 'ben'])
+
+function search() {
+    emits('onSearch', userName.value)
 }
+
+watchEffect(() => {
+    userName.value = firstName
+})
+
+// watch(props, (obj) => {
+//     userName.value = obj.firstName
+// })
 </script>
