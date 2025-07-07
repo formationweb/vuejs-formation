@@ -9,10 +9,12 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+
 export default {
     props: {
         firstName: {
-            type: String,
+            type: String as PropType<string>,
             required: true
         }
     },
