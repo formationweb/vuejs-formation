@@ -6,7 +6,7 @@
         <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
     </select>
 
-    <Opacity color="red" :opacity="1" @change="console.log" />
+    <Draw />
 
     <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
         <template #title>
@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import UserCard from './UserCard.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
-import Opacity from '../atomics/Opacity.vue';
+import Draw from './Draw.vue';
 
 const { extSelected, extensions, usersFiltered } = useExtensionFilter()
 </script>
