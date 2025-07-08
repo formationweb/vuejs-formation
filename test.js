@@ -1,25 +1,8 @@
-const user = {
-    name: 'ben',
-    age: 19,
-    address: {
-        city: 'paris'
-    }
-}
+const age = ref(42)
+const isMinor = computed(() => age.value < 18)
 
-let userProxy = new Proxy(user, {
-    get(obj, prop) {
-        return obj[prop]
-    },
-    set(obj, prop, val) {
-        console.log('test')
-        obj[prop] = val
-        return true
-    }
-})
+console.log(isMinor.value) // false
 
-userProxy = {
-    name: 'ana',
-    age: 25
-}
+age.value = 15
 
-userProxy.age = 18
+console.log(isMinor.value) // true
