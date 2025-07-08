@@ -9,7 +9,7 @@
         </div>
         <p>{{ user.email }}</p>
         <slot name="footer" :active="isActive" v-bind="user"></slot>
-        
+        <button>Supprimer</button>
     </article>
 </template>
 

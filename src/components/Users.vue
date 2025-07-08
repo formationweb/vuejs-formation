@@ -29,9 +29,14 @@ import UserCard from './UserCard.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Draw from './Draw.vue';
 import { useFetchUsers } from '../composables/useFetchUsers';
+import axios from 'axios';
 
 const { users, getAll, loading } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+
+async function deleteUser(id: number) {
+    await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
+}
 
 getAll()
 </script>
