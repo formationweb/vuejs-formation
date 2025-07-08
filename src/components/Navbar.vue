@@ -1,5 +1,5 @@
 <template>
-    <h1>My App</h1>
+    <h1 :style="{ opacity: 1 }">My App</h1>
     <Search :firstName="name" @onSearch="listenSearch" />
 </template>
 
@@ -19,3 +19,11 @@ onMounted(() => {
     }, 2000)
 })
 </script>
+
+<style>
+.red {
+    color: red;
+}
+
+
+</style>
