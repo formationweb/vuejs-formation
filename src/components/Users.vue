@@ -25,6 +25,14 @@
 import UserCard from './UserCard.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Draw from './Draw.vue';
+import axios from 'axios';
+import { onMounted, reactive, ref } from 'vue';
 
-const { extSelected, extensions, usersFiltered } = useExtensionFilter()
+const users = ref([])
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+
+onMounted(async () => {
+    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+    users.value = res.data
+})
 </script>
