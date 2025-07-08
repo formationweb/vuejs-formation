@@ -8,31 +8,30 @@
 
     <Draw />
 
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
-        <template #title>
-            <h1>Test</h1>
-        </template>
-        <template #default>
-            <p>Contenu par défaut</p>
-        </template>
-        <template #footer="{ name, active}">
-            L'utilisateur {{ name }} est {{  active ? 'actif' : 'inactif' }}
-        </template>
-    </UserCard>
+    <div v-if="!loading">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+            <template #title>
+                <h1>Test</h1>
+            </template>
+            <template #default>
+                <p>Contenu par défaut</p>
+            </template>
+            <template #footer="{ name, active}">
+                L'utilisateur {{ name }} est {{  active ? 'actif' : 'inactif' }}
+            </template>
+        </UserCard>
+    </div>
+    <div v-else aria-busy="true"></div>
 </template>
 
 <script lang="ts" setup>
 import UserCard from './UserCard.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Draw from './Draw.vue';
-import axios from 'axios';
-import { onMounted, reactive, ref } from 'vue';
+import { useFetchUsers } from '../composables/useFetchUsers';
 
-const users = ref([])
+const { users, getAll, loading } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
-onMounted(async () => {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-    users.value = res.data
-})
+getAll()
 </script>
