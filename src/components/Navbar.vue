@@ -1,6 +1,9 @@
 <template>
     <h1 :style="{ opacity: 1 }">My App</h1>
     <Search :firstName="name" @onSearch="listenSearch" />
+    <router-link :to="{ name: 'loginId' }" custom v-slot="router">
+        <button @click="router.navigate">Connexion</button>
+    </router-link>
 </template>
 
 <script lang="ts" setup>
