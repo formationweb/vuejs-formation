@@ -1,6 +1,12 @@
 <template>
     <h1>Utilisateurs</h1>
-    <UserCard v-for="u in users" :key="u.id" :user="u">
+
+    <select v-model="extSelected">
+        <option value="">Tous</option>
+        <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+    </select>
+
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
         <template #title>
             <h1>Test</h1>
         </template>
@@ -14,11 +20,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 
-let users = ref<User[]>([
+const extensions: string[] = ['tv', 'biz', 'io', 'me'];
+const extSelected = ref('')
+
+const users = ref<User[]>([
     {
         "id": 1,
         "name": "Leanne Graham",
@@ -250,4 +259,11 @@ let users = ref<User[]>([
         }
     }
 ])
+
+const usersFiltered = computed(() => {
+    if (extSelected.value == '') {
+        return users.value
+    }
+    return users.value.filter(user => user.email.endsWith(extSelected.value))
+})
 </script>
