@@ -26,6 +26,20 @@ export const useUserStore = defineStore('user', () => {
         users.value = [...users.value, res.data]
     }
 
+    async function updateUser(id: number, values: UserPayload) {
+        const res = await axios.put(URL + '/' + id, values)
+        userModifying.value = {
+            ...userModifying.value,
+            ...res.data
+        };
+        users.value = users.value.map(user => {
+            if (user.id == id) {
+                return userModifying.value as User
+            }
+            return user
+        })
+    }
+
     async function deleteUser(id: number) {
         await axios.delete(URL + "/" + id)
         users.value = users.value.filter(user => user.id != id)
@@ -37,6 +51,7 @@ export const useUserStore = defineStore('user', () => {
         getAll,
         createUser,
         deleteUser,
-        getUser
+        getUser,
+        updateUser
     }
 })

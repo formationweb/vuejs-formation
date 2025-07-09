@@ -1,7 +1,7 @@
 <template>
     <h1>{{ userModifying?.name }}</h1>
 
-    <form>
+    <form @submit.prevent="onEdit">
         <label>Nom</label>
         <input type="text" v-model="name" v-bind="nameAttrs">
 
@@ -28,6 +28,10 @@ const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
 const userId = +params.id
+
+const onEdit = handleSubmit((values) => {
+    userStore.updateUser(userId, values as UserPayload)
+})
 
 onMounted(async () =>{
     await userStore.getUser(userId)
