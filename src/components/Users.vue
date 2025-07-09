@@ -17,7 +17,7 @@
     </form>
 
     <div v-if="!loading">
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="userStore.deleteUser">
             <template #title>
                 <h1>Test</h1>
             </template>
@@ -41,7 +41,7 @@ import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { ref } from 'vue';
-import { useUserStore } from '../store/user';
+import { useUserStore, type UserPayload } from '../store/user';
 import { storeToRefs } from 'pinia';
 
 const { getAll, loading } = useFetchUsers()
@@ -60,21 +60,14 @@ const loadingCreate = ref(false)
 
 const createUser = handleSubmit(async (values) => {
     loadingCreate.value = true
-    const res = await axios.post("https://jsonplaceholder.typicode.com/users", values)
+    await userStore.createUser(values as UserPayload)
     loadingCreate.value = false
-    const userCreated = res.data
-    // users.value.push(userCreated)
-    users.value = [...users.value, userCreated]
     resetForm()
 })
 
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
-async function deleteUser(id: number) {
-    await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
-    users.value = users.value.filter(user => user.id != id)
-}
 
 getAll()
 </script>
