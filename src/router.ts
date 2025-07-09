@@ -34,7 +34,7 @@ export const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
-    if (to.meta.requiredAuth && !authStore.token) {
+    if (to.meta.requiredAuth && !authStore.hasConnected) {
         next({
             name: 'loginId'
         })
