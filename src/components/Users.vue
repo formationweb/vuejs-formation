@@ -41,8 +41,12 @@ import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { ref } from 'vue';
+import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia';
 
-const { users, getAll, loading } = useFetchUsers()
+const { getAll, loading } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
 const { handleSubmit, defineField, resetForm } = useForm({
