@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ref } from "vue";
+import type { User } from "../interfaces/User";
 
 function wait(ms: number) {
   return new Promise((resolve) => {
@@ -8,7 +9,7 @@ function wait(ms: number) {
 }
 
 export function useFetchUsers() {
-  const users = ref([]);
+  const users = ref<User[]>([]);
   const loading = ref(false);
   const error = ref<null | unknown>(null)
 
@@ -16,7 +17,6 @@ export function useFetchUsers() {
     try {
         loading.value = true;
         const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-        await wait(2000);
         users.value = res.data;
     }
     catch (err) {

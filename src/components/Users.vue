@@ -9,7 +9,7 @@
     <Draw />
 
     <div v-if="!loading">
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
             <template #title>
                 <h1>Test</h1>
             </template>
@@ -36,6 +36,7 @@ const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
 async function deleteUser(id: number) {
     await axios.delete("https://jsonplaceholder.typicode.com/users/" + id)
+    users.value = users.value.filter(user => user.id != id)
 }
 
 getAll()
