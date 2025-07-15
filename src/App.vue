@@ -1,21 +1,31 @@
 <template>
-    <Navbar />
+    <Navbar :name="firstName" @onSearch="listenSearch" />
     <Users />
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from './components/Navbar.vue';
 import Users from './components/Users.vue';
 
 export default {
     data() {
         return {
-            message: 'hello world'
+            firstName: 'ana'
+        }
+    },
+    methods: {
+        listenSearch(userName: string) {
+            console.log(userName)
         }
     },
     components: {
         Navbar,
         Users
+    },
+    mounted() {
+        setTimeout(() => {
+            this.firstName = 'ben'
+        }, 1000)
     }
 }
 </script>
