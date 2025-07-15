@@ -3,29 +3,20 @@
     <Users />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { onMounted, ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import Users from './components/Users.vue';
 
-export default {
-    data() {
-        return {
-            firstName: 'ana'
-        }
-    },
-    methods: {
-        listenSearch(userName: string) {
-            console.log(userName)
-        }
-    },
-    components: {
-        Navbar,
-        Users
-    },
-    mounted() {
-        setTimeout(() => {
-            this.firstName = 'ben'
-        }, 1000)
-    }
+let firstName = ref('ana')
+
+function listenSearch(userName: string) {
+    console.log(userName)
 }
+
+onMounted(() => {
+    setTimeout(() => {
+       firstName.value = 'ben'
+    }, 1000)
+})
 </script>
