@@ -8,16 +8,10 @@
     </article>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import type { User } from '../core/interfaces/user';
-import type { PropType } from 'vue';
 
-export default {
-    props: {
-        user: {
-            type: Object as PropType<User>,
-            required: true
-        }
-    }
-}
+defineProps<{
+    user: User
+}>()
 </script>

@@ -13,16 +13,12 @@
   </UserCard>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue';
 import type { User } from '../core/interfaces/user';
 import UserCard from './UserCard.vue';
 
-export default {
-  data(): {
-    users: User[]
-  } {
-    return {
-      users: [
+const users = ref([
         {
           id: 1,
           name: "Leanne Graham",
@@ -253,11 +249,5 @@ export default {
             bs: "target end-to-end models",
           },
         },
-      ],
-    };
-  },
-  components: {
-    UserCard
-  }
-};
+      ])
 </script>
