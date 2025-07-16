@@ -1,16 +1,25 @@
-let age = {
-    _value: 0,
-
-    get value() {
-        return this._value
-    },
-
-    set value(newVal) {
-        console.log('un changement !')
-        this._value = newVal
+let user = {
+    name: 'ana',
+    age: 18,
+    address: {
+        city: 'lyon'
     }
 }
 
-console.log(age.value)
-age.value = 30
-console.log(age.value)
+
+let userProxy = new Proxy(user, {
+    get(obj, prop) {
+        return obj[prop]
+    },
+    set(obj, prop, value) {
+        obj[prop] = value
+        return true
+    }
+})
+
+userProxy = {
+    name: 'ben',
+    age: 19
+}
+
+userProxy.age = 20

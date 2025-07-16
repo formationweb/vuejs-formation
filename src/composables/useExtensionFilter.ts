@@ -1,7 +1,13 @@
 import type { User } from "@/core/interfaces/user";
-import { computed, ref, type Ref } from "vue";
+import { computed, ref, type ComputedRef, type Ref } from "vue";
 
-export function useExtensionFilter(users: Ref<User[]>) {
+type ExtensionReturn = {
+    extSelected: Ref<string>
+    extensions: Ref<string[]>
+    usersFiltered: ComputedRef<User[]>
+}
+
+export function useExtensionFilter(users: Ref<User[]>): ExtensionReturn {
   const extSelected = ref("");
   const extensions = ref(["tv", "biz", "io", "me"]);
 

@@ -1,6 +1,7 @@
 <template>
   <h1 :style="{ color: 'red' }">utilisateurs</h1>
   <!-- <Opacity color="black" :opacity="1" @change="console.log" /> -->
+   <Draw />
    <select v-model="extSelected">
     <option value="">Tous</option>
     <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
@@ -21,14 +22,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import type { User } from '../core/interfaces/user';
 import UserCard from './UserCard.vue';
 import Loader from '@/atomics/Loader.vue';
 import Opacity from '@/atomics/Opacity.vue'
 import { useExtensionFilter } from '@/composables/useExtensionFilter';
+import Draw from './Draw.vue';
 
-const users = ref([
+let users = ref([
         {
           id: 1,
           name: "Leanne Graham",
