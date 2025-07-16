@@ -3,9 +3,16 @@
 </template>
 
 <script lang="ts" setup>
-import { useTemplateRef } from 'vue';
+import { onMounted, useTemplateRef } from 'vue';
 
 const canvasRef = useTemplateRef('myCanvas')
 
-console.log(canvasRef.value)
+onMounted(() => {
+    const el = canvasRef.value
+    // const context = el?.getContext('2d')
+    // if (context) {
+    //     context.fillStyle = 'blue'
+    //     context.fillRect(0, 0, 100, 100)
+    // }
+})
 </script>
