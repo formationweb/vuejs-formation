@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, watchEffect } from 'vue';
+import { useSearch } from '@/composables/useSearch';
 
 const props = defineProps<{
     name: string
@@ -19,14 +19,5 @@ const emits = defineEmits<{
     onSearch: [string] 
 }>()
 
-const userName = ref(props.name)
-const names = ['ana', 'jim', 'ben']
-
-function search() {
-    emits('onSearch', userName.value)
-}
-
-watchEffect(() => {
-    userName.value = props.name // ben
-})
+const { userName, names, search } = useSearch(props, emits)
 </script>
