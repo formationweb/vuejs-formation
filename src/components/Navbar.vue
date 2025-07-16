@@ -2,7 +2,7 @@
     <input type="text" v-model="userName">
     <button @click="search" v-if="userName != ''">Rechercher</button>
     <ul>
-        <li v-for="(name, index) in names" :key="index">
+        <li v-for="(name, index) in namesFiltered" :key="index">
             {{ name }}
         </li>
     </ul>
@@ -19,5 +19,5 @@ const emits = defineEmits<{
     onSearch: [string] 
 }>()
 
-const { userName, names, search } = useSearch(props, emits)
+const { userName, namesFiltered, search } = useSearch(props, emits)
 </script>
