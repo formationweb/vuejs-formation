@@ -1,8 +1,12 @@
 <template>
   <h1 :style="{ color: 'red' }">utilisateurs</h1>
-  <Opacity color="black" :opacity="1" @change="console.log" />
-  <Loader :loading="false">
-    <UserCard v-for="u in users" :key="u.id" :user="u">
+  <!-- <Opacity color="black" :opacity="1" @change="console.log" /> -->
+   <select v-model="extSelected">
+    <option value="">Tous</option>
+    <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+   </select>
+    <Loader :loading="false">
+      <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
       <template #header>
         <h1>header</h1>
       </template>
@@ -17,12 +21,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { User } from '../core/interfaces/user';
 import UserCard from './UserCard.vue';
 import Loader from '@/atomics/Loader.vue';
 import Opacity from '@/atomics/Opacity.vue'
 
+const extSelected = ref('')
+const extensions = ref(['tv', 'biz', 'io', 'me'])
 const users = ref([
         {
           id: 1,
@@ -255,6 +261,14 @@ const users = ref([
           },
         },
       ])
+
+const usersFiltered = computed(() => {
+  if (!extSelected.value) {
+    return users.value
+  }
+  return users.value.filter((user) => user.email.endsWith(extSelected.value))
+})
+
 </script>
 
 <style scoped>
