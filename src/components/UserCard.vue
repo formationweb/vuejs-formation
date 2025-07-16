@@ -4,12 +4,16 @@
         <header>{{ user.name }}</header>
         <footer>{{ user.email }}</footer>
         <slot></slot>
-        <slot name="footer"></slot>
+        <input type="checkbox" v-model="active">
+        <slot name="footer" :isActive="active"></slot>
     </article>
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import type { User } from '../core/interfaces/user';
+
+const active = ref(false)
 
 defineProps<{
     user: User

@@ -20,8 +20,10 @@
           <template #default>
             Contenu par défaut
           </template>
-          <template #footer>
+          <template #footer="slotProps">
             <h2>footer</h2>
+           
+            Utilisateur est {{ slotProps.isActive ? 'actif' : 'inactive' }}
           </template>
         </UserCard>
       </div>

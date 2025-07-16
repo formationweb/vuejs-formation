@@ -6,6 +6,9 @@
             {{ name }}
         </li>
     </ul>
+    <router-link to="/login" custom v-slot="router">
+        <button @click="router.navigate">Connexion</button>
+    </router-link>
 </template>
 
 <script lang="ts" setup>
