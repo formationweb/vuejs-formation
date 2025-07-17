@@ -14,7 +14,7 @@
     <button @click="createUser">Créer utilisateur</button>
     <Loader :loading="loading">
       <div :ref="(el) => assignRef(el, index)" v-for="(u, index) in usersFiltered" :key="u.id" >
-        <UserCard :user="u"> 
+        <UserCard :user="u" @onDelete="deleteUser"> 
           <template #header>
             <h1>header</h1>
           </template>
@@ -73,6 +73,7 @@ function scrollToUser() {
 
 async function deleteUser(id: number) {
   await axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
+  users.value = users.value.filter(user => user.id != id)
 } 
 
 async function createUser() {

@@ -6,6 +6,7 @@
         <slot></slot>
         <input type="checkbox" v-model="active">
         <slot name="footer" :isActive="active"></slot>
+        <button @click="emits('onDelete', user.id)">Supprimer</button>
     </article>
 </template>
 
@@ -17,5 +18,9 @@ const active = ref(false)
 
 defineProps<{
     user: User
+}>()
+
+const emits = defineEmits<{
+    onDelete: [number]
 }>()
 </script>

@@ -1,7 +1,9 @@
-/login -> Serveur -> Routeur -> Controller
-/login -> Routeur -> Component
+ Supprimer un utilisateur
 
-SPA (Single Page Application)
-    -> CSR (Client Side Rendering)
-    -> SSR (Server Side Rendering) / Hydratation
-    -> SSG (Server Side Generation)
+
+Avoir un bouton pour supprimer un utilisateur. Comment actualiser l'interface après la suppression ?
+
+
+Aide
+
+> Utiliser filter() pour supprimer l’utilisateur du tableau
