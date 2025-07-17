@@ -7,6 +7,7 @@
         <input type="checkbox" v-model="active">
         <slot name="footer" :isActive="active" v-bind="user"></slot>
         <button @click="emits('onDelete', user.id)">Supprimer</button>
+        <router-link :to="{ name: 'userEdit', params: { id: user.id } }">Modifier</router-link>
     </article>
 </template>
 

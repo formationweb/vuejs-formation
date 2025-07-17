@@ -1,6 +1,6 @@
 <template>
     <Navbar :name="firstName" @onSearch="listenSearch" />
-    <Users />
+    <router-view />
 </template>
 
 <script lang="ts" setup>
