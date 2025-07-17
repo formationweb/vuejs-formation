@@ -41,16 +41,19 @@ import { useExtensionFilter } from '@/composables/useExtensionFilter';
 import Draw from './Draw.vue';
 import axios from 'axios';
 import { useFetchUsers } from '@/composables/useFetchUsers';
+import { useUserStore } from '@/store/user';
+import { storeToRefs } from 'pinia';
 
-const { getAll, users, loading } = useFetchUsers()
-const { users: myUsers } = useFetchUsers()
+const { fetchUsers, loading } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+
 const {
     extSelected,
     extensions,
     usersFiltered
   } = useExtensionFilter(users)
 
-  console.log(myUsers)
 
 const userCards = ref<HTMLElement[]>([])
 const userIndex = ref(0)
@@ -88,7 +91,7 @@ async function createUser() {
   ]
 }
 
-getAll()
+fetchUsers()
 </script>
 
 <style scoped>

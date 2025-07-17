@@ -1,17 +1,17 @@
-import type { User } from "@/core/interfaces/user";
-import axios from "axios";
+
+import { useUserStore } from "@/store/user";
 import { ref } from "vue";
 
 export function useFetchUsers() {
-  const users = ref<User[]>([]);
+  const userStore = useUserStore()
+ 
   const loading = ref(true)
   const error = ref(null)
 
-  async function getAll() {
+  async function fetchUsers() {
    try {
     loading.value = true
-    const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-    users.value = res.data;
+    await userStore.getAll()
    }
    catch (err: any) {
     error.value = err
@@ -22,8 +22,7 @@ export function useFetchUsers() {
   }
 
   return {
-    users,
-    getAll,
+    fetchUsers,
     loading,
     error
   }
