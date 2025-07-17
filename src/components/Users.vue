@@ -11,10 +11,10 @@
       <button @click="scrollToUser">Scroll To User</button>
       <p v-if="error">{{ error }}</p>
     </div>
-    <button @click="createUser">Créer utilisateur</button>
+    <button @click="userStore.createUser">Créer utilisateur</button>
     <Loader :loading="loading">
       <div :ref="(el) => assignRef(el, index)" v-for="(u, index) in usersFiltered" :key="u.id" >
-        <UserCard :user="u" @onDelete="deleteUser"> 
+        <UserCard :user="u" @onDelete="userStore.deleteUser"> 
           <template #header>
             <h1>header</h1>
           </template>
@@ -71,24 +71,6 @@ function scrollToUser() {
    }
    error.value = ''
    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
-
-
-async function deleteUser(id: number) {
-  await axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
-  users.value = users.value.filter(user => user.id != id)
-} 
-
-async function createUser() {
-  const payload = {
-    name: 'ana',
-    email: 'ana@gamil.com'
-  }
-  const res = await axios.post('https://jsonplaceholder.typicode.com/users', payload)
-  users.value = [
-    ...users.value,
-    res.data
-  ]
 }
 
 fetchUsers()
