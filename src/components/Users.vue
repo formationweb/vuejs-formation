@@ -12,7 +12,7 @@
       <p v-if="error">{{ error }}</p>
     </div>
     <button @click="createUser">Créer utilisateur</button>
-    <Loader :loading="false">
+    <Loader :loading="loading">
       <div :ref="(el) => assignRef(el, index)" v-for="(u, index) in usersFiltered" :key="u.id" >
         <UserCard :user="u"> 
           <template #header>
@@ -40,12 +40,21 @@ import Opacity from '@/atomics/Opacity.vue'
 import { useExtensionFilter } from '@/composables/useExtensionFilter';
 import Draw from './Draw.vue';
 import axios from 'axios';
+import { useFetchUsers } from '@/composables/useFetchUsers';
+
+const { getAll, users, loading } = useFetchUsers()
+const { users: myUsers } = useFetchUsers()
+const {
+    extSelected,
+    extensions,
+    usersFiltered
+  } = useExtensionFilter(users)
+
+  console.log(myUsers)
 
 const userCards = ref<HTMLElement[]>([])
 const userIndex = ref(0)
 const error = ref('')
-
-let users = ref<User[]>([])
 
 function assignRef(el: any, index: number) {
   return userCards.value[index] = el
@@ -61,10 +70,6 @@ function scrollToUser() {
    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-async function getAll() {
-  const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-  users.value = res.data
-}
 
 async function deleteUser(id: number) {
   await axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
@@ -83,12 +88,6 @@ async function createUser() {
 }
 
 getAll()
-
-const {
-    extSelected,
-    extensions,
-    usersFiltered
-  } = useExtensionFilter(users)
 </script>
 
 <style scoped>
