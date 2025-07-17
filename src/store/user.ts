@@ -5,6 +5,11 @@ import { ref } from "vue";
 
 const URL = "https://jsonplaceholder.typicode.com/users"
 
+export type UserPayload = {
+   name: string
+   email: string
+}
+
 export const useUserStore = defineStore("user", () => {
   const users = ref<User[]>([]);
   const userModifying = ref<User | null>(null)
@@ -22,6 +27,17 @@ export const useUserStore = defineStore("user", () => {
   async function deleteUser(id: number) {
     await axios.delete(URL + '/' + id);
     users.value = users.value.filter((user) => user.id != id);
+  }
+
+  async function updateUser(id: number, payload: UserPayload) {
+    const res = await axios.put(
+      URL + '/' + id,
+      payload
+    );
+    userModifying.value = {
+      ...userModifying.value,
+      ...res.data
+    }
   }
 
   async function createUser() {
@@ -42,6 +58,7 @@ export const useUserStore = defineStore("user", () => {
     getAll,
     deleteUser,
     createUser,
-    getUser
+    getUser,
+    updateUser
   };
 });
