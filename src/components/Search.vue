@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
+import { reactive, ref, watchEffect } from 'vue';
 
 const { userName } = defineProps<{
     userName: string

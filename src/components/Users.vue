@@ -8,7 +8,7 @@ import { ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 
-const users = ref<User[]>([
+let users = ref<User[]>([
     {
         "id": 1,
         "name": "Leanne Graham",
