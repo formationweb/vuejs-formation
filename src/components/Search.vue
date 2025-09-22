@@ -1,6 +1,6 @@
 <template>
-    <input type="text" v-model="userName">
-    <button @click="search" v-if="userName != ''">Rechercher</button>
+    <input type="text" v-model="name">
+    <button @click="search" v-if="name != ''">Rechercher</button>
     <ul>
         <li v-for="(name, index) in firstNames" :key="index">
           {{ index }} - {{ name }}
@@ -8,17 +8,29 @@
     </ul>
 </template>
 
-<script>
+<script lang="ts">
 export default {
+    props: {
+        userName: {
+            type: String,
+            required: true
+        }
+    },
+    emits: ['onSearch'],
     data() {
         return {
-            userName: 'ana',
+            name: this.userName,
             firstNames: ['ana', 'ben', 'jim']
         }
     },
     methods: {
         search() {
-            console.log(this.userName)
+            this.$emit('onSearch', this.name)
+        }
+    },
+    watch: {
+        userName(newValue) {
+            this.name = newValue
         }
     }
 }

@@ -1,4 +1,11 @@
-export const age = 42
-export function foo() {}
+function foo(obj2) {
+    obj2.name ='ben'
+}
 
-export default 'test'
+const obj = {
+    name: 'ana'
+}
+
+foo(obj)
+
+console.log(obj)
