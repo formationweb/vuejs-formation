@@ -1,14 +1,16 @@
 <template>
-    <h1>Hello World</h1>
     <Navbar />
+    <Users />
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
+import Users from './components/Users.vue';
 
 export default {
    components: {
-    Navbar
+        Navbar,
+        Users
    }
 }
 </script>
