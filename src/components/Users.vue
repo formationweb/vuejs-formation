@@ -1,6 +1,7 @@
 <template>
     <h1>Utilisateurs</h1>
     <!-- <Opacity color="black" :opacity="1" @change="console.log" /> -->
+     <Draw />
     <Loader :loading="false">
         <select v-model="extSelected">
             <option value="">Tous</option>
@@ -30,6 +31,7 @@ import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
+import Draw from './Draw.vue';
 
 let users = ref<User[]>([
     {
