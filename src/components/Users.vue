@@ -24,14 +24,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
-
-const extensions = ref(['tv', 'biz', 'io', 'me']);
-const extSelected = ref('')
+import { useExtensionFilter } from '../composables/useExtensionFilter';
 
 let users = ref<User[]>([
     {
@@ -266,12 +264,7 @@ let users = ref<User[]>([
     }
 ])
 
-const usersFiltered = computed(() => {
-    if (!extSelected.value) {
-        return users.value
-    }
-    return users.value.filter(user => user.email.endsWith(extSelected.value))
-})
+const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
 </script>
 
 <style scoped>
