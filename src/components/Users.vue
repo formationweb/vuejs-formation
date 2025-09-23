@@ -2,7 +2,7 @@
     <h1>Utilisateurs</h1>
     <!-- <Opacity color="black" :opacity="1" @change="console.log" /> -->
      <Draw />
-    <Loader :loading="false">
+    <Loader :loading>
         <select v-model="extSelected">
             <option value="">Tous</option>
             <option v-for="ext in extensions" :key="ext">
@@ -32,18 +32,12 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Draw from './Draw.vue';
-import axios from 'axios';
+import { useFetchUsers } from '../composables/useFetchUsers';
 
-let users = ref<User[]>([])
-
-async function getAll() {
-     const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-     users.value = res.data
-}
+const { users, getAll, loading } = useFetchUsers()
+const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
 
 getAll()
-
-const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
 </script>
 
 <style scoped>
