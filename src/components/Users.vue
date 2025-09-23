@@ -1,5 +1,6 @@
 <template>
     <h1>Utilisateurs</h1>
+    <Opacity color="black" :opacity="1" @change="console.log" />
     <Loader :loading="false">
         <UserCard v-for="u in users" :key="u.id" :user="u">
             <template #title>
@@ -21,6 +22,7 @@ import { ref } from 'vue';
 import type { User } from '../interfaces/User';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
+import Opacity from '../atomics/Opacity.vue';
 
 let users = ref<User[]>([
     {
