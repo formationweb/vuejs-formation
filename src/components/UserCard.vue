@@ -14,6 +14,7 @@
         </div>
     <footer>
         <button @click="emit('onDelete', user.id)">Supprimer</button>
+        <RouterLink :to="{ name: 'userEdit', params: { id: user.id } }">Modifier</RouterLink>
     </footer>
     </article>
 </template>
