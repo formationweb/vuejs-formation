@@ -13,7 +13,13 @@
             <input type="checkbox" v-model="isActive">
         </div>
     <footer>
-        <button @click="emit('onDelete', user.id)">Supprimer</button>
+        <button 
+        v-confirm="{
+            message: 'Etes vous sûr ...',
+            confirmFn: () => emit('onDelete', user.id)
+        }">
+            Supprimer
+        </button>
         <RouterLink :to="{ name: 'userEdit', params: { id: user.id } }">Modifier</RouterLink>
     </footer>
     </article>
