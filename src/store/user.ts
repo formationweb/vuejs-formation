@@ -21,6 +21,14 @@ export const useUserStore = defineStore("user", () => {
     userModifying.value = res.data
   }
 
+  async function updateUser(id: number, payload: UserPayload) {
+    const res = await axios.put(URL + "/" + id, payload);
+    userModifying.value = {
+      ...userModifying.value as User,
+      ...res.data
+    }
+  }
+
   async function deleteUser(id: number) {
     await axios.delete(URL + "/" + id);
     users.value = users.value.filter((user) => user.id != id);
@@ -41,5 +49,6 @@ export const useUserStore = defineStore("user", () => {
     deleteUser,
     createUser,
     getUser,
+    updateUser
   };
 });

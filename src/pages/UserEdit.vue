@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
-import { useUserStore } from '../store/user';
+import { useUserStore, type UserPayload } from '../store/user';
 import { useForm } from 'vee-validate';
 import type { User } from '../interfaces/User';
 
@@ -30,7 +30,9 @@ const { handleSubmit, defineField, setValues } = useForm()
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 
-const editUser = handleSubmit(() => {})
+const editUser = handleSubmit((values) => {
+    userStore.updateUser(userId, values as UserPayload)
+})
 
 async function init() {
     await userStore.getUser(userId)
