@@ -28,7 +28,7 @@
                 {{ ext }}
             </option>
         </select>
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="userStore.deleteUser">
             <template #title>
                 <h1>test</h1>
             </template>
@@ -55,7 +55,7 @@ import { useFetchUsers } from '../composables/useFetchUsers';
 import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { useUserStore } from '../store/user';
+import { useUserStore, type UserPayload } from '../store/user';
 import { storeToRefs } from 'pinia';
 
 const userStore = useUserStore()
@@ -63,11 +63,6 @@ const { users } = storeToRefs(userStore)
 
 const { getAll, loading } = useFetchUsers()
 const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
-
-async function deleteUser(id: number) {
-    await axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
-    users.value = users.value.filter(user => user.id != id)
-}
 
 const isSubmitting = ref(false)
 const loadingCreate = ref(false)
@@ -82,8 +77,7 @@ const { handleSubmit, defineField, errors, resetForm } = useForm({
 
 const createUser = handleSubmit(async (values) => {
     loadingCreate.value = true
-    const res = await axios.post('https://jsonplaceholder.typicode.com/users', values)
-    users.value = [...users.value, res.data]
+    await userStore.createUser(values as UserPayload)
     loadingCreate.value = false
     resetForm()
 

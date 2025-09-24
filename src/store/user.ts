@@ -3,18 +3,35 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { User } from "../interfaces/User";
 
-const URL = 'https://jsonplaceholder.typicode.com/users'
+export type UserPayload = { email: string, name: string }
 
-export const useUserStore = defineStore('user', () => {
-     const users = ref<User[]>([])
+const URL = "https://jsonplaceholder.typicode.com/users";
 
-     async function getAll() {
-        const res = await axios.get(URL)
-        users.value = res.data
-     }
+export const useUserStore = defineStore("user", () => {
+  const users = ref<User[]>([]);
 
-     return {
-        users,
-        getAll
-     }
-})
+  async function getAll() {
+    const res = await axios.get(URL);
+    users.value = res.data;
+  }
+
+  async function deleteUser(id: number) {
+    await axios.delete(URL + "/" + id);
+    users.value = users.value.filter((user) => user.id != id);
+  }
+
+  async function createUser(values: UserPayload) {
+    const res = await axios.post(
+      URL,
+      values
+    );
+    users.value = [...users.value, res.data];
+  }
+
+  return {
+    users,
+    getAll,
+    deleteUser,
+    createUser
+  };
+});
