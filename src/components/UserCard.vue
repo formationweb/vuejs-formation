@@ -13,7 +13,7 @@
             <input type="checkbox" v-model="isActive">
         </div>
     <footer>
-        <button>Supprimer</button>
+        <button @click="emit('onDelete', user.id)">Supprimer</button>
     </footer>
     </article>
 </template>
@@ -26,5 +26,9 @@ const isActive = ref(false)
 
 defineProps<{
     user: User
+}>()
+
+const emit = defineEmits<{
+    onDelete: [number]
 }>()
 </script>
