@@ -1,7 +1,26 @@
 <template>
     <h1>Utilisateurs</h1>
     <!-- <Opacity color="black" :opacity="1" @change="console.log" /> -->
-     <Draw />
+     <!-- <Draw /> -->
+
+     <form @submit.prevent="createUser">
+        <label>Email</label>
+        <input type="text" v-model="email" v-bind="emailAttrs">
+
+        <div v-show="errors.email && isSubmitting">
+            {{ errors.email }}
+        </div>
+
+        <label>Nom</label>
+        <input type="password" v-model="name" v-bind="nameAttrs">
+
+        <div v-show="errors.password && isSubmitting">
+            {{ errors.password }}
+        </div>
+
+        <button :aria-busy="loadingCreate" :disabled="loadingCreate">Créer utilisateur</button>
+    </form>
+
     <Loader :loading>
         <select v-model="extSelected">
             <option value="">Tous</option>
@@ -34,6 +53,8 @@ import { useExtensionFilter } from '../composables/useExtensionFilter';
 import Draw from './Draw.vue';
 import { useFetchUsers } from '../composables/useFetchUsers';
 import axios from 'axios';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
 
 const { users, getAll, loading } = useFetchUsers()
 const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
@@ -42,6 +63,31 @@ async function deleteUser(id: number) {
     await axios.delete('https://jsonplaceholder.typicode.com/users/' + id)
     users.value = users.value.filter(user => user.id != id)
 }
+
+const isSubmitting = ref(false)
+const loadingCreate = ref(false)
+
+const { handleSubmit, defineField, errors, resetForm } = useForm({
+    validationSchema: object({
+        email: string()
+            .required('Email obligatoire'),
+        name: string().required()
+    })
+})
+
+const createUser = handleSubmit(async (values) => {
+    loadingCreate.value = true
+    const res = await axios.post('https://jsonplaceholder.typicode.com/users', values)
+    users.value = [...users.value, res.data]
+    loadingCreate.value = false
+    resetForm()
+
+}, () => {
+    isSubmitting.value = true
+})
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
 
 getAll()
 </script>
