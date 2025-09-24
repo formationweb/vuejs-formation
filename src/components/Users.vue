@@ -12,10 +12,10 @@
         </div>
 
         <label>Nom</label>
-        <input type="password" v-model="name" v-bind="nameAttrs">
+        <input type="text" v-model="name" v-bind="nameAttrs">
 
-        <div v-show="errors.password && isSubmitting">
-            {{ errors.password }}
+        <div v-show="errors.name && isSubmitting">
+            {{ errors.name }}
         </div>
 
         <button :aria-busy="loadingCreate" :disabled="loadingCreate">Créer utilisateur</button>

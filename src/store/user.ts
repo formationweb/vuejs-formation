@@ -9,10 +9,16 @@ const URL = "https://jsonplaceholder.typicode.com/users";
 
 export const useUserStore = defineStore("user", () => {
   const users = ref<User[]>([]);
+  const userModifying = ref<User | null>(null)
 
   async function getAll() {
     const res = await axios.get(URL);
     users.value = res.data;
+  }
+
+  async function getUser(id: number) {
+    const res = await axios.get(URL + "/" + id);
+    userModifying.value = res.data
   }
 
   async function deleteUser(id: number) {
@@ -30,8 +36,10 @@ export const useUserStore = defineStore("user", () => {
 
   return {
     users,
+    userModifying,
     getAll,
     deleteUser,
-    createUser
+    createUser,
+    getUser,
   };
 });
