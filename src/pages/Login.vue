@@ -28,8 +28,13 @@
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { object, string } from 'yup';
+import { useAuthStore } from '../store/auth';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
 const isSubmitting = ref(false)
+const authStore = useAuthStore()
+const router = useRouter()
 
 const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = useForm({
     validationSchema: object({
@@ -42,8 +47,12 @@ const { handleSubmit, defineField, errors, meta, setFieldValue, setValues } = us
     })
 })
 
-const login = handleSubmit((values) => {
-    console.log(values)
+// prendre les états, en en faire des refs
+//const { token } = storeToRefs(authStore)
+
+const login = handleSubmit(async (values) => {
+    await authStore.login(values.email, values.password)
+    router.push({ name: 'home' })
 }, () => {
     isSubmitting.value = true
 })
