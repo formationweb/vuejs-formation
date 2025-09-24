@@ -55,8 +55,13 @@ import { useFetchUsers } from '../composables/useFetchUsers';
 import axios from 'axios';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia';
 
-const { users, getAll, loading } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+
+const { getAll, loading } = useFetchUsers()
 const { extSelected, extensions, usersFiltered, } = useExtensionFilter(users)
 
 async function deleteUser(id: number) {
