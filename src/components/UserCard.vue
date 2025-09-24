@@ -12,6 +12,9 @@
             <label>Activer</label>
             <input type="checkbox" v-model="isActive">
         </div>
+    <footer>
+        <button>Supprimer</button>
+    </footer>
     </article>
 </template>
 
