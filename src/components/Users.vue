@@ -1,18 +1,27 @@
 <template>
   <h1>utilisateurs</h1>
-  <UserCard v-for="u in users" :key="u.id" :user="u" />
+  <Loader :loading="false">
+    <UserCard v-for="u in users" :key="u.id" :user="u">
+      <template #header="{ name }">
+          <h1>{{ name }}</h1>
+      </template>
+      <template #default>
+        default slot
+      </template>
+      <template #footer="{ active, name }">
+        <p>Est ce utilisateur {{ name }} est {{ active }}</p>
+      </template>
+    </UserCard>
+  </Loader>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import type { User } from '@/core/interfaces/User';
 import UserCard from './UserCard.vue';
+import Loader from '@/atomics/Loader.vue'
+import { ref } from 'vue';
 
-export default {
-  data(): {
-    users: User[]
-  } {
-    return {
-      users: [
+const users = ref<User[]>([
         {
           id: 1,
           name: "Leanne Graham",
@@ -243,11 +252,5 @@ export default {
             bs: "target end-to-end models",
           },
         },
-      ],
-    };
-  },
-  components: {
-    UserCard
-  }
-};
+      ])
 </script>
