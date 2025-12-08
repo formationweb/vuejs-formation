@@ -21,6 +21,11 @@ export default {
   components: {
     Navbar,
     Users
+  },
+  mounted() {
+    setTimeout(() => {
+      this.firstName = 'jim'
+    }, 2000)
   }
 }
 </script>

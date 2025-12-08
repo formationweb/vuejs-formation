@@ -28,6 +28,11 @@ export default {
         search() {
             this.$emit('onSearch', this.userName)
         }
+    },
+    watch: {
+        name(newValue: string) {
+            this.userName = newValue
+        }
     }
 }
 </script>
