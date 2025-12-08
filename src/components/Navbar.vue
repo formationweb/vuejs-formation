@@ -9,30 +9,34 @@
     </ul>
 </template>
 
-<script lang="ts">
-export default {
-    props: {
-        name: {
-            type: String,
-            default: 'test'
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-            firstNames: ['ana', 'ben', 'jim'],
-            userName: this.name
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('onSearch', this.userName)
-        }
-    },
-    watch: {
-        name(newValue: string) {
-            this.userName = newValue
-        }
-    }
+<script setup lang="ts">
+import { ref, watch, watchEffect } from 'vue';
+
+// defineProps({
+//     name: {
+//         type: String,
+//         default: 'test'
+//     }
+// })
+
+const props = defineProps<{
+    name: string
+}>()
+
+//defineEmits(['onSearch'])
+
+const emits = defineEmits<{
+    onSearch: [string]
+}>()
+
+const firstNames = ref(['ana', 'ben', 'jim'])
+const userName = ref(props.name)
+
+function search() {
+    emits('onSearch', userName.value)
 }
+
+watchEffect(() => {
+    userName.value = props.name
+})
 </script>
