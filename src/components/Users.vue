@@ -9,7 +9,10 @@
         default slot
       </template>
       <template #footer="{ active, name }">
-        <p>Est ce utilisateur {{ name }} est {{ active }}</p>
+        <p 
+          :class="{ red: !active, green: active }"
+          :style="{ fontWeight: active ? 'bold' : 'normal' }"
+        >Est ce utilisateur {{ name }} est {{ active }}</p>
       </template>
     </UserCard>
   </Loader>
@@ -254,3 +257,13 @@ const users = ref<User[]>([
         },
       ])
 </script>
+
+<style scoped>
+.red {
+    color: red;
+}
+
+.green {
+  color: green;
+}
+</style>
