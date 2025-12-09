@@ -1,7 +1,11 @@
 <template>
   <h1>utilisateurs</h1>
+  <select v-model="extSelected">
+    <option value="">Tous</option>
+    <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+  </select>
   <Loader :loading="false">
-    <UserCard v-for="u in users" :key="u.id" :user="u">
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
       <template #header="{ name }">
           <h1>{{ name }}</h1>
       </template>
@@ -22,8 +26,10 @@
 import type { User } from '@/core/interfaces/User';
 import UserCard from './UserCard.vue';
 import Loader from '@/atomics/Loader.vue'
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
+const extensions = ref(['tv', 'biz', 'io', 'me']);
+const extSelected = ref('')
 const users = ref<User[]>([
         {
           id: 1,
@@ -256,6 +262,12 @@ const users = ref<User[]>([
           },
         },
       ])
+const usersFiltered = computed(() => {
+  if (!extSelected.value) {
+    return users.value
+  }
+  return users.value.filter(user => user.email.endsWith(extSelected.value))
+})
 </script>
 
 <style scoped>

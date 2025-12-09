@@ -1,7 +1,7 @@
 <template>
-  <Opacity color="black" :opacity="0.5" @change="console.log" />
-  <!-- <Navbar :name="firstName"  @onSearch="listenSearch" />
-  <Users /> -->
+  <!-- <Opacity color="black" :opacity="0.5" @change="console.log" /> -->
+  <Navbar :name="firstName"  @onSearch="listenSearch" />
+  <Users />
 </template>
 
 <script setup lang="ts">

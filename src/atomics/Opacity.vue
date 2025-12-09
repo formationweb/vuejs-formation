@@ -4,14 +4,14 @@
         min="0"
         max="1"
         step="0.01"
-        @input="emits('change', alpha)"
         v-model="alpha"
     />
     <div :style="{ backgroundColor: color, opacity: alpha }"></div>
+    <p>{{ percentStr }}</p>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
 
 const props = defineProps<{
     color: string
@@ -23,6 +23,15 @@ const emits = defineEmits<{
 }>()
 
 const alpha = ref(props.opacity)
+const percentStr = computed(() =>  alpha.value * 100 + '%')
+
+watchEffect(() => {
+    emits('change', alpha.value)
+})
+
+setTimeout(() => {
+    alpha.value = 0.2
+}, 2000)
 </script>
 
 <style scoped>

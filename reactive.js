@@ -15,8 +15,11 @@ function ref(defaultValue) {
 }
 
 const nom = ref('ana')
-nom.value = 'anadzefrgthyjuilmùsazdefgrthyjui'
+const age = ref(20)
+const isMinor = computed(() => age.value < 18)
+
 
 watchEffect(() => {
-    console.log(nom.value)
+  // isMinor.value = age.value < 18
 })
+

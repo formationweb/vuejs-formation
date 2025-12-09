@@ -3,14 +3,15 @@
     <input type="text" v-model="userName">
     <button @click="search" v-if="userName != ''">Rechercher</button>
     <ul>
-        <li v-for="(name, index) of firstNames" :key="name">
+        <li v-for="(name, index) of firstNamesFiltered" :key="name">
           {{  index }} - {{ name }}
         </li>
     </ul>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, watchEffect } from 'vue';
+import { useSearch } from '@/composables/useSearch';
+import { computed, ref, watch, watchEffect } from 'vue';
 
 // defineProps({
 //     name: {
@@ -29,14 +30,5 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-const firstNames = ref(['ana', 'ben', 'jim'])
-const userName = ref(props.name)
-
-function search() {
-    emits('onSearch', userName.value)
-}
-
-watchEffect(() => {
-    userName.value = props.name
-})
+const { firstNamesFiltered, userName, search } = useSearch(props, emits)
 </script>
