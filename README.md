@@ -1,5 +1,15 @@
-<App>
-  <Navbar title="" name="" />
-  <Sidebar />
-  <Content />
-</App>
+/login -> Serveur -> Routeur -> Controller
+
+--
+
+/login -> Routeur -> Component
+
+--
+
+SPA (Single Page Application)
+
+---
+
+CSR -> Client Side Rendering
+SSR -> Server Side Rendering
+SSG -> Server Side Generation

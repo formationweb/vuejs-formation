@@ -7,11 +7,18 @@
           {{  index }} - {{ name }}
         </li>
     </ul>
+    <!-- <RouterLink :to="{ name: 'loginId' }" custom v-slot="router">
+        <button @click="router.navigate">Se connecter</button>
+    </RouterLink> -->
+    <button @click="router.push({ name: 'loginId' })">Se connecter</button>
 </template>
 
 <script setup lang="ts">
 import { useSearch } from '@/composables/useSearch';
 import { computed, ref, watch, watchEffect } from 'vue';
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // defineProps({
 //     name: {
@@ -21,7 +28,7 @@ import { computed, ref, watch, watchEffect } from 'vue';
 // })
 
 const props = defineProps<{
-    name: string
+    name?: string
 }>()
 
 //defineEmits(['onSearch'])
