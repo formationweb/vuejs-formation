@@ -48,11 +48,15 @@ import { useFetchUsers } from '@/composables/useFetchUsers';
 import { deleteUser, createUser, type UserPayload } from '@/composables/useUsers';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia';
 
-const { users, loading, getAll } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+const { loading, getAll } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
-const { remove } = deleteUser(users)
-const { create, loadingCreate } = createUser(users)
+const { remove } = deleteUser()
+const { create, loadingCreate } = createUser()
 
 const { handleSubmit, defineField, errors, resetForm, setFieldValue, setValues } = useForm({
     validationSchema: object({
