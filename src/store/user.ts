@@ -7,6 +7,7 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
   const users = ref<User[]>([]);
+  const userModifying = ref<User | undefined>()
 
   function getAll(data: User[]) {
     users.value = data;
@@ -20,10 +21,19 @@ export const useUserStore = defineStore("user", () => {
     users.value = [...users.value, data];
   }
 
+  function currentModifying(data: User) {
+    userModifying.value = {
+      ...(userModifying.value ?? {}),
+      ...data
+    }
+  }
+
   return {
     users,
+    userModifying,
     getAll,
     remove,
     create,
+    currentModifying
   };
 });

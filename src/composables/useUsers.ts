@@ -4,8 +4,6 @@ import { useUserStore } from "@/store/user";
 import axios from "axios";
 import { inject, ref, type Ref } from "vue";
 
-
-
 export function deleteUser() {
     const userStore = useUserStore()
     const userService = inject<UserService>('userService')
@@ -32,5 +30,33 @@ export function createUser() {
     return {
         create,
         loadingCreate
+    }
+}
+
+export function getUser() {
+    const userStore = useUserStore()
+    const userService = inject<UserService>('userService')
+
+    return {
+        async getCurrentUser(id: number) {
+            const user = await userService?.getUser(id)
+            if (user) {
+                userStore.currentModifying(user)
+            }
+        }
+    }
+}
+
+export function updateUser() {
+    const userStore = useUserStore()
+    const userService = inject<UserService>('userService')
+
+    return {
+        async updateCurrentUser(id: number, payload: UserPayload) {
+            const user = await userService?.updateUser(id, payload)
+            if (user) {
+                userStore.currentModifying(user)
+            }
+        }
     }
 }

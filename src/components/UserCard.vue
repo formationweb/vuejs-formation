@@ -8,7 +8,12 @@
         </slot>
         <input type="checkbox" v-model="active">
         <footer>
-            <button @click="emits('deleteUser', user.id)">Supprimer</button>
+            <button 
+                v-confirm="{
+                    message: 'Etes vous sur ...',
+                    onConfirm: () => emits('deleteUser', user.id)
+                }">Supprimer
+            </button>
             <RouterLink :to="{ name: 'userEdit', params: { id: user.id } }">
                 <button>Modifier</button>
             </RouterLink>
