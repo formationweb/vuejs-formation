@@ -1,25 +1,21 @@
 import axios, { AxiosError } from "axios";
-import { reactive, ref } from "vue";
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
 
-// plus utile, car pinia
-/*
 const KEY_TOKEN = 'token'
 
-export function useAuth()  {
-    // const email = ref('host@example.com')
-    // const password = ref('password123')
-
-    const fields = reactive({
-        email: 'host@example.com',
-        password: 'password123'
-    })
-
+export const useAuthStore = defineStore('auth', () => {
+    // state
     const token = ref(localStorage.getItem(KEY_TOKEN))
     const error = ref('')
 
-    async function login() {
+    // getter
+    const isConnected = computed(() => !!token.value)
+
+    // action
+    async function login(payload: { email: string, password: string}) {
        try {
-        const res = await axios.post('https://apprendre.angular.fr/api/fake/login', fields)
+        const res = await axios.post('https://apprendre.angular.fr/api/fake/login', payload)
         token.value = res.data.token
         localStorage.setItem(KEY_TOKEN, token.value ?? '')
        }
@@ -34,8 +30,9 @@ export function useAuth()  {
     }
 
     return {
-        fields,
         login,
-        error
+        error,
+        isConnected,
+        token
     }
-}*/
+})

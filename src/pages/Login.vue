@@ -35,17 +35,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useAuth } from '@/composables/useAuth';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { object, string } from 'yup';
 
-const { login, error } = useAuth()
+const authStore = useAuthStore()
+//const { token } = storeToRefs(authStore)
 const router = useRouter()
 
 const isSubmitting = ref(false)
-const { handleSubmit, defineField, errors, meta } = useForm({
+const { handleSubmit, defineField, errors, meta, setValues } = useForm({
     validationSchema: object({
         email: string()
         .required('Email obligatoire')
@@ -58,13 +60,17 @@ const { handleSubmit, defineField, errors, meta } = useForm({
 })
 
 const submitLogin = handleSubmit(async (values) => {
-    console.log(values)
-    //await login()
-   // router.push({ name: 'home' })
+    await authStore.login(values as any)
+    router.push({ name: 'home' })
 }, () => {
     isSubmitting.value = true
 })
 
 const [email, emailAttrs] = defineField('email')
 const [password, passwordAttrs] = defineField('password')
+
+setValues({
+    email: 'host@example.com',
+    password: 'password123'
+})
 </script>
