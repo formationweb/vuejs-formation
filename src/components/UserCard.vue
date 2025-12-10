@@ -7,6 +7,9 @@
             Valeur
         </slot>
         <input type="checkbox" v-model="active">
+        <footer>
+            <button @click="emits('deleteUser', user.id)">Supprimer</button>
+        </footer>
     </article>
 </template>
 
@@ -25,6 +28,10 @@ const active = ref(false)
 
 defineProps<{
     user: User
+}>()
+
+const emits = defineEmits<{
+    deleteUser: [number]
 }>()
 
 </script>

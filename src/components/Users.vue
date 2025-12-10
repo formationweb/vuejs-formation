@@ -5,7 +5,7 @@
     <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
   </select>
   <Loader :loading="loading">
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @deleteUser="remove">
       <template #header="{ name }">
           <h1>{{ name }}</h1>
       </template>
@@ -30,9 +30,11 @@ import { computed, ref } from 'vue';
 import { useExtensionFilter } from '@/composables/useExtensionFilter';
 import axios from 'axios';
 import { useFetchUsers } from '@/composables/useFetchUsers';
+import { deleteUser } from '@/composables/useUsers';
 
 const { users, loading, getAll } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+const { remove } = deleteUser(users)
 
 getAll()
 </script>
