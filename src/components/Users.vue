@@ -45,11 +45,12 @@ import { computed, ref } from 'vue';
 import { useExtensionFilter } from '@/composables/useExtensionFilter';
 import axios from 'axios';
 import { useFetchUsers } from '@/composables/useFetchUsers';
-import { deleteUser, createUser, type UserPayload } from '@/composables/useUsers';
+import { deleteUser, createUser } from '@/composables/useUsers';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { useUserStore } from '../store/user';
 import { storeToRefs } from 'pinia';
+import type { UserPayload } from '@/services/user';
 
 const userStore = useUserStore()
 const { users } = storeToRefs(userStore)

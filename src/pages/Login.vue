@@ -1,10 +1,6 @@
 <template>
     <h1>login</h1>
 
-    <div v-show="error" class="red">
-        {{ error }}
-    </div>
-
     <div v-show="!meta.valid && isSubmitting">
         Formulaire invalide
     </div>
@@ -36,7 +32,6 @@
 
 <script lang="ts" setup>
 import { useAuthStore } from '@/store/auth';
-import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';

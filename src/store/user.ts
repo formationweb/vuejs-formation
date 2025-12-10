@@ -1,6 +1,4 @@
-import type { UserPayload } from "@/composables/useUsers";
 import type { User } from "@/core/interfaces/User";
-import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
