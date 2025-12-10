@@ -1,17 +1,19 @@
 import type { User } from "@/core/interfaces/User"
+import type { UserService } from "@/services/user"
 import { useUserStore } from "@/store/user"
 import axios from "axios"
-import { ref } from "vue"
+import { inject, ref } from "vue"
 
 export function useFetchUsers() {
     const userStore = useUserStore()
     const loading = ref(false)
     const error = ref('')
+    const userService = inject<UserService>('userService')
 
     async function getAll() {
         try {
             loading.value = true
-            await userStore.getAll()
+             userStore.getAll(await userService?.getUsers() ?? [])
         }
         catch (err: unknown) {
             if (err && typeof err == 'object' && 'message' in err) {

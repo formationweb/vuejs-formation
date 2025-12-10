@@ -4,27 +4,20 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-const URL = "https://jsonplaceholder.typicode.com/users"
 
 export const useUserStore = defineStore("user", () => {
   const users = ref<User[]>([]);
 
-  async function getAll() {
-    const res = await axios.get(URL);
-    users.value = res.data;
+  function getAll(data: User[]) {
+    users.value = data;
   }
 
-  async function remove(id: number) {
-    await axios.delete(URL + '/' + id);
+  function remove(id: number) {
     users.value = users.value.filter((user) => user.id != id);
   }
 
-  async function create(payload: UserPayload) {
-    const res = await axios.post(
-      URL,
-      payload
-    );
-    users.value = [...users.value, res.data];
+  function create(data: User) {
+    users.value = [...users.value, data];
   }
 
   return {
