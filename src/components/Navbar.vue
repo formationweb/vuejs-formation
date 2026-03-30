@@ -9,34 +9,25 @@
     </ul>
 </template>
 
-<script lang="ts">
-export default {
-    props: {
-        name: {
-            type: String,
-            required: true
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-            propName: this.name,
-            names: ['ana', 'ben', 'jim'],
-            obj: {
-                name: 'ana',
-                age: 18
-            }
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('onSearch', this.name)
-        }
-    },
-    watch: {
-        name(newValue: string) {
-            this.propName = newValue
-        }
-    }
+<script lang="ts" setup>
+import { ref, watch } from 'vue';
+
+const props = defineProps<{
+    name: string
+}>()
+
+const emits = defineEmits<{
+    onSearch: [string]
+}>()
+
+const propName = ref(props.name)
+const names = ref(['ana', 'ben', 'jim'])
+
+function search() {
+    emits('onSearch', propName.value)
 }
+
+watch(props, (obj) => {
+    propName.value = obj.name
+})
 </script>

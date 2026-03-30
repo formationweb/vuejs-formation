@@ -3,35 +3,22 @@
   <Users />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue';
 import Navbar from './components/Navbar.vue';
 import Users from './components/Users.vue';
 
-export default {
-  data() {
-    return {
-      count: 0,
-      userName: 'ana'
-    }
-  },
-  methods: {
-    increment() {
-      this.count++
-    },
-    listenSearch(userName: string) {
-      console.log(userName)
-    }
-  },
-  components: {
-    Navbar,
-    Users
-  },
-  mounted() {
-    setTimeout(() => {
-      this.userName = 'ben'
-    }, 1000)
-  },
+let userName = ref('ana')
+
+console.log(userName.value)
+
+function listenSearch(userNameVal: string) {
+  console.log(userNameVal)
 }
+
+setTimeout(() => {
+  userName.value = 'ben'
+}, 1000)
 </script>
 
 <style scoped>

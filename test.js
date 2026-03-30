@@ -1,10 +1,16 @@
-let obj = {
-    name: 'ana'
+function ref(defaultValue) {
+  return {
+    _value: defaultValue,
+    get value() {
+      return this._value;
+    },
+    set value(val) {
+      console.log("render");
+      this._value = val;
+    },
+  };
 }
 
-function foo(myObj) {
-    myObj.name = 'ben'
-}
-
-foo(obj)
-console.log(obj)
+const age = ref(18)
+console.log(age.value)
+age.value = 15
