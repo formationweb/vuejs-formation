@@ -6,15 +6,23 @@
         <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
     </select>
 
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
-        <h1>test</h1>
-    </UserCard>
+    <Loader :loading="false">
+        <template #default>
+            <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+                <template #default="{ isActive, name }">
+                    <h1>test</h1>
+                    <p>L'utilisateur {{ name }} est {{ isActive }}</p>
+                </template>
+            </UserCard>
+        </template>
+    </Loader>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import type { User } from '../interfaces/user';
 import UserCard from './UserCard.vue';
+import Loader from '../atomics/Loader.vue';
 
 const extensions = ref(['tv', 'biz', 'io', 'me']);
 
