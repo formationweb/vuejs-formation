@@ -7,10 +7,17 @@
            <p :class="{ red: index % 2 != 0, bold: true }">{{ index }} - {{ name }}</p>
         </li>
     </ul>
+    <!-- <RouterLink to="/login" custom v-slot="router">
+        <button @click="router.navigate">Se connecter</button>
+    </RouterLink> -->
+    <button @click="router.push('/login')">Se connecter</button>
 </template>
 
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
 import { useSearch } from '../composables/useSearch';
+
+const router = useRouter()
 
 const props = defineProps<{
     name: string
