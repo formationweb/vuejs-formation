@@ -21,15 +21,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import type { User } from '../interfaces/user';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
+import { useExtensionFilter } from '../composables/useExtensionFilter';
 
-const extensions = ref(['tv', 'biz', 'io', 'me']);
-
-const extSelected = ref('')
 const users = ref<User[]>([
     {
         "id": 1,
@@ -262,10 +260,6 @@ const users = ref<User[]>([
         }
     }
 ])
-const usersFiltered = computed(() => {
-    if (!extSelected.value) {
-        return users.value
-    }
-    return users.value.filter(user => user.email.endsWith(extSelected.value))
-})
+
+const { extensions,extSelected, usersFiltered } = useExtensionFilter(users)
 </script>
