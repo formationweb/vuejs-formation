@@ -6,7 +6,9 @@
         <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
     </select>
 
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <h1>test</h1>
+    </UserCard>
 </template>
 
 <script lang="ts" setup>

@@ -1,5 +1,6 @@
 <template>
     <article>
+        <slot></slot>
         <header>{{  user.name }}</header>
         <p>{{ user.email }}</p>
     </article>

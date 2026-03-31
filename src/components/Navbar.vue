@@ -4,9 +4,10 @@
     <button @click="search" v-if="propName != ''">Rechercher</button>
     <ul>
         <li v-for="(name, index) in namesFiltered" :key="name">
-           {{ index }} - {{ name }}
+           <p :class="{ red: index % 2 != 0, bold: true }">{{ index }} - {{ name }}</p>
         </li>
     </ul>
+    <p :style="{ color: myColor, fontWeight: 'bold' }">test</p>
 </template>
 
 <script lang="ts" setup>
@@ -19,6 +20,8 @@ const props = defineProps<{
 const emits = defineEmits<{
     onSearch: [string]
 }>()
+
+const myColor = ref('red')
 
 const propName = ref(props.name)
 const names = ref(['ana', 'ben', 'jim'])
@@ -42,3 +45,13 @@ watchEffect(() => {
      console.log(propName.value)
 })
 </script>
+
+<style scoped>
+.red {
+    color: red;
+}
+
+.bold {
+    font-weight: bold;
+}
+</style>
