@@ -7,11 +7,10 @@
            <p :class="{ red: index % 2 != 0, bold: true }">{{ index }} - {{ name }}</p>
         </li>
     </ul>
-    <p :style="{ color: myColor, fontWeight: 'bold' }">test</p>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch, watchEffect } from 'vue';
+import { useSearch } from '../composables/useSearch';
 
 const props = defineProps<{
     name: string
@@ -21,29 +20,7 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-const myColor = ref('red')
-
-const propName = ref(props.name)
-const names = ref(['ana', 'ben', 'jim'])
-const namesFiltered = computed(() => {
-    return names.value.filter(name => name.startsWith(propName.value))
-})
-
-function search() {
-    emits('onSearch', propName.value)
-}
-
-// watch(props, (obj) => {
-//     propName.value = obj.name
-// })
-
-watchEffect(() => {
-    propName.value = props.name
-})
-
-watchEffect(() => {
-     console.log(propName.value)
-})
+const { propName, search, namesFiltered } = useSearch(props, emits)
 </script>
 
 <style scoped>
