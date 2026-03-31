@@ -1,6 +1,8 @@
 <template>
     <h1>Users</h1>
 
+    <Opacity color="black" :opacity="0.5" @change="console.log" />
+
     <select v-model="extSelected">
         <option value="">Tous</option>
         <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
@@ -23,6 +25,7 @@ import { computed, ref } from 'vue';
 import type { User } from '../interfaces/user';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
+import Opacity from '../atomics/Opacity.vue';
 
 const extensions = ref(['tv', 'biz', 'io', 'me']);
 
