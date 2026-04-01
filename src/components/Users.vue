@@ -21,7 +21,7 @@
 
     <Loader :loading="loading">
         <template #default>
-            <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="removeUser">
+            <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="remove">
                 <template #default="{ isActive, name }">
                     <h1>test</h1>
                     <p>L'utilisateur {{ name }} est {{ isActive }}</p>
@@ -41,17 +41,17 @@ import { inject, ref } from 'vue';
 import { UserService, type UserPayload } from '../services/users';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
+import { useUserStore } from '../store/user';
+import { storeToRefs } from 'pinia';
+import { useUser } from '../composables/useUser';
 
-const { users, fetchUsers, loading } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+const { fetchUsers, loading } = useFetchUsers()
+const { remove, create, loadingCreate } = useUser()
 const { extensions,extSelected, usersFiltered } = useExtensionFilter(users)
 
 fetchUsers()
-
-const userService = inject<UserService>('userService')
-async function removeUser(id: number) {
-      await userService?.deleteUser(id)
-      users.value = users.value.filter(user => user.id != id)
-}
 
 const { handleSubmit, defineField, resetForm } = useForm({
     validationSchema: object({
@@ -60,20 +60,7 @@ const { handleSubmit, defineField, resetForm } = useForm({
     })
 })
 
-const loadingCreate = ref(false)
-
-const createUser = handleSubmit(async (values) => {
-    loadingCreate.value = true
-    const user = await userService?.createUser(values as UserPayload)
-    if (user) {
-        users.value = [
-            ...users.value,
-            user
-        ]
-        resetForm()
-    }
-     loadingCreate.value = false
-})
+const createUser = handleSubmit(create as any)
 
 const [email, emailAttrs] = defineField('email')
 const [name,nameAttrs] = defineField('name')

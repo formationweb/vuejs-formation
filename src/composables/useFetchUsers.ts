@@ -1,16 +1,18 @@
 import { inject, reactive, ref } from "vue"
 import type { User } from "../interfaces/user"
 import type { UserService } from "../services/users"
+import { useUserStore } from "../store/user"
 
 export function useFetchUsers() {
     const userService = inject<UserService>('userService')
-    const users = ref<User[]>([])
+    const userStore = useUserStore()
     const loading = ref(true)
     const error = ref('')
 
     async function fetchUsers() {
         try {
-            users.value = (await userService?.getUsers() ?? [])
+            const users = (await userService?.getUsers() ?? [])
+            userStore.setUsers(users)
         }
         catch (err) {
             if (err && typeof err == 'object' && 'message' in err) {
@@ -23,7 +25,6 @@ export function useFetchUsers() {
     }
 
     return {
-        users,
         fetchUsers,
         loading
     }
