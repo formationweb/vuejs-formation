@@ -30,8 +30,15 @@
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { object, string } from 'yup';
+import { useAuthStore } from '../store/auth';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
+
+const authStore = useAuthStore()
+const router = useRouter()
 
 const isSubmitting = ref(false)
+// const { token } = storeToRefs(authStore)
 
 function domainValidator(domainName: string) {
     return (email: string) => {
@@ -49,9 +56,10 @@ const { handleSubmit, defineField, meta, errors } = useForm({
     })
 })
 
-const submitLogin = handleSubmit((values) => {
-    console.log(values)
+const submitLogin = handleSubmit(async (values) => {
+    await authStore.login(values as any)
     isSubmitting.value = true
+   // router.push('/')
 }, () => {
     isSubmitting.value = true
 })
