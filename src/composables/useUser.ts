@@ -23,6 +23,12 @@ export function useUser() {
                 userStore.setCurrentUser(user)
             }
         },
+        async updateUser(id: number, values: UserPayload) {
+            const userModified = await userService?.updateUser(id, values)
+            if (userModified) {
+                userStore.setCurrentUser(userModified)
+            }
+        },
         loadingCreate
     }
 }

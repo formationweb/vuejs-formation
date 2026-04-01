@@ -24,4 +24,8 @@ export class UserService {
         const res = await axios.get(URL + '/' + id)
         return res.data
     }
+    async updateUser(id: number, payload: UserPayload): Promise<User> {
+        const res = await axios.put(URL + '/' + id, payload)
+        return res.data
+    }
 }

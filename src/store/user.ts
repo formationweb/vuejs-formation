@@ -22,7 +22,10 @@ export const useUserStore = defineStore('user', () => {
     }
 
     function setCurrentUser(user: User) {
-        userModifying.value = user
+        userModifying.value = {
+            ...userModifying.value,
+            ...user
+        }
     }
 
     return {

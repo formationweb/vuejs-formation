@@ -18,6 +18,7 @@ import { useUser } from '../composables/useUser';
 import { useUserStore } from '../store/user';
 import { storeToRefs } from 'pinia';
 import { useForm } from 'vee-validate';
+import type { UserPayload } from '../services/users';
 
 const user = useUser()
 const userStore = useUserStore()
@@ -34,7 +35,9 @@ async function run() {
 
 run()
 
-const editUser = handleSubmit(() => {})
+const editUser = handleSubmit(async (values) => {
+    await user.updateUser(userModifying.value.id, values as UserPayload)
+})
 
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
