@@ -46,7 +46,7 @@ function domainValidator(domainName: string) {
     }
 }
 
-const { handleSubmit, defineField, meta, errors } = useForm({
+const { handleSubmit, defineField, meta, errors, setFieldValue, setValues } = useForm({
     validationSchema: object({
         email: string()
             .required('Email obligatoire')
@@ -54,6 +54,13 @@ const { handleSubmit, defineField, meta, errors } = useForm({
             .test('email_domain', 'Nom de domaine interdit', domainValidator('gmail.com')),
         password: string().required().min(6)
     })
+})
+
+//setFieldValue('email', 'fefe')
+
+setValues({
+    email: 'dzdza',
+    password: 'fefef'
 })
 
 const submitLogin = handleSubmit(async (values) => {

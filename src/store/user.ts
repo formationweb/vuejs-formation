@@ -4,6 +4,7 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([])
+    const userModifying = ref<User>({} as User)
     
     function setUsers(data: User[]) {
         users.value = data
@@ -20,9 +21,15 @@ export const useUserStore = defineStore('user', () => {
         ]
     }
 
+    function setCurrentUser(user: User) {
+        userModifying.value = user
+    }
+
     return {
         users,
+        userModifying,
         setUsers,
+        setCurrentUser,
         filterUser,
         addUser
     }

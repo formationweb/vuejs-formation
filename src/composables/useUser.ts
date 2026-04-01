@@ -17,6 +17,12 @@ export function useUser() {
                 userStore.addUser(user)
             }
         },
+        async getUser(id: number) {
+            const user = await userService?.getUser(id)
+            if (user) {
+                userStore.setCurrentUser(user)
+            }
+        },
         loadingCreate
     }
 }

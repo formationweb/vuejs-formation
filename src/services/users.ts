@@ -20,4 +20,8 @@ export class UserService {
         const res = await axios.post(URL, payload)
         return res.data
     }
+    async getUser(id: number): Promise<User> {
+        const res = await axios.get(URL + '/' + id)
+        return res.data
+    }
 }
