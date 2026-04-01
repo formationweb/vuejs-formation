@@ -7,10 +7,12 @@
            <p :class="{ red: index % 2 != 0, bold: true }">{{ index }} - {{ name }}</p>
         </li>
     </ul>
-    <!-- <RouterLink to="/login" custom v-slot="router">
+    <RouterLink :to="{ name: 'loginId' }" custom v-slot="router">
         <button @click="router.navigate">Se connecter</button>
-    </RouterLink> -->
-    <button @click="router.push('/login')">Se connecter</button>
+    </RouterLink>
+    <!-- <button @click="router.push({
+        name: 'loginId'
+    })">Se connecter</button> -->
 </template>
 
 <script lang="ts" setup>

@@ -59,7 +59,9 @@ const { handleSubmit, defineField, meta, errors } = useForm({
 const submitLogin = handleSubmit(async (values) => {
     await authStore.login(values as any)
     isSubmitting.value = true
-   // router.push('/')
+    router.push({
+        name: 'home'
+    })
 }, () => {
     isSubmitting.value = true
 })

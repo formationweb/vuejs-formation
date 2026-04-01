@@ -3,6 +3,7 @@ import Users from "./components/Users.vue";
 import Login from "./pages/Login.vue";
 import Main from "./layouts/Main.vue";
 import { useAuthStore } from "./store/auth";
+import UserEdit from "./pages/UserEdit.vue";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -12,11 +13,24 @@ export const router = createRouter({
             component: Main,
             meta: {
                 requiredAuth: true
-            }
+            },
+            children: [
+                {
+                    path: 'user/:id',
+                    component: UserEdit,
+                    name: 'userEdit'
+                },
+                {
+                    path: '',
+                    component: Users,
+                    name: 'home'
+                }
+            ]
         },
         {
             path: '/login',
-            component: Login
+            component: Login,
+            name: 'loginId'
         }
     ]
 })
@@ -24,7 +38,9 @@ export const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore()
     if (!authStore.isConnected && to.meta.requiredAuth) {
-        next('/login')
+        next({
+            name: 'loginId'
+        })
         return
     }
     next()
