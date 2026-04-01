@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { User } from '../interfaces/user';
+import type { User } from '@/interfaces/user';
 
 defineProps<{
     user: User
