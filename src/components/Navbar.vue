@@ -11,11 +11,13 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 
 export default {
     props: {
         name: {
             type: String,
+            // type: Object as PropType<??>
             required: true
         }
     },
