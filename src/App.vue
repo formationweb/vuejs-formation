@@ -1,5 +1,6 @@
 <script>
 import Navbar from './components/Navbar.vue';
+import Users from './components/Users.vue';
 
 export default {
   data() {
@@ -8,12 +9,13 @@ export default {
     }
   },
   components: {
-    Navbar
+    Navbar,
+    Users
   }
 }
 </script>
 
 <template>
   <Navbar />
-  {{  message }}
+  <Users />
 </template>
