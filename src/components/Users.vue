@@ -1,6 +1,16 @@
 <template>
   <h1>Users</h1>
-  <UserCard v-for="u in users" :key="u.id" :user="u" />
+  <UserCard v-for="u in users" :key="u.id" :user="u">
+    <template #head>
+      <header>Titre de la carte</header>
+    </template>
+    <template #default>
+      <p>Contenu</p>
+    </template>
+    <template #foot>
+      <footer>Pied de page</footer>
+    </template>
+  </UserCard>
 </template>
 
 <script setup lang="ts">
