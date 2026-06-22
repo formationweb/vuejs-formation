@@ -1,6 +1,7 @@
 <template>
   <h1>Users</h1>
-  <UserCard v-for="u in users" :key="u.id" :user="u">
+  <Loader :loading="false">
+    <UserCard v-for="u in users" :key="u.id" :user="u">
     <template #head>
       <header>Titre de la carte</header>
     </template>
@@ -10,13 +11,15 @@
     <template #foot>
       <footer>Pied de page</footer>
     </template>
-  </UserCard>
+    </UserCard>
+  </Loader>
 </template>
 
 <script setup lang="ts">
 import type { User } from '@/core/interfaces/user';
 import UserCard from './UserCard.vue';
 import { ref } from 'vue';
+import Loader from '@/atomics/Loader.vue';
 
 const users = ref<User[]>([
         {
