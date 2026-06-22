@@ -1,41 +1,35 @@
 <template>
-    <input type="text" v-model="userName">
-    <button @click="search" v-if="userName != ''">
-        Rechercher
-    </button>
-    <ul>
-        <li v-for="(name, index) in names" :key="name">
-            {{ index }} - {{ name }}
-        </li>
-    </ul>
+  <input type="text" v-model="userName" />
+  <button @click="search" v-if="userName != ''">Rechercher</button>
+  <ul>
+    <li v-for="(name, index) in names" :key="name">{{ index }} - {{ name }}</li>
+  </ul>
 </template>
 
-<script lang="ts">
-import type { PropType } from 'vue'
+<script setup lang="ts">
+import { ref, type PropType } from "vue";
 
-export default {
-    props: {
-        name: {
-            type: String,
-            // type: Object as PropType<??>
-            required: true
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-            names: ['ana', 'ben', 'jim'],
-            userName: this.name
-        }
-    },
-    methods: {
-        search() {
-           this.$emit('onSearch', this.userName)
-        }
-    }
+// écriture JS
+// const props = defineProps({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+// });
+
+// écriture si TS activé
+const props = defineProps<{
+    name: string
+}>();
+
+const emits = defineEmits<{
+    onSearch: [string]
+}>()
+
+const names = ["ana", "ben", "jim"];
+const userName = ref(props.name)
+
+function search() {
+    emits('onSearch', userName.value)
 }
 </script>
-
-<style>
-
-</style>
