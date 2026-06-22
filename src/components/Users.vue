@@ -1,10 +1,16 @@
 <template>
   <h1>Users</h1>
+  <UserCard v-for="u in users" :key="u.id" :user="u" />
 </template>
 
 <script lang="ts">
+import type { User } from '@/core/interfaces/user';
+import UserCard from './UserCard.vue';
+
 export default {
-  data() {
+  data(): {
+    users: User[]
+  }  {
     return {
       users: [
         {
@@ -240,5 +246,8 @@ export default {
       ],
     };
   },
+  components: {
+    UserCard
+  }
 };
 </script>
