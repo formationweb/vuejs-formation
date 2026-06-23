@@ -1,42 +1,58 @@
-Instructions
+Développez un composant ConfirmDialog.vue réutilisable permettant d'afficher une boîte de dialogue de confirmation.
 
-1. Créer un composant avec :
-  * une barre de type range :
+Le composant doit :
 
-<input
-  type="range"
-  min="0"
-  max="1"
-  step="0.01"
-  @input="..."
-/>
+* Accepter une prop open indiquant si la boîte de dialogue est visible ou non.
+* Afficher un titre via un slot nommé header.
+* Afficher un message de confirmation via le slot par défaut.
+* Afficher deux boutons :
+  * Annuler
+  * Confirmer
+* Émettre un événement cancel lors du clic sur le bouton Annuler.
+* Émettre un événement confirm lors du clic sur le bouton Confirmer.
+* Pouvoir être fermé par le composant parent lorsque l'utilisateur annule ou confirme l'action.
+
+Exemple d'utilisation attendue :
+
+<ConfirmDialog
+  :open="showDialog"
+  @cancel="showDialog = false"
+  @confirm="deleteUser"
+>
+  <template #header>
+    <h2>Supprimer l'utilisateur ?</h2>
+  </template>
+
+  <p>Cette action est irréversible.</p>
+</ConfirmDialog>
+
+Voici le style :
 
 
-  * une div affichant la couleur avec l’opacité actuelle
-1. Lorsqu’on modifie la valeur du range :
-  * la couleur de la div change selon la nouvelle opacité,
-  * le composant émet cette nouvelle valeur.
 
----
+<style scoped>
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .5);
 
-Entrées / Sortie
-
-Entrées :
-
-* opacity : nombre (valeur initiale de l’opacité, entre 0 et 1)
-* color : chaîne (couleur de base, ex. "black")
-
-Sortie :
-
-* change : émet la nouvelle valeur d’opacité à chaque modification
-
----
-
-Aide (style de base)
-
-div {
-    width: 100px;
-    height: 100px;
-    background-color: black;
-    opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.dialog {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  min-width: 320px;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+</style>
+
