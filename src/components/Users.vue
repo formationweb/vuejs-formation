@@ -12,8 +12,12 @@
     <p>Cette action est irréversible.</p>
   </ConfirmDialog>
   <button @click="showDialog = true">Montrer confirm dialog</button>
+  <select v-model="extension">
+    <option value="">Tous</option>
+    <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
+  </select>
   <Loader :loading="false">
-    <UserCard v-for="u in users" :key="u.id" :user="u">
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
     <template #head>
       <header>Titre de la carte</header>
     </template>
@@ -30,12 +34,14 @@
 <script setup lang="ts">
 import type { User } from '@/core/interfaces/user';
 import UserCard from './UserCard.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import Loader from '@/atomics/Loader.vue';
 import Opacity from '@/atomics/Opacity.vue';
 import ConfirmDialog from '@/ui/ConfirmDialog.vue';
 
 const showDialog = ref(false)
+const extension = ref('')
+const extensions = ref(['tv', 'biz', 'io', 'me']);
 
 function deleteUser() {
   console.log('ok')
@@ -274,4 +280,11 @@ const users = ref<User[]>([
           },
         },
       ])
+
+const usersFiltered = computed(() =>  {
+  if (!extension.value) {
+    return users.value
+  }
+  return users.value.filter(user => user.email.endsWith(extension.value))
+})
 </script>
