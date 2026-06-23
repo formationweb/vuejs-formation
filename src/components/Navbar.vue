@@ -5,17 +5,24 @@
     <li :class="{ even: index % 2 == 0, bold: true }"
     v-for="(name, index) in autocompleteNames" :key="name">{{ index }} - {{ name }}</li>
   </ul>
-  <select v-model="color">
+  <!-- <select v-model="color">
     <option value="red">Red</option>
     <option value="green">Green</option>
     <option value="blue">Blue</option>
   </select>
-  <div class="color-preview" :style="{ backgroundColor: color }"></div>
+  <div class="color-preview" :style="{ backgroundColor: color }"></div> -->
+  <!-- <RouterLink :to="{ name: 'loginId' }" custom v-slot="router">
+    <button @click="router.navigate">Se connecter</button>
+  </RouterLink> -->
+  <button @click="router.push({ name: 'loginId' })">Se connecter</button>
 </template>
 
 <script setup lang="ts">
 import { useSearch } from "@/composables/useSearch";
 import { computed, ref, type PropType } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter()
 
 const color = ref('')
 
