@@ -24,8 +24,9 @@
     <template #default>
       <p>Contenu</p>
     </template>
-    <template #foot>
+    <template #foot="{ name, isActive }">
       <footer>Pied de page</footer>
+      <p>L'utilisateur {{ name }} est {{ isActive }}</p>
     </template>
     </UserCard>
   </Loader>
