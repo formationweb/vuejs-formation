@@ -38,10 +38,10 @@ import { computed, ref } from 'vue';
 import Loader from '@/atomics/Loader.vue';
 import Opacity from '@/atomics/Opacity.vue';
 import ConfirmDialog from '@/ui/ConfirmDialog.vue';
+import { useExtentionFilter } from '@/composables/useExtentionFilter.ts';
 
 const showDialog = ref(false)
-const extension = ref('')
-const extensions = ref(['tv', 'biz', 'io', 'me']);
+
 
 function deleteUser() {
   console.log('ok')
@@ -281,10 +281,5 @@ const users = ref<User[]>([
         },
       ])
 
-const usersFiltered = computed(() =>  {
-  if (!extension.value) {
-    return users.value
-  }
-  return users.value.filter(user => user.email.endsWith(extension.value))
-})
+const { extension, extensions, usersFiltered } = useExtentionFilter(users)
 </script>
