@@ -3,7 +3,7 @@
   <button @click="search" v-if="userName != ''">Rechercher</button>
   <ul>
     <li :class="{ even: index % 2 == 0, bold: true }"
-    v-for="(name, index) in names" :key="name">{{ index }} - {{ name }}</li>
+    v-for="(name, index) in autocompleteNames" :key="name">{{ index }} - {{ name }}</li>
   </ul>
   <select v-model="color">
     <option value="red">Red</option>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType } from "vue";
+import { computed, ref, type PropType } from "vue";
 
 const color = ref('')
 
@@ -35,8 +35,11 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-const names = ["ana", "ben", "jim"];
+const names = ref<string[]>(["ana", "ben", "jim"]);
 const userName = ref(props.name)
+const autocompleteNames = computed(() => {
+  return names.value.filter((name) => name.includes(userName.value))
+})
 
 function search() {
     emits('onSearch', userName.value)
