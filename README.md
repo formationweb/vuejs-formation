@@ -1,42 +1,42 @@
-# myapp
+Instructions
 
-This template should help get you started developing with Vue 3 in Vite.
+1. Créer un composant avec :
+  * une barre de type range :
 
-## Recommended IDE Setup
+<input
+  type="range"
+  min="0"
+  max="1"
+  step="0.01"
+  @input="..."
+/>
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Recommended Browser Setup
+  * une div affichant la couleur avec l’opacité actuelle
+1. Lorsqu’on modifie la valeur du range :
+  * la couleur de la div change selon la nouvelle opacité,
+  * le composant émet cette nouvelle valeur.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+---
 
-## Type Support for `.vue` Imports in TS
+Entrées / Sortie
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Entrées :
 
-## Customize configuration
+* opacity : nombre (valeur initiale de l’opacité, entre 0 et 1)
+* color : chaîne (couleur de base, ex. "black")
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Sortie :
 
-## Project Setup
+* change : émet la nouvelle valeur d’opacité à chaque modification
 
-```sh
-npm install
-```
+---
 
-### Compile and Hot-Reload for Development
+Aide (style de base)
 
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
+div {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    opacity: 1;
+}
