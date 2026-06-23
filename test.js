@@ -1,21 +1,10 @@
-function ref(defaultValue) {
-    return {
-        _value: defaultValue,
-    
-        get value() {
-            return this._value
-        },
-    
-        set value(newValue) {
-            console.log('render')
-            this._value = newValue
-        }
-    }
-}
+const age = ref(15)
+const isMinor = computed(() => age.value < 18)
 
-let name = ref('')
-let age = ref(18)
+watchEffect(() => {
+    console.log(isMinor.value) // tt
+})
 
-name.value = 'ana'
-age.value = 15
+age.value = 50
+console.log(isMinor.value) // false
 
