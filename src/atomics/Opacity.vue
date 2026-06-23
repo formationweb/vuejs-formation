@@ -5,13 +5,12 @@
         max="1"
         step="0.01"
         v-model="localOpacity"
-        @input="emits('change', localOpacity)"
     />
     <div :style="{ backgroundColor: color, opacity: localOpacity }"></div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 const props = defineProps<{
     color: string
@@ -23,6 +22,15 @@ const emits = defineEmits<{
 }>()
 
 const localOpacity = ref(props.opacity)
+
+watchEffect(() => {
+  localOpacity.value = props.opacity
+})
+
+watchEffect(() => {
+    emits('change', localOpacity.value)
+})
+
 </script>
 
 <style scoped>
