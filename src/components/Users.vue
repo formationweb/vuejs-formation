@@ -1,6 +1,17 @@
 <template>
   <h1>Users</h1>
-  <Opacity color="black" :opacity="0.5" @change="console.log" />
+  <ConfirmDialog
+    :open="showDialog"
+    @cancel="showDialog = false"
+    @confirm="deleteUser"
+  >
+    <template #header>
+      <h2>Supprimer l'utilisateur ?</h2>
+    </template>
+
+    <p>Cette action est irréversible.</p>
+  </ConfirmDialog>
+  <button @click="showDialog = true">Montrer confirm dialog</button>
   <Loader :loading="false">
     <UserCard v-for="u in users" :key="u.id" :user="u">
     <template #head>
@@ -22,6 +33,14 @@ import UserCard from './UserCard.vue';
 import { ref } from 'vue';
 import Loader from '@/atomics/Loader.vue';
 import Opacity from '@/atomics/Opacity.vue';
+import ConfirmDialog from '@/ui/ConfirmDialog.vue';
+
+const showDialog = ref(false)
+
+function deleteUser() {
+  console.log('ok')
+  showDialog.value = false
+}
 
 const users = ref<User[]>([
         {
