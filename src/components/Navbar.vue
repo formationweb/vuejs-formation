@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { useSearch } from "@/composables/useSearch";
 import { computed, ref, type PropType } from "vue";
 
 const color = ref('')
@@ -35,15 +36,7 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-const names = ref<string[]>(["ana", "ben", "jim"]);
-const userName = ref(props.name)
-const autocompleteNames = computed(() => {
-  return names.value.filter((name) => name.includes(userName.value))
-})
-
-function search() {
-    emits('onSearch', userName.value)
-}
+const { userName, autocompleteNames, search } = useSearch(props, emits)
 </script>
 
 <style scoped>
