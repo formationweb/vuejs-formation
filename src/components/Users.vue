@@ -16,7 +16,7 @@
     <option value="">Tous</option>
     <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
   </select>
-  <Loader :loading="false">
+  <Loader :loading="loading">
     <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
       <template #head>
         <header>Titre de la carte</header>
@@ -41,6 +41,7 @@ import Opacity from "@/atomics/Opacity.vue";
 import ConfirmDialog from "@/ui/ConfirmDialog.vue";
 import { useExtentionFilter } from "@/composables/useExtentionFilter.ts";
 import axios from "axios";
+import { useFetchUsers } from "@/composables/useFetchUsers.ts";
 
 const showDialog = ref(false);
 
@@ -49,14 +50,8 @@ function deleteUser() {
   showDialog.value = false;
 }
 
-const users = ref<User[]>([]);
-
-async function getAllUser() {
-  const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-  users.value = res.data
-}
-
-getAllUser();
-
+const { users, getAllUser, loading } = useFetchUsers()
 const { extension, extensions, usersFiltered } = useExtentionFilter(users);
+
+getAllUser()
 </script>
