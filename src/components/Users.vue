@@ -17,7 +17,7 @@
     <option v-for="ext in extensions" :key="ext">{{ ext }}</option>
   </select>
   <Loader :loading="loading">
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="remove">
       <template #head>
         <header>Titre de la carte</header>
       </template>
