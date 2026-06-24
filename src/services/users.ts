@@ -12,4 +12,9 @@ export class UsersService {
     async deleteUser(id: number): Promise<void> {
         await axios.delete(this.url + '/' + id)
     }
+
+    async getUser(id: number): Promise<User> {
+        const res = await axios.get(this.url + '/' + id)
+        return res.data
+    }
 }

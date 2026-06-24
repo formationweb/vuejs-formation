@@ -4,9 +4,14 @@ import { ref } from "vue";
 
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([]) // state
+    const userModifying = ref<User>({} as User)
 
     function setUsers(data: User[]) { // action (qui fait la mutation)
         users.value = data
+    }
+
+    function setCurrentUser(data: User) {
+        userModifying.value = data
     }
 
     function filterUsers(id: number) {
@@ -15,7 +20,9 @@ export const useUserStore = defineStore('user', () => {
 
     return {
         users,
+        userModifying,
         setUsers,
+        setCurrentUser,
         filterUsers
     }
 })
