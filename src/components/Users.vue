@@ -42,15 +42,18 @@ import ConfirmDialog from "@/ui/ConfirmDialog.vue";
 import { useExtentionFilter } from "@/composables/useExtentionFilter.ts";
 import axios from "axios";
 import { useFetchUsers } from "@/composables/useFetchUsers.ts";
+import { useUser } from "@/composables/useUser.ts";
 
 const showDialog = ref(false);
 
-function deleteUser() {
+function deleteUser(id: number) {
   console.log("ok");
+  remove(id)
   showDialog.value = false;
 }
 
 const { users, getAllUser, loading } = useFetchUsers()
+const { remove } = useUser()
 const { extension, extensions, usersFiltered } = useExtentionFilter(users);
 
 getAllUser()

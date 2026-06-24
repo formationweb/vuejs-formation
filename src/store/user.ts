@@ -9,8 +9,13 @@ export const useUserStore = defineStore('user', () => {
         users.value = data
     }
 
+    function filterUsers(id: number) {
+        users.value = users.value.filter(user => user.id != id)
+    }
+
     return {
         users,
-        setUsers
+        setUsers,
+        filterUsers
     }
 })
