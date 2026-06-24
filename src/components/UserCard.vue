@@ -6,6 +6,7 @@
         <span>{{ user.email }}</span>
         <slot name="foot" :isActive="active" v-bind="user"></slot>
         <input type="checkbox" v-model="active"> 
+        <button @click="emits('onDelete', user.id)">Supprimer</button>
     </article>
 </template>
 
@@ -15,6 +16,10 @@ import { ref } from 'vue';
 
 defineProps<{
     user: User
+}>()
+
+const emits = defineEmits<{
+    onDelete: [number]
 }>()
 
 const active = ref(false)
