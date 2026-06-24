@@ -1,4 +1,4 @@
-import type { UsersService } from "@/services/users"
+import type { UserPayload, UsersService } from "@/services/users"
 import { useUserStore } from "@/store/user"
 import { storeToRefs } from "pinia"
 import { inject } from "vue"
@@ -18,6 +18,15 @@ export function useUser() {
             const user = await userService?.getUser(id)
             if (user) {
                 userStore.setCurrentUser(user)
+            }
+        },
+        async update(id: number, data: UserPayload) {
+            const userModified =  await userService?.updateUser(id, data)
+            if (userModified) {
+                userStore.setCurrentUser({
+                    ...userModifying.value,
+                    ...userModified
+                }) 
             }
         }
     }

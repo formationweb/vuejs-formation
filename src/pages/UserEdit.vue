@@ -14,9 +14,10 @@
 
 <script setup lang="ts">
 import { useUser } from '@/composables/useUser';
+import type { UserPayload } from '@/services/users';
 import { useForm } from 'vee-validate';
 import { useRoute } from 'vue-router';
-const { get, userModifying } = useUser()
+const { get, userModifying, update } = useUser()
 
 const { params } = useRoute()
 const userId = params.id == undefined ? null : +params.id
@@ -33,6 +34,6 @@ get(userId!).then(() => {
 })
 
 const edit = handleSubmit((values) => {
-    console.log(values)
+   update(userId!, values as UserPayload)
 })
 </script>
