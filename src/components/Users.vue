@@ -1,22 +1,25 @@
 <template>
     <h1>Users</h1>
-    <UserCard v-for="u in users" :key="u.id" :user="u">
-        <template #header>
-            <h1>Titre</h1>
-        </template>
-        <template #default>
-            le contenu
-        </template>
-        <template #footer>
-            <h2>Footer</h2>
-        </template>
-    </UserCard>
+    <Loader :loading="false">
+        <UserCard v-for="u in users" :key="u.id" :user="u">
+            <template #header>
+                <h1>Titre</h1>
+            </template>
+            <template #default>
+                le contenu
+            </template>
+            <template #footer>
+                <h2>Footer</h2>
+            </template>
+        </UserCard>
+    </Loader>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import UserCard from './UserCard.vue';
 import type { User } from '@/core/interfaces/user.ts';
+import Loader from '../atomics/Loader.vue';
 
 const users = ref<User[]>([
                 {
