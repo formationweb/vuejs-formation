@@ -13,30 +13,29 @@
     </ul>
 </template>
 
-<script lang="ts">
-export default {
-    props: {
-        userName: {
-            type: String,
-            required: true
-        }
-    },
-    emits: ['onSearch'],
-    data() {
-        return {
-            name: this.userName,
-            names: ['ana', 'ben', 'jim'],
-            config: {
-                url: 'http://',
-                port: 3000
-            }
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('onSearch', this.name)
-        }
-    }
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+// const props = defineProps({
+//     userName: {
+//         type: String,
+//         required: true
+//     }
+// })
+
+const props = defineProps<{
+    userName: string
+}>()
+
+const emits = defineEmits<{
+    onSearch: [string]
+}>()
+
+let name = ref(props.userName)
+const names = ref(['ana', 'ben', 'jim'])
+
+function search() {
+    emits('onSearch', name.value)
 }
 </script>
 

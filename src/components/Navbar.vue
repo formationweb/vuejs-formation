@@ -3,22 +3,13 @@
     <Search :userName="defaultName" @onSearch="listenSearch" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import Search from './Search.vue';
 
-export default {
-    data() {
-        return {
-            defaultName: 'ben'
-        }
-    },
-    methods: {
-        listenSearch(userName: string) {
-            console.log(userName)
-        }
-    },
-    components: {
-        Search
-    }
+const defaultName = 'ben'
+
+function listenSearch(userName: string) {
+    console.log(userName)
 }
+
 </script>

@@ -3,14 +3,7 @@
   <Users />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import Navbar from './components/Navbar.vue';
 import Users from './components/Users.vue';
-
-export default {
-  components: {
-    Navbar,
-    Users
-  }
-}
 </script>
