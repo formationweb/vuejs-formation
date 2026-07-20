@@ -1,7 +1,10 @@
 <template>
     <article>
+        <slot name="header"></slot>
         <header>{{ user.name }}</header>
+        <slot></slot>
         <p>{{ user.email }}</p>
+        <slot name="footer"></slot>
     </article>
 </template>
 
