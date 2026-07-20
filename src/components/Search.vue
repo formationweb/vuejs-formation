@@ -2,9 +2,13 @@
     <input type="text" v-model="name">
     <button @click="search" v-if="name != ''">Rechercher</button>
     <div v-else>Rien</div>
+    
+    
+    <div :style="{ color: 'red', fontWeight: 'bold' }">Un texte</div>
+    
     <ul>
         <li v-for="(nom, index) in names" :key="nom" 
-        :class="index % 2 == 0 ? 'red' : ''">
+        :class="{ red: index % 2 == 0, bold: index == 1 }">
             {{ index }} - {{ nom }}
         </li>
         <!-- <li v-for="(val, key) in config" :key="key">
@@ -42,5 +46,9 @@ function search() {
 <style scoped>
 .red {
     color: red;
+}
+
+.bold {
+    font-weight: bold;
 }
 </style>
