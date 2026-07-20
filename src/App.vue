@@ -1,7 +1,7 @@
 <template>
-  <!-- <Navbar />
-  <Users /> -->
-  <Draw />
+  <Navbar />
+  <Users />
+  <!-- <Draw /> -->
 </template>
 
 <script lang="ts" setup>
