@@ -3,16 +3,12 @@
     <UserCard v-for="u in users" :key="u.id" :user="u" />
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue';
 import UserCard from './UserCard.vue';
 import type { User } from '@/core/interfaces/user.ts';
 
-export default {
-    data(): {
-        users: User[]
-    } {
-        return {
-            users: [
+const users = ref<User[]>([
                 {
                     "id": 1,
                     "name": "Leanne Graham",
@@ -243,11 +239,5 @@ export default {
                         "bs": "target end-to-end models"
                     }
                 }
-            ]
-        }
-    },
-    components: {
-        UserCard
-    }
-}
+            ])
 </script>
