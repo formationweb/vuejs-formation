@@ -1,24 +1,16 @@
 <template>
   <Navbar />
- <button v-on:click="changeTitle">Changer titre</button>
+  <Users />
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
+import Users from './components/Users.vue';
 
 export default {
-  data() {
-    return {
-      title: 'Mon App'
-    }
-  },
-  methods: {
-    changeTitle() {
-      this.title = 'test'
-    }
-  },
   components: {
-    Navbar
+    Navbar,
+    Users
   }
 }
 </script>
