@@ -19,6 +19,7 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
+import { useSearch } from '../composables/useSearch';
 
 // const props = defineProps({
 //     userName: {
@@ -35,15 +36,7 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-const name = ref(props.userName)
-const names = ref(['ana', 'ben', 'jim'])
-const namesFiltered = computed(() => {
-    return names.value.filter(n => n.startsWith(name.value))
-})
-
-function search() {
-    emits('onSearch', name.value)
-}
+const { name, namesFiltered, search } = useSearch(props, emits)
 </script>
 
 <style scoped>
