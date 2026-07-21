@@ -2,12 +2,13 @@ import { inject, ref } from "vue";
 import type { User } from "../core/interfaces/user";
 import axios from "axios";
 import type { UserService } from "../core/services/user";
+import { UserServiceKey } from "../keys";
 
 export function useFetchUsers() {
   const users = ref<User[]>([]);
   const loading = ref(false);
   const error = ref<null | string>(null);
-  const userService = inject<UserService>('userService')
+  const userService = inject<UserService>(UserServiceKey)
 
   async function getAllUser() {
     try {

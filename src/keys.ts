@@ -1,0 +1,1 @@
+export const UserServiceKey = Symbol('userService key')
