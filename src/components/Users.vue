@@ -13,8 +13,9 @@
             <template #default>
                 le contenu
             </template>
-            <template #footer>
+            <template #footer="{ isActive, name }">
                 <h2>Footer</h2>
+                L'utilisateur {{ name }} est {{ isActive }}
             </template>
         </UserCard>
     </Loader>

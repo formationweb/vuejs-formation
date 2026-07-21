@@ -1,2 +1,9 @@
-<Navbar title="Mon App" />
-<Navbar title="Footer" />
+/login -> Server -> Router -> controller 
+/login -> Routeur -> Component
+
+
+SPA (Single Page Application)
+
+-> CSR (Client Side Rendering)
+-> SSR (Server Side Rendering)
+-> SSG (Server Side Generation)
