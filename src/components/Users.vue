@@ -5,7 +5,7 @@
         <option value="">Tous</option>
         <option v-for="ext in extensions">{{ ext }}</option>
      </select>
-    <Loader :loading="false">
+    <Loader :loading="loading">
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
             <template #header>
                 <h1>Titre</h1>
@@ -29,17 +29,12 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 import axios from 'axios';
+import { useFetchUsers } from '../composables/useFetchUsers.ts';
 
-const users = ref<User[]>([])
-
-async function getAllUser() {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-    users.value = res.data
-}
+const { getAllUser, users, loading } = useFetchUsers()
+const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
 
 getAllUser()
-
-const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
 
 const userOpacity = ref(0.5)
 
