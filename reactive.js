@@ -16,3 +16,10 @@ name.value = 'ben'
 
 const age = ref(18)
 age.value = 15
+
+const isMinor = computed(() => age.value < 18)
+console.log(isMinor.value)
+
+watchEffect(() => {
+  console.log(age.value)
+})

@@ -1,6 +1,6 @@
 <template>
     <h1>Users</h1>
-    <Opacity :opacity="0.5" color="black" @change="console.log" />
+    <Opacity :opacity="userOpacity" color="black" @change="console.log" />
     <Loader :loading="false">
         <UserCard v-for="u in users" :key="u.id" :user="u">
             <template #header>
@@ -255,4 +255,10 @@ const users = ref<User[]>([
                     }
                 }
             ])
+
+const userOpacity = ref(0.5)
+
+setTimeout(() => {
+    userOpacity.value = 0.2
+}, 2000)
 </script>

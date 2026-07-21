@@ -7,7 +7,7 @@
     <div :style="{ color: 'red', fontWeight: 'bold' }">Un texte</div>
     
     <ul>
-        <li v-for="(nom, index) in names" :key="nom" 
+        <li v-for="(nom, index) in namesFiltered" :key="nom" 
         :class="{ red: index % 2 == 0, bold: index == 1 }">
             {{ index }} - {{ nom }}
         </li>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 // const props = defineProps({
 //     userName: {
@@ -35,8 +35,11 @@ const emits = defineEmits<{
     onSearch: [string]
 }>()
 
-let name = ref(props.userName)
+const name = ref(props.userName)
 const names = ref(['ana', 'ben', 'jim'])
+const namesFiltered = computed(() => {
+    return names.value.filter(n => n.startsWith(name.value))
+})
 
 function search() {
     emits('onSearch', name.value)
