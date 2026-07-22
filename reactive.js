@@ -11,15 +11,30 @@ function ref(defaultValue) {
   };
 }
 
-const name = ref('')
-name.value = 'ben'
+const name = ref("ana");
 
-const age = ref(18)
-age.value = 15
+// const user = ref({
+//   name: '',
+//   address: ref({
+//     city: 'paris'
+//   })
+// })
 
-const isMinor = computed(() => age.value < 18)
-console.log(isMinor.value)
+function reactive(obj) {
+  return new Proxy(obj, {
+    get(obj, prop) {
+      return obj[prop];
+    },
+    set(obj, prop, val) {
+      console.log("rendu !");
+      obj[prop] = val;
+      return true;
+    },
+  });
+}
 
-watchEffect(() => {
-  console.log(age.value)
+const user = reactive({
+  name: 'ana'
 })
+
+user.name = 'ben'

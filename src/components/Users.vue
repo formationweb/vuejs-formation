@@ -61,7 +61,7 @@ import type { UserCreatePayload } from '../core/services/user.ts';
 
 const { getAllUser, users, loading } = useFetchUsers()
 const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
-const { deleteUser, createUser, loadingCreate } = useUserManage(users)
+const { deleteUser, createUser, loadingCreate } = useUserManage()
 
 const { handleSubmit, defineField, meta, errors, resetForm, setFieldValue, setValues } = useForm({
     validationSchema: object({
