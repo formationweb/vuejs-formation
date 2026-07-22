@@ -31,15 +31,13 @@ import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 import axios from 'axios';
 import { useFetchUsers } from '../composables/useFetchUsers.ts';
+import { useUserManage } from '../composables/useUserManage.ts';
 
 const { getAllUser, users, loading } = useFetchUsers()
 const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
+const { deleteUser } = useUserManage(users)
 
 getAllUser()
-
-function deleteUser(id: number) {
-
-}
 
 const userOpacity = ref(0.5)
 
