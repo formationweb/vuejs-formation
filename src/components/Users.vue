@@ -1,5 +1,28 @@
 <template>
     <h1>Users</h1>
+
+    <div v-show="!meta.valid">
+        Formulaire invalide
+        <div v-show="errors.email">
+            {{ errors.email }}
+        </div>
+        <div v-show="errors.name">
+            {{ errors.name }}
+        </div>
+    </div>
+
+    <form @submit.prevent="submitCreateUser">
+        <label>Email</label>
+        <input type="text" v-model="email" v-bind="emailAttrs">
+
+        <label>Nom</label>
+        <input type="password" v-model="name" v-bind="nameAttrs">
+
+        <button 
+            :aria-busy="loadingCreate" 
+            :disabled="loadingCreate">Créer utilisateur</button>
+    </form>
+
     <!-- <Opacity :opacity="userOpacity" color="black" @change="console.log" /> -->
      <select v-model="extSelected">
         <option value="">Tous</option>
@@ -32,10 +55,36 @@ import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 import axios from 'axios';
 import { useFetchUsers } from '../composables/useFetchUsers.ts';
 import { useUserManage } from '../composables/useUserManage.ts';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import type { UserCreatePayload } from '../core/services/user.ts';
 
 const { getAllUser, users, loading } = useFetchUsers()
 const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
-const { deleteUser } = useUserManage(users)
+const { deleteUser, createUser, loadingCreate } = useUserManage(users)
+
+const { handleSubmit, defineField, meta, errors, resetForm, setFieldValue, setValues } = useForm({
+    validationSchema: object({
+        email: string().email('Email obligatoire').required(),
+        name: string().required()
+    })
+})
+
+const submitCreateUser = handleSubmit(async (values) => {
+    await createUser(values as UserCreatePayload)
+    resetForm()
+})
+
+setTimeout(() => {
+   // setFieldValue('email', 'zfez')
+   setValues({
+     email: 'fefe',
+     name: 'ergr'
+   })
+}, 1000)
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
 
 getAllUser()
 
