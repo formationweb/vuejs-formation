@@ -6,7 +6,8 @@
         <option v-for="ext in extensions">{{ ext }}</option>
      </select>
     <Loader :loading="loading">
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" 
+            :key="u.id" :user="u" @onDelete="deleteUser">
             <template #header>
                 <h1>Titre</h1>
             </template>
@@ -35,6 +36,10 @@ const { getAllUser, users, loading } = useFetchUsers()
 const { extensions, extSelected, usersFiltered } = useExtensionFilter(users)
 
 getAllUser()
+
+function deleteUser(id: number) {
+
+}
 
 const userOpacity = ref(0.5)
 
