@@ -7,6 +7,7 @@ import type { User } from "../interfaces/user";
 // }
 
 export type UserCreatePayload = Pick<User, 'email'> & Pick<User, 'name'>
+export type UserUpdatePayload = UserCreatePayload
 
 export class UserService {
     readonly url = "https://jsonplaceholder.typicode.com/users"
@@ -23,6 +24,11 @@ export class UserService {
 
     async createUser(payload: UserCreatePayload): Promise<User> {
         const res = await axios.post(this.url, payload)
+        return res.data
+    }
+
+    async updateUser(id: number, payload: UserUpdatePayload): Promise<User> {
+        const res = await axios.put(this.url + '/' + id, payload)
         return res.data
     }
 

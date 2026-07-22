@@ -19,6 +19,7 @@ import { storeToRefs } from 'pinia';
 import { useUserManage } from '../composables/useUserManage';
 import { useForm } from 'vee-validate';
 import { watchEffect } from 'vue';
+import type { UserUpdatePayload } from '../core/services/user';
 
 const route = useRoute()
 const userStore = useUserStore()
@@ -46,7 +47,7 @@ watchEffect(() => {
 })
 
 const submitEditUser = handleSubmit(async (values) => {
-    
+    if (id) userManage.updateUser(id, values as UserUpdatePayload)
 })
 
 const [email, emailAttrs] = defineField('email')

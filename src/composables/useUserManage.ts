@@ -1,6 +1,6 @@
 import { inject, ref, type Ref } from "vue";
 import { UserServiceKey } from "../keys";
-import { UserService, type UserCreatePayload } from "../core/services/user";
+import { UserService, type UserCreatePayload, type UserUpdatePayload } from "../core/services/user";
 import type { User } from "../core/interfaces/user";
 import { useUserStore } from "../store/user";
 
@@ -26,10 +26,19 @@ export function useUserManage() {
         if (user) userStore.setCurrentUser(user)
     }
 
+    async function updateUser(id: number, payload: UserUpdatePayload) {
+        const user = await userService?.updateUser(id, payload)
+        if (user) userStore.setCurrentUser({
+            ...userStore.userModifying,
+            ...user
+        })
+    }
+
     return {
         deleteUser,
         createUser,
         loadingCreate,
-        getUser
+        getUser,
+        updateUser
     }
 }
