@@ -11,9 +11,24 @@ export const useUserStore = defineStore('user', () => {
         users.value = newUsers
      }
 
+     function filterUsers(id: number) {
+        users.value = users.value.filter(user => user.id != id)
+     }
+
+     function addUser(user?: User) {
+        if (user) {
+            users.value = [
+                ...users.value,
+                user
+            ]
+        }
+     }
+
      return {
         users,
         setUsers,
+        filterUsers,
+        addUser,
         usersCount
      }
 })
