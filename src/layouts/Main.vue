@@ -6,5 +6,5 @@ import Users from '../components/Users.vue';
 
 <template>
     <Navbar />
-    <Users />
+    <RouterView />
 </template>
