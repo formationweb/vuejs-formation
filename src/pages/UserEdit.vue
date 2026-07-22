@@ -6,7 +6,7 @@
         <input type="text" v-model="email" v-bind="emailAttrs">
 
         <label>Nom</label>
-        <input type="password" v-model="name" v-bind="nameAttrs">
+        <input type="text" v-model="name" v-bind="nameAttrs">
 
         <button>Modifier utilisateur</button>
     </form>
