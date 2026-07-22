@@ -16,6 +16,11 @@ export class UserService {
         return res.data;
     }
 
+    async get(id: number): Promise<User> {
+        const res = await axios.get(this.url + '/' + id);
+        return res.data;
+    }
+
     async createUser(payload: UserCreatePayload): Promise<User> {
         const res = await axios.post(this.url, payload)
         return res.data

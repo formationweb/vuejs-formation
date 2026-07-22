@@ -21,9 +21,15 @@ export function useUserManage() {
         loadingCreate.value = false
     }
 
+    async function getUser(id: number) {
+        const user = await userService?.get(id)
+        if (user) userStore.setCurrentUser(user)
+    }
+
     return {
         deleteUser,
         createUser,
-        loadingCreate
+        loadingCreate,
+        getUser
     }
 }

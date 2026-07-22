@@ -4,11 +4,16 @@ import { computed, ref } from "vue";
 
 export const useUserStore = defineStore('user', () => {
      const users = ref<User[]>([]); // state
+     const userModifying = ref<User | undefined>()
 
      const usersCount = computed(() => users.value.length) // getter
 
      function setUsers(newUsers: User[]) { // action
         users.value = newUsers
+     }
+
+     function setCurrentUser(user: User) {
+         userModifying.value = user
      }
 
      function filterUsers(id: number) {
@@ -29,6 +34,8 @@ export const useUserStore = defineStore('user', () => {
         setUsers,
         filterUsers,
         addUser,
-        usersCount
+        usersCount,
+        setCurrentUser,
+        userModifying
      }
 })
