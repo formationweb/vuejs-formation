@@ -13,4 +13,8 @@ let name = ref('ben')
 function listenSearch(userName: string) {
   console.log(userName)
 }
+
+// setTimeout(() => {
+//   name.value  = 'jim'
+// }, 3000)
 </script>

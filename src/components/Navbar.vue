@@ -6,55 +6,14 @@
         Vide
     </div>
     <ul>
-        <li v-for="(name, index) in names" :key="name">
+        <li v-for="(name, index) in namesFiltered" :key="name">
             {{ index }} - {{ name }}
         </li>
     </ul>
 </template>
 
-<!-- <script lang="ts">
-import type { PropType } from 'vue';
-
-export default {
-    props: {
-        userName: {
-            type: String,
-            required: true
-        },
-        myObject: {
-            type: Object as PropType<{
-                url: string
-            }>
-        }
-    },
-    emits: ['runSearch'],
-    data() {
-        return {
-            names: ['ana', 'ben', 'jim'],
-            config: {
-                url: 'example.com',
-                port: 3000
-            },
-            localUserName: this.userName
-        }
-    },
-    methods: {
-        search() {
-            this.$emit('runSearch', this.localUserName)
-        }
-    }
-}
-</script> -->
-
 <script lang="ts" setup>
-import { ref } from 'vue';
-
-// const props = defineProps({
-//     userName: {
-//         type: String,
-//         required: true
-//     }
-// })
+import { computed, ref, watchEffect } from 'vue';
 
 const props = defineProps<{
     userName: string
@@ -66,9 +25,20 @@ const emits = defineEmits<{
 
 const localUserName = ref(props.userName)
 const names = ref(['ana', 'ben', 'jim'])
+const namesFiltered = computed(() => {
+    return names.value.filter(name => localUserName.value.includes(name))
+})
 
 function search() {
     emits('runSearch', localUserName.value)
 }
+
+watchEffect(() => {
+    localUserName.value = props.userName
+})
+
+watchEffect(() => {
+    console.log(localUserName.value)
+})
 </script>
 
