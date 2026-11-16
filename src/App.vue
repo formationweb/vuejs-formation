@@ -1,9 +1,9 @@
 <template>
-  <Navbar :userName="name" />
+  <Navbar :userName="name" @runSearch="listenSearch" />
   <Users />
 </template>
 
-<script>
+<script lang="ts">
 import Navbar from './components/Navbar.vue';
 import Users from './components/Users.vue';
 
@@ -15,6 +15,11 @@ export default {
   data() {
     return {
       name: 'ben'
+    }
+  },
+  methods: {
+    listenSearch(userName: string) {
+      console.log(userName)
     }
   }
 }

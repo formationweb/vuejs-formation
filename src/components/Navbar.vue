@@ -16,8 +16,21 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue';
+
 export default {
-    props: ['userName'],
+    props: {
+        userName: {
+            type: String,
+            required: true
+        },
+        myObject: {
+            type: Object as PropType<{
+                url: string
+            }>
+        }
+    },
+    emits: ['runSearch'],
     data() {
         return {
             names: ['ana', 'ben', 'jim'],
@@ -30,7 +43,7 @@ export default {
     },
     methods: {
         search() {
-            console.log(this.localUserName)
+            this.$emit('runSearch', this.localUserName)
         }
     }
 }
