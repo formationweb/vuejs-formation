@@ -1,10 +1,17 @@
 <template>
     <h1>Users</h1>
-    <UserCard v-for="u in users" :key="u.id" :user="u" />
+
+    <select v-model="extSelected">
+        <option v-for="ext in extensions" :key="ext">
+            {{ ext }}
+        </option>
+    </select>
+
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { User } from '../core/interfaces/user.ts';
 import UserCard from './UserCard.vue';
 
@@ -240,4 +247,10 @@ const users = ref<User[]>([
         }
     }
 ])
+
+ const extensions =ref(['tv', 'biz', 'io', 'me']);
+ const extSelected = ref('')
+ const usersFiltered = computed(() => {
+    return users.value.filter(user => user.email.endsWith(extSelected.value))
+ })
 </script>
