@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <Navbar :userName="name" />
   <Users />
 </template>
 
@@ -11,6 +11,11 @@ export default {
   components: {
     Navbar,
     Users
+  },
+  data() {
+    return {
+      name: 'ben'
+    }
   }
 }
 </script>
