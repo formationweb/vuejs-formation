@@ -1,9 +1,12 @@
 <template>
+  <Navbar />
   <h1>{{ title }}</h1>
   <button v-on:click="changeTitle">Changer titre</button>
 </template>
 
 <script>
+import Navbar from './components/Navbar.vue';
+
 export default {
   data() {
     return {
@@ -14,6 +17,9 @@ export default {
     changeTitle() {
       this.title = 'Nouveau titre'
     }
+  },
+  components: {
+    Navbar
   }
 }
 </script>
