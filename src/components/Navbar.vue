@@ -9,13 +9,10 @@
         <li v-for="(name, index) in names" :key="name">
             {{ index }} - {{ name }}
         </li>
-        <!-- <li v-for="(value, key) in config" :key="key">
-            {{ key }} - {{  value }}
-        </li> -->
     </ul>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import type { PropType } from 'vue';
 
 export default {
@@ -47,4 +44,31 @@ export default {
         }
     }
 }
+</script> -->
+
+<script lang="ts" setup>
+import { ref } from 'vue';
+
+// const props = defineProps({
+//     userName: {
+//         type: String,
+//         required: true
+//     }
+// })
+
+const props = defineProps<{
+    userName: string
+}>()
+
+const emits = defineEmits<{
+    runSearch: [string]
+}>()
+
+const localUserName = ref(props.userName)
+const names = ref(['ana', 'ben', 'jim'])
+
+function search() {
+    emits('runSearch', localUserName.value)
+}
 </script>
+

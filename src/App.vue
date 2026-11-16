@@ -1,26 +1,16 @@
 <template>
-  <Navbar :userName="name" @runSearch="listenSearch" />
+   <Navbar :userName="name" @runSearch="listenSearch" />
   <Users />
 </template>
 
-<script lang="ts">
-import Navbar from './components/Navbar.vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 import Users from './components/Users.vue';
+import Navbar from './components/Navbar.vue';
 
-export default {
-  components: {
-    Navbar,
-    Users
-  },
-  data() {
-    return {
-      name: 'ben'
-    }
-  },
-  methods: {
-    listenSearch(userName: string) {
-      console.log(userName)
-    }
-  }
+let name = ref('ben')
+
+function listenSearch(userName: string) {
+  console.log(userName)
 }
 </script>

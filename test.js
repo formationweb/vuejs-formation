@@ -1,10 +1,18 @@
-let obj = {
-    nom: 'ana'
+function ref(defaultValue) {
+    return {
+        _value: defaultValue,
+        get value() {
+            return this._value
+        },
+        set value(newNom) {
+            console.log('prop modified')
+            this._value = newNom 
+        }
+    }
 }
 
-function test(obj2) {
-    obj2.nom = 'ben'
-}
 
-test(obj)
-console.log(obj)
+let nom = ref('ana')
+let age = ref(18)
+
+nom.value = 'ben'
