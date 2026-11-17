@@ -1,22 +1,3 @@
 <template>
-   <!-- <Navbar :userName="name" @runSearch="listenSearch" />
-  <Users /> -->
-  <Draw />
+  <RouterView />
 </template>
-
-<script lang="ts" setup>
-import { ref } from 'vue';
-import Users from './components/Users.vue';
-import Navbar from './components/Navbar.vue';
-import Draw from './components/Draw.vue';
-
-let name = ref('ben')
-
-function listenSearch(userName: string) {
-  console.log(userName)
-}
-
-// setTimeout(() => {
-//   name.value  = 'jim'
-// }, 3000)
-</script>
