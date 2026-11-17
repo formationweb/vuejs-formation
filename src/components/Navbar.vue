@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watchEffect } from 'vue';
+import { useSearch } from '../composables/useSearch';
 
 const props = defineProps<{
     userName: string
@@ -25,23 +25,7 @@ const emits = defineEmits<{
     runSearch: [string]
 }>()
 
-const localUserName = ref(props.userName)
-const names = ref(['ana', 'ben', 'jim', 'benjamin', 'benfeoef'])
-const namesFiltered = computed(() => {
-    return names.value.filter(name => name.includes(localUserName.value))
-})
-
-function search() {
-    emits('runSearch', localUserName.value)
-}
-
-watchEffect(() => {
-    localUserName.value = props.userName
-})
-
-watchEffect(() => {
-    console.log(localUserName.value)
-})
+const { localUserName, namesFiltered, search } = useSearch(props, emits)
 </script>
 
 <style scoped>
