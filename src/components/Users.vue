@@ -7,7 +7,17 @@
         </option>
     </select>
 
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" />
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+       <template #header>
+            <h1>test</h1>
+       </template>
+       <template #default>
+            contenu
+       </template>
+       <template #footer="{ active, name }">
+            L'utilisateur {{ name }} est {{ active }}
+       </template>
+    </UserCard>
 </template>
 
 <script lang="ts" setup>
