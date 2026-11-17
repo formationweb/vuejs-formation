@@ -1,6 +1,8 @@
 <template>
     <h1>Users</h1>
 
+    <Opacity :opacity="0.5" color="black" @change="console.log" />
+
     <select v-model="extSelected">
         <option v-for="ext in extensions" :key="ext">
             {{ ext }}
@@ -27,6 +29,7 @@ import { computed, ref } from 'vue';
 import type { User } from '../core/interfaces/user.ts';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
+import Opacity from '../atomics/Opacity.vue';
 
 const users = ref<User[]>([
     {
