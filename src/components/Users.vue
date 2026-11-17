@@ -1,7 +1,7 @@
 <template>
     <h1>Users</h1>
 
-    <Opacity :opacity="0.5" color="black" @change="console.log" />
+    <!-- <Opacity :opacity="0.5" color="black" @change="console.log" /> -->
 
     <select v-model="extSelected">
         <option v-for="ext in extensions" :key="ext">
@@ -30,6 +30,7 @@ import type { User } from '../core/interfaces/user.ts';
 import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
+import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 
 const users = ref<User[]>([
     {
@@ -264,9 +265,5 @@ const users = ref<User[]>([
     }
 ])
 
- const extensions =ref(['tv', 'biz', 'io', 'me']);
- const extSelected = ref('')
- const usersFiltered = computed(() => {
-    return users.value.filter(user => user.email.endsWith(extSelected.value))
- })
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 </script>
