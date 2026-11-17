@@ -9,7 +9,7 @@
         </option>
     </select>
 
-    <Loader :loading="false">
+    <Loader :loading="loadingUsers">
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
             <template #header>
                     <h1>test</h1>
@@ -31,21 +31,10 @@ import UserCard from './UserCard.vue';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
+import { useFetchUsers } from '../composables/useFetchUsers.ts';
 
-const users = ref<User[]>([])
-
-async function run() {
-    try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/users')
-        const data = await res.json()
-        users.value = data
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
-
-run()
-
+const { users, getAllUsers, loadingUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+
+getAllUsers()
 </script>
