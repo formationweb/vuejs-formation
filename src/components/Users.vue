@@ -10,7 +10,7 @@
     </select>
 
     <Loader :loading="loadingUsers">
-        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
             <template #header>
                     <h1>test</h1>
             </template>
@@ -32,9 +32,11 @@ import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 import { useFetchUsers } from '../composables/useFetchUsers.ts';
+import { useUserManage } from '../composables/useUserManage.ts';
 
 const { users, getAllUsers, loadingUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
+const { deleteUser } = useUserManage(users)
 
 getAllUsers()
 </script>
