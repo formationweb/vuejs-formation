@@ -7,23 +7,26 @@
         </option>
     </select>
 
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
-       <template #header>
-            <h1>test</h1>
-       </template>
-       <template #default>
-            contenu
-       </template>
-       <template #footer="{ active, name }">
-            L'utilisateur {{ name }} est {{ active }}
-       </template>
-    </UserCard>
+    <Loader :loading="false">
+        <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+            <template #header>
+                    <h1>test</h1>
+            </template>
+            <template #default>
+                    contenu
+            </template>
+            <template #footer="{ active, name }">
+                    L'utilisateur {{ name }} est {{ active }}
+            </template>
+        </UserCard>
+    </Loader>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
 import type { User } from '../core/interfaces/user.ts';
 import UserCard from './UserCard.vue';
+import Loader from '../atomics/Loader.vue';
 
 const users = ref<User[]>([
     {
