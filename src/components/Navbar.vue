@@ -6,10 +6,12 @@
         Vide
     </div>
     <ul>
-        <li v-for="(name, index) in namesFiltered" :key="name">
+        <li v-for="(name, index) in namesFiltered" 
+        :key="name" :class="{ red: index % 2 != 0, green: name.startsWith('ana') }" class="bold">
             {{ index }} - {{ name }}
         </li>
     </ul>
+    <p :style="{ color: 'red', fontWeight: 'bold' }">test</p>
 </template>
 
 <script lang="ts" setup>
@@ -24,9 +26,9 @@ const emits = defineEmits<{
 }>()
 
 const localUserName = ref(props.userName)
-const names = ref(['ana', 'ben', 'jim'])
+const names = ref(['ana', 'ben', 'jim', 'benjamin', 'benfeoef'])
 const namesFiltered = computed(() => {
-    return names.value.filter(name => localUserName.value.includes(name))
+    return names.value.filter(name => name.includes(localUserName.value))
 })
 
 function search() {
@@ -42,3 +44,16 @@ watchEffect(() => {
 })
 </script>
 
+<style scoped>
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.bold {
+    font-weight: bold;
+}
+</style>
