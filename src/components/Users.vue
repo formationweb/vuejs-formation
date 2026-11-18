@@ -54,7 +54,7 @@ const userStore = useUserStore()
 const { users } = storeToRefs(userStore)
 const { getAllUsers, loadingUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
-const { deleteUser, createUser, loadingCreate } = useUserManage(users)
+const { deleteUser, createUser, loadingCreate } = useUserManage()
 
 getAllUsers()
 

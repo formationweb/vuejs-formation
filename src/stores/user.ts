@@ -11,8 +11,11 @@ export const useUserStore = defineStore('user', () => {
         users.value = data
     }
 
-    function setCurrentUser(data: User) {
-        userModifying.value = data
+    function setCurrentUser(data: Partial<User>) {
+        userModifying.value = {
+            ...userModifying.value,
+            ...data
+        }
     }
 
     function addUser(user: User) {

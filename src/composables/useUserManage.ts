@@ -27,10 +27,16 @@ export function useUserManage() {
         if (user) userStore.setCurrentUser(user)
     }
 
+    async function updateUser(id: number, payload: UserPayload) {
+        const user = await userService?.editUser(id, payload)
+        if (user) userStore.setCurrentUser(user)
+    }
+
     return {
         deleteUser,
         createUser,
         getUser,
+        updateUser,
         loadingCreate
     }
 }
