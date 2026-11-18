@@ -47,8 +47,12 @@ import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 import { create } from 'axios';
 import type { UserPayload } from '../services/users.ts';
+import { useUserStore } from '../stores/user.ts';
+import { storeToRefs } from 'pinia';
 
-const { users, getAllUsers, loadingUsers } = useFetchUsers()
+const userStore = useUserStore()
+const { users } = storeToRefs(userStore)
+const { getAllUsers, loadingUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 const { deleteUser, createUser, loadingCreate } = useUserManage(users)
 
