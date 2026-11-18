@@ -9,6 +9,16 @@
         </option>
     </select>
 
+    <form @submit.prevent="addUser">
+         <label>Email</label>
+        <input type="text" v-model="email" v-bind="emailAttrs">
+
+        <label>Nom</label>
+        <input type="text" v-model="name" v-bind="nameAttrs">
+
+        <button :aria-busy="loadingCreate" :disabled="loadingCreate">Créer utilisateur</button>
+    </form>
+
     <Loader :loading="loadingUsers">
         <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="deleteUser">
             <template #header>
@@ -33,10 +43,44 @@ import Opacity from '../atomics/Opacity.vue';
 import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 import { useFetchUsers } from '../composables/useFetchUsers.ts';
 import { useUserManage } from '../composables/useUserManage.ts';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import { create } from 'axios';
+import type { UserPayload } from '../services/users.ts';
 
 const { users, getAllUsers, loadingUsers } = useFetchUsers()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
-const { deleteUser } = useUserManage(users)
+const { deleteUser, createUser, loadingCreate } = useUserManage(users)
 
 getAllUsers()
+
+const { handleSubmit, defineField, meta, errors, resetForm, setFieldValue, setValues } = useForm({
+    validationSchema: object({
+        email: string()
+            .required('Email obligatoire'),
+        name: string().required()
+    })
+})
+
+setTimeout(() => {
+    //setFieldValue('email', 'fzlf')
+    setValues({
+        email: 'fefve',
+        name: 'fefmmm'
+    })
+}, 2000)
+
+const submitting = ref(false)
+
+const addUser = handleSubmit(async (values) => {
+    submitting.value = true
+    await createUser(values as UserPayload)
+    resetForm()
+    submitting.value = false
+}, () => {
+    submitting.value = true
+})
+
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
 </script>

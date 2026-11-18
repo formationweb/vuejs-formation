@@ -1,6 +1,11 @@
 import axios from "axios";
 import type { User } from "../core/interfaces/user";
 
+export type UserPayload = {
+    email: string
+    name: string
+}
+
 const URL = 'https://jsonplaceholder.typicode.com/users'
 
 export class UserService {
@@ -10,5 +15,9 @@ export class UserService {
     }
     async deleteUser(id: number) {
         await axios.delete(URL + '/' + id)
+    }
+    async createUser(payload: UserPayload): Promise<User> {
+        const res = await axios.post(URL, payload)
+        return res.data
     }
 }
