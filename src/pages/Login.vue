@@ -28,6 +28,7 @@ import { ref } from 'vue';
 import { object, string } from 'yup';
 import { useAuthStore, type LoginPayload } from '../stores/auth';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
 function domainValidator(domainName: string) {
     return (email: string) => {
@@ -48,6 +49,9 @@ const { handleSubmit, defineField, meta, errors } = useForm({
 
 const authStore = useAuthStore()
 const router = useRouter()
+
+
+//const { token } = storeToRefs(authStore)
 
 const submitting = ref(false)
 
