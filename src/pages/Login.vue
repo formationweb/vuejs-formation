@@ -26,6 +26,8 @@
 import { useForm } from 'vee-validate';
 import { ref } from 'vue';
 import { object, string } from 'yup';
+import { useAuthStore, type LoginPayload } from '../stores/auth';
+import { useRouter } from 'vue-router';
 
 function domainValidator(domainName: string) {
     return (email: string) => {
@@ -44,11 +46,16 @@ const { handleSubmit, defineField, meta, errors } = useForm({
     })
 })
 
+const authStore = useAuthStore()
+const router = useRouter()
+
 const submitting = ref(false)
 
-const login = handleSubmit((values) => {
+const login = handleSubmit(async (values) => {
     submitting.value = true
-    console.log(values)
+    await authStore.login(values as LoginPayload)
+    router.push({ name: 'home' })
+
 }, () => {
     submitting.value = true
 })

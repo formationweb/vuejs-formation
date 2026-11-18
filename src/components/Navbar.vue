@@ -15,7 +15,7 @@
     <!-- <RouterLink to="/login" custom v-slot="router">
         <button @click="router.navigate">Se connecter</button>
     </RouterLink> -->
-    <button @click="router.push('/login')">Se connecter</button>
+    <button @click="router.push({name : 'loginId'})">Se connecter</button>
 </template>
 
 <script lang="ts" setup>
