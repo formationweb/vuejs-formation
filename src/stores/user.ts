@@ -4,10 +4,15 @@ import type { User } from "../core/interfaces/user";
 
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([]);
+    const userModifying = ref<User>({} as User) 
     const nbUsers = computed(() => users.value.length)
 
     function setUsers(data: User[]) {
         users.value = data
+    }
+
+    function setCurrentUser(data: User) {
+        userModifying.value = data
     }
 
     function addUser(user: User) {
@@ -21,8 +26,10 @@ export const useUserStore = defineStore('user', () => {
     return {
         users,
         nbUsers,
+        userModifying,
         setUsers,
         addUser,
-        removeUser
+        removeUser,
+        setCurrentUser
     }
 })
