@@ -5,6 +5,7 @@ import { router } from './router.ts'
 import { UserService } from './services/users.ts'
 import { USER_SERVICE_TOKEN } from './tokens.ts'
 import { createPinia } from 'pinia'
+import './interceptor.ts'
 
 const app = createApp(App)
 
