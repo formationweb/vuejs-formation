@@ -1,11 +1,11 @@
 <template>
     <input type="range" min="0" max="1" 
-        step="0.01" v-model="alpha" @input="emits('change', alpha)" />
+        step="0.01" v-model="alpha" />
     <div :style="{ backgroundColor: color, opacity: alpha }"></div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watchEffect } from 'vue';
 
 const props = defineProps<{
     color: string
@@ -17,6 +17,10 @@ const emits = defineEmits<{
 }>()
 
 const alpha = ref(props.opacity)
+
+watchEffect(() => {
+    emits('change', alpha.value)
+})
 </script>
 
 <style scoped>
