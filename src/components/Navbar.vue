@@ -7,10 +7,14 @@
         Vide
     </div>
     <ul>
-        <li v-for="(name, index) in names" :key="name">
+        <li v-for="(name, index) in names" :key="name" 
+        :class="{ red: index % 2 == 0 }" class="bold">
            {{ index }} - {{ name }}
         </li>
     </ul>
+    <div :style="{ color: 'red', fontWeight: 'bold' }">
+        un texte
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -31,3 +35,13 @@ function search() {
     emits('onSearch', localUserName.value)
 }
 </script>
+
+<style scoped>
+.red {
+    color: red;
+}
+
+.bold {
+    font-weight: bold;
+}
+</style>

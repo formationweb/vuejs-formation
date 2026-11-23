@@ -1,6 +1,20 @@
 <template>
     <h1>Utilisateurs</h1>
-    <UserCard v-for="u in users" :key="u.id" :user="u" />
+    <UserCard v-for="u in users" :key="u.id" :user="u">
+        <template #header>
+            <header>
+              test
+            </header>
+        </template>
+        <template #default>
+          <p>dzfefer</p>
+        </template>
+        <template #footer="{ active, name }">
+            <footer>
+            L'utilisateur {{ name }} est {{ active }}
+          </footer>
+        </template>
+    </UserCard>
 </template>
 
 <script setup lang="ts">
