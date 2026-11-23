@@ -1,11 +1,14 @@
 <template>
     <h1>Utilisateurs</h1>
+    <UserCard v-for="u in users" :key="u.id" :user="u" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import UserCard from './UserCard.vue';
+import type { User } from '../core/interfaces/user.ts';
 
-const users = ref([
+const users = ref<User[]>([
   {
     "id": 1,
     "name": "Leanne Graham",
