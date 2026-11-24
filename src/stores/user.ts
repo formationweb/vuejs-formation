@@ -4,6 +4,7 @@ import type { User } from "../core/interfaces/user";
 
 export const useUserStore = defineStore('user', () => {
     const users = ref<User[]>([]); // state
+    const userModifying = ref<User>({} as User)
 
     function setUsers(data: User[]) {  // action
         users.value = data // mutate
@@ -13,9 +14,15 @@ export const useUserStore = defineStore('user', () => {
         users.value = users.value.filter(user => user.id != id)
     }
 
+    function setCurrentUser(data: User) {
+        userModifying.value = data
+    }
+
     return {
         users,
+        userModifying,
         setUsers,
-        filterUsers
+        filterUsers,
+        setCurrentUser
     }
 })

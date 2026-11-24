@@ -26,9 +26,15 @@ export function useUserManage() {
     userStore.filterUsers(id)
   }
 
+   async function getUser(id: number) {
+    const user = await userService?.getById(id)
+    if (user) userStore.setCurrentUser(user)
+  }
+
   return {
     loadingUsers,
     getAllUsers,
-    removeUser
+    removeUser,
+    getUser
   };
 }
