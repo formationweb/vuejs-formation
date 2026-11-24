@@ -1,7 +1,7 @@
 <template>
-  <!-- <Navbar userName="ana" @onSearch="listenSearch" />
-  <Users /> -->
-  <Draw />
+  <Navbar userName="ana" @onSearch="listenSearch" />
+  <Users />
+  <!-- <Draw /> -->
 </template>
 
 <script setup lang="ts">
