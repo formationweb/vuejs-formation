@@ -15,10 +15,13 @@
     <div :style="{ color: 'red', fontWeight: 'bold' }">
         un texte
     </div>
+
+    <button @click="router.push({ name: 'loginId' })">Se connecter</button>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{
     userName: string
@@ -27,6 +30,8 @@ const props = defineProps<{
 const emits = defineEmits<{
     onSearch: [string]
 }>()
+
+const router = useRouter()
 
 const names = ref<string[]>(['ana', 'ben', 'jim'])
 const localUserName = ref(props.userName)
