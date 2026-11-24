@@ -21,8 +21,14 @@ export function useUserManage() {
     }
   }
 
+  async function removeUser(id: number) {
+    await userService?.delete(id)
+    userStore.filterUsers(id)
+  }
+
   return {
     loadingUsers,
     getAllUsers,
+    removeUser
   };
 }

@@ -9,7 +9,7 @@
   </select>
 
   <Loader :loading="loadingUsers">
-    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u">
+    <UserCard v-for="u in usersFiltered" :key="u.id" :user="u" @onDelete="removeUser">
       <template #header>
         <header>
           test
@@ -41,7 +41,7 @@ import { storeToRefs } from 'pinia';
 const userStore = useUserStore()
 const { users } = storeToRefs(userStore)
 
-const { getAllUsers, loadingUsers } = useUserManage()
+const { getAllUsers, loadingUsers, removeUser } = useUserManage()
 const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 
 getAllUsers()
