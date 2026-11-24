@@ -33,9 +33,8 @@ import UserCard from './UserCard.vue';
 import type { User } from '../core/interfaces/user.ts';
 import Loader from '../atomics/Loader.vue';
 import Opacity from '../atomics/Opacity.vue';
+import { useExtensionFilter } from '../composables/useExtensionFilter.ts';
 
-const extSelected = ref('')
-const extensions = ref(['tv', 'biz', 'io', 'me']);
 const users = ref<User[]>([
   {
     "id": 1,
@@ -268,7 +267,6 @@ const users = ref<User[]>([
     }
   }
 ])
-const usersFiltered = computed(() => {
-  return users.value.filter(user => user.email.endsWith(extSelected.value))
-})
+
+const { extSelected, extensions, usersFiltered } = useExtensionFilter(users)
 </script>
