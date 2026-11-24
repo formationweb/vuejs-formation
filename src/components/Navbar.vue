@@ -24,7 +24,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const props = defineProps<{
-    userName: string
+    userName?: string
 }>()
 
 const emits = defineEmits<{
@@ -34,7 +34,7 @@ const emits = defineEmits<{
 const router = useRouter()
 
 const names = ref<string[]>(['ana', 'ben', 'jim'])
-const localUserName = ref(props.userName)
+const localUserName = ref(props.userName ?? '')
 const namesFiltered = computed(() => {
     return names.value.filter(name => name.includes(localUserName.value))
 })
